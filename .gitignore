@@ -1,0 +1,17 @@
+# Geheimnisse (Passwörter, API-Keys) – NIE hochladen
+.env
+.env.*
+
+# Node / Python (für später im Backend)
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# Persönliche Einstellungen
+.claude/settings.local.json
+.vscode/
+
+# System-Müll
+Thumbs.db
+.DS_Store

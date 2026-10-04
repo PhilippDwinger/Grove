@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Grove Logo: Jahresringe + Schallplatte (Amber auf Aubergine) -->
+  <circle cx="100" cy="100" r="97" fill="#24152a"/>
+  <g fill="none" stroke="#e8a33d" stroke-linecap="round">
+    <circle cx="100"   cy="100"   r="88" stroke-width="2.6" opacity=".95"/>
+    <circle cx="101"   cy="99"    r="79" stroke-width="1.2" opacity=".5"/>
+    <circle cx="99.5"  cy="101"   r="71" stroke-width="2.1" opacity=".85"/>
+    <circle cx="101.5" cy="100.5" r="62" stroke-width="1"   opacity=".45"/>
+    <circle cx="100"   cy="98.5"  r="54" stroke-width="1.8" opacity=".8"/>
+    <circle cx="99"    cy="100"   r="46" stroke-width="1"   opacity=".5"/>
+    <circle cx="100.5" cy="100"   r="38" stroke-width="1.6" opacity=".75"/>
+  </g>
+  <circle cx="100" cy="100" r="26" fill="#e8a33d"/>
+  <circle cx="100" cy="100" r="4"  fill="#1a0f1c"/>
+</svg>

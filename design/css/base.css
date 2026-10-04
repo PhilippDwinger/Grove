@@ -1,0 +1,52 @@
+/* ==========================================================
+   Grove · base.css  (Claude)
+   Farben, Schriften, Reset – die Grundlage für alles andere
+   ========================================================== */
+
+:root {
+  /* Farben */
+  --aubergine-900: #1a0f1c;   /* tiefster Hintergrund */
+  --aubergine-800: #24152a;   /* Karten, Flächen */
+  --aubergine-700: #321d39;   /* Hover, Lichtschein */
+  --amber-500:     #e8a33d;   /* Hauptakzent */
+  --amber-400:     #f2bb5c;
+  --amber-300:     #f7d08a;
+  --cream:         #f4e9d8;   /* Text */
+  --muted:         #b4a2b3;   /* Nebentext */
+  --line:          rgba(232, 163, 61, .18);
+
+  /* Schriften */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Manrope', system-ui, sans-serif;
+
+  /* Abstände & Radien */
+  --gap: clamp(16px, 3vw, 32px);
+  --radius: 18px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { color-scheme: dark; scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, var(--aubergine-700), transparent 70%),
+    var(--aubergine-900);
+  color: var(--cream);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* feines Filmkorn für den Nachtclub-Look */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  opacity: .06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
