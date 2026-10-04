@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grove – Animations-Katalog</title>
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+
+  <!-- Schriften -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Design (Claude) -->
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/grove-animationen.css">
+  <link rel="stylesheet" href="../css/katalog.css">
+</head>
+<body>
+
+  <header class="kat-head">
+    <div class="kat-head__brand"><img src="../img/grove-logo-klein.svg" alt="" width="28" height="28"> Grove · Testseite</div>
+    <h1>Animations-Katalog</h1>
+    <p>30 Ideen für Bewegung in Grove – zwischen Wald und Jazz. Alles reines CSS, kein JavaScript.
+      <strong>Sag mir einfach die Nummern, die dir gefallen</strong>, dann baue ich sie fest ins Design ein.</p>
+    <p>Die alte Testseite liegt unter <a href="test-v01.html" style="color:var(--amber-light)">design/beispiele/test-v01.html</a>.</p>
+  </header>
+
+  <nav class="kat-jump" aria-label="Zu Animation springen">
+    <div class="kat-jump__inner"><a href="#a01">01</a><a href="#a02">02</a><a href="#a03">03</a><a href="#a04">04</a><a href="#a05">05</a><a href="#a06">06</a><a href="#a07">07</a><a href="#a08">08</a><a href="#a09">09</a><a href="#a10">10</a><a href="#a11">11</a><a href="#a12">12</a><a href="#a13">13</a><a href="#a14">14</a><a href="#a15">15</a><a href="#a16">16</a><a href="#a17">17</a><a href="#a18">18</a><a href="#a19">19</a><a href="#a20">20</a><a href="#a21">21</a><a href="#a22">22</a><a href="#a23">23</a><a href="#a24">24</a><a href="#a25">25</a><a href="#a26">26</a><a href="#a27">27</a><a href="#a28">28</a><a href="#a29">29</a><a href="#a30">30</a></div>
+  </nav>
+
+  <p class="kat-motion-hint">Hinweis: Dein System hat „Animationen reduzieren“ an. Im Katalog laufen sie trotzdem – auf der fertigen Seite respektieren wir die Einstellung.</p>
+
+  <main class="kat-list">
+    <!-- ===== 01 · Groooove-Schriftzug ===== -->
+    <article class="anim" id="a01">
+      <div class="anim__num">01</div>
+      <div class="anim__stage">
+        <h3 class="a01" aria-label="Grove"><span aria-hidden="true">Gr</span><span class="o" aria-hidden="true">o</span><span class="o x" style="--i:1" aria-hidden="true">o</span><span class="o x" style="--i:2" aria-hidden="true">o</span><span class="o x" style="--i:3" aria-hidden="true">o</span><span class="o x" style="--i:4" aria-hidden="true">o</span><span aria-hidden="true">ve</span></h3>
+      </div>
+      <div class="anim__info">
+        <h2>Groooove-Schriftzug</h2>
+        <p>„Grove“ klappt zu „Groooooove“ auf, die o’s wippen im Takt und klappen wieder ein.</p>
+        <span class="anim__tag">Klasse <b>.a01</b></span>
+        <span class="anim__tag">Idee für: <b>Startseite, Hero</b></span>
+      </div>
+    </article>
+    <!-- ===== 02 · Logo atmet ===== -->
+    <article class="anim" id="a02">
+      <div class="anim__num">02</div>
+      <div class="anim__stage">
+        <img class="a02" src="../img/grove-icon.svg" alt="">
+      </div>
+      <div class="anim__info">
+        <h2>Logo atmet</h2>
+        <p>Das App-Icon pulsiert langsam und leuchtet dabei warm auf.</p>
+        <span class="anim__tag">Klasse <b>.a02</b></span>
+        <span class="anim__tag">Idee für: <b>Hero, Ladebildschirm</b></span>
+      </div>
+    </article>
+    <!-- ===== 03 · Jahresringe wachsen ===== -->
+    <article class="anim" id="a03">
+      <div class="anim__num">03</div>
+      <div class="anim__stage">
+        <svg class="a03" viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1" class="ring" pathLength="1" style="--i:0"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85" class="ring" pathLength="1" style="--i:1"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7" class="ring" pathLength="1" style="--i:2"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85" class="ring" pathLength="1" style="--i:3"/><line x1="300" y1="210" x2="440" y2="72" stroke="#1C1420" stroke-width="14" stroke-linecap="round"/><g class="core"><circle cx="242" cy="267" r="64" fill="#E3A15A"/><path d="M242 300 L242 262" stroke="#1C1420" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M242 270 C224 270 214 256 216 240 C232 240 242 252 242 270 Z" fill="#1C1420"/><path d="M242 262 C258 260 270 246 270 230 C254 230 242 242 242 262 Z" fill="#1C1420"/></g></svg>
+      </div>
+      <div class="anim__info">
+        <h2>Jahresringe wachsen</h2>
+        <p>Das Logo zeichnet sich Ring für Ring, dann springt der Keimling in die Mitte.</p>
+        <span class="anim__tag">Klasse <b>.a03</b></span>
+        <span class="anim__tag">Idee für: <b>Intro, Seitenstart</b></span>
+      </div>
+    </article>
+    <!-- ===== 04 · Platte dreht – Keimling bleibt ===== -->
+    <article class="anim" id="a04">
+      <div class="anim__num">04</div>
+      <div class="anim__stage">
+        <svg class="a04" viewBox="0 0 512 512" aria-hidden="true"><g class="rings"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/></g><line x1="300" y1="210" x2="440" y2="72" stroke="#1C1420" stroke-width="14" stroke-linecap="round"/><circle cx="242" cy="267" r="64" fill="#E3A15A"/><path d="M242 300 L242 262" stroke="#1C1420" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M242 270 C224 270 214 256 216 240 C232 240 242 252 242 270 Z" fill="#1C1420"/><path d="M242 262 C258 260 270 246 270 230 C254 230 242 242 242 262 Z" fill="#1C1420"/></svg>
+      </div>
+      <div class="anim__info">
+        <h2>Platte dreht – Keimling bleibt</h2>
+        <p>Nur die Ringe drehen sich wie eine Schallplatte, der Keimling bleibt aufrecht stehen.</p>
+        <span class="anim__tag">Klasse <b>.a04</b></span>
+        <span class="anim__tag">Idee für: <b>Musik läuft, „aktiv“-Zustand</b></span>
+      </div>
+    </article>
+    <!-- ===== 05 · Tonarm senkt sich ===== -->
+    <article class="anim" id="a05">
+      <div class="anim__num">05</div>
+      <div class="anim__stage">
+        <svg class="a05" viewBox="0 0 300 220" aria-hidden="true">
+<circle cx="120" cy="110" r="96" fill="#160F19"/>
+<g class="disc"><g transform="translate(30 20) scale(0.3515)"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/><circle cx="242" cy="267" r="64" fill="#E3A15A"/><circle cx="242" cy="267" r="8" fill="#1C1420"/></g></g>
+<g class="arm"><circle cx="262" cy="34" r="14" fill="#3A2C3D"/><circle cx="262" cy="34" r="6" fill="#E3A15A"/>
+<path d="M262 34 L240 150 L196 176" stroke="#CDBFAE" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="182" y="168" width="22" height="14" rx="3" fill="#CDBFAE" transform="rotate(-30 193 175)"/></g>
+</svg>
+      </div>
+      <div class="anim__info">
+        <h2>Tonarm senkt sich</h2>
+        <p>Der Tonarm schwenkt auf die Platte, sie dreht drei Runden, der Arm fährt zurück.</p>
+        <span class="anim__tag">Klasse <b>.a05</b></span>
+        <span class="anim__tag">Idee für: <b>Bridge startet, Verbinden</b></span>
+      </div>
+    </article>
+    <!-- ===== 06 · Equalizer ===== -->
+    <article class="anim" id="a06">
+      <div class="anim__num">06</div>
+      <div class="anim__stage">
+        <div class="a06" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="anim__info">
+        <h2>Equalizer</h2>
+        <p>Zwölf Balken hüpfen in unterschiedlichen Tempi.</p>
+        <span class="anim__tag">Klasse <b>.a06</b></span>
+        <span class="anim__tag">Idee für: <b>Status „läuft“, Musik</b></span>
+      </div>
+    </article>
+    <!-- ===== 07 · Keimling wächst ===== -->
+    <article class="anim" id="a07">
+      <div class="anim__num">07</div>
+      <div class="anim__stage">
+        <svg class="a07" viewBox="0 0 160 190" aria-hidden="true">
+<path d="M20 172 Q80 162 140 172" stroke="#3A2C3D" stroke-width="4" fill="none" stroke-linecap="round"/>
+<g class="sway"><path class="stem" pathLength="1" d="M80 170 C80 145 77 120 80 92" stroke="#E3A15A" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path class="leaf leaf--l" d="M80 100 C60 100 46 82 49 62 C69 62 81 78 80 100 Z" fill="#E3A15A"/>
+<path class="leaf leaf--r" d="M80 92 C100 89 115 72 114 52 C94 52 79 68 80 92 Z" fill="#F2C08A"/></g>
+</svg>
+      </div>
+      <div class="anim__info">
+        <h2>Keimling wächst</h2>
+        <p>Ein Stiel wächst aus der Erde, zwei Blätter entfalten sich und wiegen sanft.</p>
+        <span class="anim__tag">Klasse <b>.a07</b></span>
+        <span class="anim__tag">Idee für: <b>Neues Projekt angelegt</b></span>
+      </div>
+    </article>
+    <!-- ===== 08 · Schallwellen ===== -->
+    <article class="anim" id="a08">
+      <div class="anim__num">08</div>
+      <div class="anim__stage">
+        <div class="a08" aria-hidden="true"><i></i><i></i><i></i><img src="../img/grove-logo-klein.svg" alt=""></div>
+      </div>
+      <div class="anim__info">
+        <h2>Schallwellen</h2>
+        <p>Ringe laufen vom Logo nach außen, wie Schall oder ein Funksignal.</p>
+        <span class="anim__tag">Klasse <b>.a08</b></span>
+        <span class="anim__tag">Idee für: <b>Bridge sendet, Gerät online</b></span>
+      </div>
+    </article>
+    <!-- ===== 09 · Buchstaben-Welle ===== -->
+    <article class="anim" id="a09">
+      <div class="anim__num">09</div>
+      <div class="anim__stage">
+        <h3 class="a09" aria-label="Grove"><span aria-hidden="true" style="--i:0">G</span><span aria-hidden="true" style="--i:1">r</span><span aria-hidden="true" style="--i:2">o</span><span aria-hidden="true" style="--i:3">v</span><span aria-hidden="true" style="--i:4">e</span></h3>
+      </div>
+      <div class="anim__info">
+        <h2>Buchstaben-Welle</h2>
+        <p>Die Buchstaben von „Grove“ hüpfen nacheinander wie eine Welle.</p>
+        <span class="anim__tag">Klasse <b>.a09</b></span>
+        <span class="anim__tag">Idee für: <b>Überschriften, Hover</b></span>
+      </div>
+    </article>
+    <!-- ===== 10 · Ride-Becken im Swing ===== -->
+    <article class="anim" id="a10">
+      <div class="anim__num">10</div>
+      <div class="anim__stage">
+        <div class="a10" aria-hidden="true"><div class="a10__cymbal"></div><div class="a10__label">ding · ding-a · ding · ding-a</div></div>
+      </div>
+      <div class="anim__info">
+        <h2>Ride-Becken im Swing</h2>
+        <p>Ein Becken schlägt den typischen Jazz-Rhythmus: ding · ding-a · ding · ding-a.</p>
+        <span class="anim__tag">Klasse <b>.a10</b></span>
+        <span class="anim__tag">Idee für: <b>Taktgeber für andere Animationen</b></span>
+      </div>
+    </article>
+    <!-- ===== 11 · Glühwürmchen ===== -->
+    <article class="anim" id="a11">
+      <div class="anim__num">11</div>
+      <div class="anim__stage">
+        <div class="a11" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="anim__info">
+        <h2>Glühwürmchen</h2>
+        <p>Warme Lichtpunkte schweben und blinken, wie abends auf einer Lichtung.</p>
+        <span class="anim__tag">Klasse <b>.a11</b></span>
+        <span class="anim__tag">Idee für: <b>Hintergrund, Nachtmodus</b></span>
+      </div>
+    </article>
+    <!-- ===== 12 · Noten steigen auf ===== -->
+    <article class="anim" id="a12">
+      <div class="anim__num">12</div>
+      <div class="anim__stage">
+        <div class="a12" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="8" cy="18" rx="5" ry="3.6" transform="rotate(-20 8 18)"/><rect x="11.6" y="3" width="2" height="15"/><path d="M13.6 3 C17 4 20 6 19 10 C18 8 16 7 13.6 7 Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="8" cy="18" rx="5" ry="3.6" transform="rotate(-20 8 18)"/><rect x="11.6" y="3" width="2" height="15"/><path d="M13.6 3 C17 4 20 6 19 10 C18 8 16 7 13.6 7 Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="8" cy="18" rx="5" ry="3.6" transform="rotate(-20 8 18)"/><rect x="11.6" y="3" width="2" height="15"/><path d="M13.6 3 C17 4 20 6 19 10 C18 8 16 7 13.6 7 Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="8" cy="18" rx="5" ry="3.6" transform="rotate(-20 8 18)"/><rect x="11.6" y="3" width="2" height="15"/><path d="M13.6 3 C17 4 20 6 19 10 C18 8 16 7 13.6 7 Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="8" cy="18" rx="5" ry="3.6" transform="rotate(-20 8 18)"/><rect x="11.6" y="3" width="2" height="15"/><path d="M13.6 3 C17 4 20 6 19 10 C18 8 16 7 13.6 7 Z"/></svg></div>
+      </div>
+      <div class="anim__info">
+        <h2>Noten steigen auf</h2>
+        <p>Kleine Noten steigen schwingend nach oben und lösen sich auf.</p>
+        <span class="anim__tag">Klasse <b>.a12</b></span>
+        <span class="anim__tag">Idee für: <b>Erfolg, „gespeichert“</b></span>
+      </div>
+    </article>
+    <!-- ===== 13 · Blätter fallen ===== -->
+    <article class="anim" id="a13">
+      <div class="anim__num">13</div>
+      <div class="anim__stage">
+        <div class="a13" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 C4 20 2 11 6 2 C15 5 19 13 12 22 Z" fill="#E3A15A" opacity=".85"/><path d="M12 21 C10 15 8 9 6.5 3.5" stroke="#1C1420" stroke-width="1.2" fill="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 C4 20 2 11 6 2 C15 5 19 13 12 22 Z" fill="#E3A15A" opacity=".85"/><path d="M12 21 C10 15 8 9 6.5 3.5" stroke="#1C1420" stroke-width="1.2" fill="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 C4 20 2 11 6 2 C15 5 19 13 12 22 Z" fill="#E3A15A" opacity=".85"/><path d="M12 21 C10 15 8 9 6.5 3.5" stroke="#1C1420" stroke-width="1.2" fill="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 C4 20 2 11 6 2 C15 5 19 13 12 22 Z" fill="#E3A15A" opacity=".85"/><path d="M12 21 C10 15 8 9 6.5 3.5" stroke="#1C1420" stroke-width="1.2" fill="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 C4 20 2 11 6 2 C15 5 19 13 12 22 Z" fill="#E3A15A" opacity=".85"/><path d="M12 21 C10 15 8 9 6.5 3.5" stroke="#1C1420" stroke-width="1.2" fill="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 C4 20 2 11 6 2 C15 5 19 13 12 22 Z" fill="#E3A15A" opacity=".85"/><path d="M12 21 C10 15 8 9 6.5 3.5" stroke="#1C1420" stroke-width="1.2" fill="none"/></svg></div>
+      </div>
+      <div class="anim__info">
+        <h2>Blätter fallen</h2>
+        <p>Blätter segeln drehend von oben herab.</p>
+        <span class="anim__tag">Klasse <b>.a13</b></span>
+        <span class="anim__tag">Idee für: <b>Herbst-Stimmung, Löschen</b></span>
+      </div>
+    </article>
+    <!-- ===== 14 · Bühnenlicht über Text ===== -->
+    <article class="anim" id="a14">
+      <div class="anim__num">14</div>
+      <div class="anim__stage">
+        <h3 class="a14">Heute Abend live</h3>
+      </div>
+      <div class="anim__info">
+        <h2>Bühnenlicht über Text</h2>
+        <p>Ein Spotlight wandert über den Schriftzug wie auf einer Clubbühne.</p>
+        <span class="anim__tag">Klasse <b>.a14</b></span>
+        <span class="anim__tag">Idee für: <b>Hero-Überschrift</b></span>
+      </div>
+    </article>
+    <!-- ===== 15 · Karte reagiert auf die Maus ===== -->
+    <article class="anim" id="a15">
+      <div class="anim__num">15</div>
+      <div class="anim__stage">
+        <a class="a15" href="#a15"><svg class="bg" viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/></svg><span class="tag">Herzstück</span><h3>Bridge</h3><p>Geräte sprechen miteinander und geben sich Aufgaben.</p><span class="go">Öffnen →</span></a>
+      </div>
+      <div class="anim__info">
+        <h2>Karte reagiert auf die Maus</h2>
+        <p>Fahr mit der Maus drüber: Die Karte hebt sich, die Ringe drehen sich, der Pfeil rückt vor.</p>
+        <span class="anim__tag">Klasse <b>.a15</b></span>
+        <span class="anim__tag">Idee für: <b>Projekt-Karten</b></span>
+      </div>
+    </article>
+    <!-- ===== 16 · Bridge – Pakete zwischen Geräten ===== -->
+    <article class="anim" id="a16">
+      <div class="anim__num">16</div>
+      <div class="anim__stage">
+        <svg class="a16" viewBox="0 0 380 150" aria-hidden="true">
+<line class="wire" x1="80" y1="75" x2="300" y2="75" stroke="#3A2C3D" stroke-width="3"/>
+<rect x="30" y="35" width="46" height="80" rx="9" fill="none" stroke="#CDBFAE" stroke-width="3"/><rect class="scr-l" x="37" y="45" width="32" height="56" rx="3" fill="#2A1F2C"/>
+<rect x="290" y="45" width="66" height="44" rx="5" fill="none" stroke="#CDBFAE" stroke-width="3"/><rect class="scr-r" x="296" y="51" width="54" height="32" rx="2" fill="#2A1F2C"/><path d="M280 99 H366" stroke="#CDBFAE" stroke-width="4" stroke-linecap="round"/>
+<circle class="p1" cx="90" cy="75" r="7" fill="#E3A15A"/><circle class="p2" cx="290" cy="75" r="7" fill="#F2C08A"/>
+</svg>
+      </div>
+      <div class="anim__info">
+        <h2>Bridge – Pakete zwischen Geräten</h2>
+        <p>Datenpakete wandern hin und her, das Ziel-Display blinkt beim Empfang.</p>
+        <span class="anim__tag">Klasse <b>.a16</b></span>
+        <span class="anim__tag">Idee für: <b>Bridge-Übersicht</b></span>
+      </div>
+    </article>
+    <!-- ===== 17 · Wurzelnetz ===== -->
+    <article class="anim" id="a17">
+      <div class="anim__num">17</div>
+      <div class="anim__stage">
+        <svg class="a17" viewBox="0 0 380 200" aria-hidden="true">
+<path class="ln" pathLength="1" style="--i:1" d="M190 100 C150 70 110 60 70 50" stroke="#E3A15A" stroke-width="2.5" fill="none" opacity=".7"/>
+<path class="ln" pathLength="1" style="--i:2" d="M190 100 C230 60 270 50 310 40" stroke="#E3A15A" stroke-width="2.5" fill="none" opacity=".7"/>
+<path class="ln" pathLength="1" style="--i:3" d="M190 100 C160 130 120 150 80 160" stroke="#E3A15A" stroke-width="2.5" fill="none" opacity=".7"/>
+<path class="ln" pathLength="1" style="--i:4" d="M190 100 C230 140 270 150 320 155" stroke="#E3A15A" stroke-width="2.5" fill="none" opacity=".7"/>
+<path class="ln" pathLength="1" style="--i:5" d="M70 50 C60 100 70 130 80 160" stroke="#F2C08A" stroke-width="1.5" fill="none" opacity=".4"/>
+<path class="ln" pathLength="1" style="--i:6" d="M310 40 C330 90 330 120 320 155" stroke="#F2C08A" stroke-width="1.5" fill="none" opacity=".4"/>
+<circle class="nd" style="--i:0" cx="190" cy="100" r="14" fill="#E3A15A"/>
+<circle class="nd" style="--i:2" cx="70" cy="50" r="8" fill="#F2C08A"/><circle class="nd" style="--i:3" cx="310" cy="40" r="8" fill="#F2C08A"/>
+<circle class="nd" style="--i:4" cx="80" cy="160" r="8" fill="#F2C08A"/><circle class="nd" style="--i:5" cx="320" cy="155" r="8" fill="#F2C08A"/>
+</svg>
+      </div>
+      <div class="anim__info">
+        <h2>Wurzelnetz</h2>
+        <p>Knoten tauchen auf und verbinden sich wie Wurzeln unter dem Waldboden.</p>
+        <span class="anim__tag">Klasse <b>.a17</b></span>
+        <span class="anim__tag">Idee für: <b>Geräte-Netzwerk, Bridge</b></span>
+      </div>
+    </article>
+    <!-- ===== 18 · Schreibmaschine ===== -->
+    <article class="anim" id="a18">
+      <div class="anim__num">18</div>
+      <div class="anim__stage">
+        <h3 class="a18" aria-label="Guten Abend."><span aria-hidden="true" style="--i:0">G</span><span aria-hidden="true" style="--i:1">u</span><span aria-hidden="true" style="--i:2">t</span><span aria-hidden="true" style="--i:3">e</span><span aria-hidden="true" style="--i:4">n</span><span aria-hidden="true" style="--i:5"> </span><span aria-hidden="true" style="--i:6">A</span><span aria-hidden="true" style="--i:7">b</span><span aria-hidden="true" style="--i:8">e</span><span aria-hidden="true" style="--i:9">n</span><span aria-hidden="true" style="--i:10">d</span><span aria-hidden="true" style="--i:11">.</span><span class="cur" aria-hidden="true"></span></h3>
+      </div>
+      <div class="anim__info">
+        <h2>Schreibmaschine</h2>
+        <p>„Guten Abend.“ tippt sich Buchstabe für Buchstabe, mit blinkendem Cursor.</p>
+        <span class="anim__tag">Klasse <b>.a18</b></span>
+        <span class="anim__tag">Idee für: <b>Begrüßung auf „Heute“</b></span>
+      </div>
+    </article>
+    <!-- ===== 19 · Goldener Glanz ===== -->
+    <article class="anim" id="a19">
+      <div class="anim__num">19</div>
+      <div class="anim__stage">
+        <h3 class="a19">Grove</h3>
+      </div>
+      <div class="anim__info">
+        <h2>Goldener Glanz</h2>
+        <p>Ein Lichtschimmer läuft über den Schriftzug.</p>
+        <span class="anim__tag">Klasse <b>.a19</b></span>
+        <span class="anim__tag">Idee für: <b>Logo-Schriftzug, Buttons</b></span>
+      </div>
+    </article>
+    <!-- ===== 20 · Metronom ===== -->
+    <article class="anim" id="a20">
+      <div class="anim__num">20</div>
+      <div class="anim__stage">
+        <svg class="a20" viewBox="0 0 150 190" aria-hidden="true">
+<path d="M50 20 H100 L130 175 H20 Z" fill="#2A1F2C" stroke="#3A2C3D" stroke-width="3" stroke-linejoin="round"/>
+<g class="pend"><line x1="75" y1="160" x2="75" y2="30" stroke="#CDBFAE" stroke-width="3" stroke-linecap="round"/><rect x="66" y="62" width="18" height="14" rx="3" fill="#E3A15A"/></g>
+<circle cx="75" cy="160" r="6" fill="#E3A15A"/>
+</svg>
+      </div>
+      <div class="anim__info">
+        <h2>Metronom</h2>
+        <p>Ein Pendel schwingt im Takt von 80 Schlägen pro Minute.</p>
+        <span class="anim__tag">Klasse <b>.a20</b></span>
+        <span class="anim__tag">Idee für: <b>Ladezustand, Timer</b></span>
+      </div>
+    </article>
+    <!-- ===== 21 · Echte Schallplatte ===== -->
+    <article class="anim" id="a21">
+      <div class="anim__num">21</div>
+      <div class="anim__stage">
+        <div class="a21" aria-hidden="true"><div class="a21__label"></div></div>
+      </div>
+      <div class="anim__info">
+        <h2>Echte Schallplatte</h2>
+        <p>Feine Rillen, ein Lichtreflex, das Label dreht mit 33⅓ Umdrehungen pro Minute.</p>
+        <span class="anim__tag">Klasse <b>.a21</b></span>
+        <span class="anim__tag">Idee für: <b>Musik-Bereich, Hain</b></span>
+      </div>
+    </article>
+    <!-- ===== 22 · Der Hain wächst ===== -->
+    <article class="anim" id="a22">
+      <div class="anim__num">22</div>
+      <div class="anim__stage">
+        <div class="a22" aria-hidden="true"><i style="--i:0;--h:90px;--o:0.6"></i><i style="--i:1;--h:140px;--o:0.8"></i><i style="--i:2;--h:110px;--o:0.7"></i><i style="--i:3;--h:180px;--o:1"></i><i style="--i:4;--h:130px;--o:0.85"></i><i style="--i:5;--h:160px;--o:0.9"></i><i style="--i:6;--h:100px;--o:0.65"></i><i style="--i:7;--h:150px;--o:0.8"></i><i style="--i:8;--h:80px;--o:0.55"></i></div>
+      </div>
+      <div class="anim__info">
+        <h2>Der Hain wächst</h2>
+        <p>Bäume schießen nacheinander aus dem Boden – ein kleiner Wald entsteht.</p>
+        <span class="anim__tag">Klasse <b>.a22</b></span>
+        <span class="anim__tag">Idee für: <b>Projekt-Übersicht, Wachstum</b></span>
+      </div>
+    </article>
+    <!-- ===== 23 · Neon-Schild ===== -->
+    <article class="anim" id="a23">
+      <div class="anim__num">23</div>
+      <div class="anim__stage">
+        <h3 class="a23">Grove</h3>
+      </div>
+      <div class="anim__info">
+        <h2>Neon-Schild</h2>
+        <p>„Grove“ als Leuchtreklame im Jazzclub – mit gelegentlichem Flackern.</p>
+        <span class="anim__tag">Klasse <b>.a23</b></span>
+        <span class="anim__tag">Idee für: <b>Nachtmodus, Fehlerseite 404</b></span>
+      </div>
+    </article>
+    <!-- ===== 24 · Lade-Ringe ===== -->
+    <article class="anim" id="a24">
+      <div class="anim__num">24</div>
+      <div class="anim__stage">
+        <div class="a24" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+      </div>
+      <div class="anim__info">
+        <h2>Lade-Ringe</h2>
+        <p>Drei Ringe drehen in verschiedenen Richtungen und Tempi um einen pulsierenden Kern.</p>
+        <span class="anim__tag">Klasse <b>.a24</b></span>
+        <span class="anim__tag">Idee für: <b>Laden, Warten auf Bridge</b></span>
+      </div>
+    </article>
+    <!-- ===== 25 · Button mit Groove-Rand ===== -->
+    <article class="anim" id="a25">
+      <div class="anim__num">25</div>
+      <div class="anim__stage">
+        <button class="a25" type="button">Weitermachen</button>
+      </div>
+      <div class="anim__info">
+        <h2>Button mit Groove-Rand</h2>
+        <p>Ein Lichtstreifen läuft um den Button. Beim Drüberfahren füllt er sich in Amber.</p>
+        <span class="anim__tag">Klasse <b>.a25</b></span>
+        <span class="anim__tag">Idee für: <b>Haupt-Buttons</b></span>
+      </div>
+    </article>
+    <!-- ===== 26 · Worte steigen auf ===== -->
+    <article class="anim" id="a26">
+      <div class="anim__num">26</div>
+      <div class="anim__stage">
+        <h3 class="a26"><span><span style="--i:0">Willkommen</span></span><span><span style="--i:1">im</span></span><span><span style="--i:2"><em>Grove</em></span></span></h3>
+      </div>
+      <div class="anim__info">
+        <h2>Worte steigen auf</h2>
+        <p>Jedes Wort steigt einzeln aus einer unsichtbaren Linie und verschwindet nach oben.</p>
+        <span class="anim__tag">Klasse <b>.a26</b></span>
+        <span class="anim__tag">Idee für: <b>Seitenüberschriften</b></span>
+      </div>
+    </article>
+    <!-- ===== 27 · Klangwelle ===== -->
+    <article class="anim" id="a27">
+      <div class="anim__num">27</div>
+      <div class="anim__stage">
+        <svg class="a27" viewBox="0 0 400 140" preserveAspectRatio="none" aria-hidden="true"><path class="w1" d="M0 70 Q50 20 100 70 Q150 120 200 70 Q250 20 300 70 Q350 120 400 70 Q450 20 500 70 Q550 120 600 70 Q650 20 700 70 Q750 120 800 70" stroke="#E3A15A" stroke-width="3" fill="none"/><path class="w2" d="M0 70 Q50 45 100 70 Q150 95 200 70 Q250 45 300 70 Q350 95 400 70 Q450 45 500 70 Q550 95 600 70 Q650 45 700 70 Q750 95 800 70" stroke="#F2C08A" stroke-width="2" fill="none" opacity=".45"/></svg>
+      </div>
+      <div class="anim__info">
+        <h2>Klangwelle</h2>
+        <p>Zwei Wellen laufen gegeneinander, wie ein Audiosignal.</p>
+        <span class="anim__tag">Klasse <b>.a27</b></span>
+        <span class="anim__tag">Idee für: <b>Sprach-/Audio-Funktionen</b></span>
+      </div>
+    </article>
+    <!-- ===== 28 · Barlicht ===== -->
+    <article class="anim" id="a28">
+      <div class="anim__num">28</div>
+      <div class="anim__stage">
+        <div class="a28"><span>Nachtmodus</span></div>
+      </div>
+      <div class="anim__info">
+        <h2>Barlicht</h2>
+        <p>Ein warmer Lichtschein flackert unruhig hinter dem Text, wie Kerzen an der Bar.</p>
+        <span class="anim__tag">Klasse <b>.a28</b></span>
+        <span class="anim__tag">Idee für: <b>Abend-Begrüßung, Hintergrund</b></span>
+      </div>
+    </article>
+    <!-- ===== 29 · Fortschrittsring ===== -->
+    <article class="anim" id="a29">
+      <div class="anim__num">29</div>
+      <div class="anim__stage">
+        <div class="a29" aria-hidden="true"><svg viewBox="0 0 150 150"><circle cx="75" cy="75" r="66" fill="none" stroke="#2A1F2C" stroke-width="10"/><circle class="bar" cx="75" cy="75" r="66" fill="none" stroke="#E3A15A" stroke-width="10" stroke-linecap="round" pathLength="100"/></svg><b></b></div>
+      </div>
+      <div class="anim__info">
+        <h2>Fortschrittsring</h2>
+        <p>Ein Ring füllt sich, die Zahl in der Mitte zählt mit hoch.</p>
+        <span class="anim__tag">Klasse <b>.a29</b></span>
+        <span class="anim__tag">Idee für: <b>Projekt-Fortschritt, Uploads</b></span>
+      </div>
+    </article>
+    <!-- ===== 30 · Ringe im Hintergrund ===== -->
+    <article class="anim" id="a30">
+      <div class="anim__num">30</div>
+      <div class="anim__stage">
+        <div class="a30" aria-hidden="true"><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/></svg><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/></svg></div><div class="a30__text"><h3>Guten Abend.</h3><p>Ruhiger Tag. Zwei Dinge warten noch auf dich.</p></div>
+      </div>
+      <div class="anim__info">
+        <h2>Ringe im Hintergrund</h2>
+        <p>Große, blasse Jahresringe drehen und treiben ganz langsam hinter dem Inhalt.</p>
+        <span class="anim__tag">Klasse <b>.a30</b></span>
+        <span class="anim__tag">Idee für: <b>Seitenhintergrund, große Karten</b></span>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" style="padding:28px;text-align:center;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border)">Grove · Animations-Katalog · v0.3</footer>
+
+  <!-- ================= PADDY-ZONE (Claude ändert hier nichts) =================
+       Hier bindest du deine Scripte ein, z. B.:
+       <script src="scripts/main.js" defer></script>
+  ============================================================================ -->
+
+  <!-- ================= ENDE PADDY-ZONE ================= -->
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grove – Größen & Hell/Dunkel</title>
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<!-- Beispiel-Entwurf aus dem Grove-Design (Claude). Inhalte sind Platzhalter. -->
+<style>
+body{margin:0;background:#120D15;min-height:100vh}
+a{color:#E3A15A}a:hover{color:#F2C08A}
+</style>
+</head>
+<body>
+<div style="width: 860px; height: 640px; display: flex; flex-direction: column">
+<div style="height: 320px; background: #120D15; display: flex; align-items: flex-end; justify-content: center; gap: 48px; padding: 0 64px 48px 64px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 180px; height: 180px; border-radius: 40px; background: #1C1420; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="130" height="130" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12"></circle>
+<circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"></circle>
+<circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"></circle>
+<circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"></circle>
+<line x1="300" y1="210" x2="440" y2="72" stroke="#1C1420" stroke-width="14" stroke-linecap="round"></line>
+<circle cx="242" cy="267" r="64" fill="#E3A15A"></circle>
+<path d="M242 300 L242 262" stroke="#1C1420" stroke-width="7" stroke-linecap="round" fill="none"></path>
+<path d="M242 270 C224 270 214 256 216 240 C232 240 242 252 242 270 Z" fill="#1C1420"></path>
+<path d="M242 262 C258 260 270 246 270 230 C254 230 242 242 242 262 Z" fill="#1C1420"></path>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #B9A58F">180 · App</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 96px; height: 96px; border-radius: 21px; background: #1C1420; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="70" height="70" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12"></circle>
+<circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"></circle>
+<circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"></circle>
+<circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"></circle>
+<line x1="300" y1="210" x2="440" y2="72" stroke="#1C1420" stroke-width="14" stroke-linecap="round"></line>
+<circle cx="242" cy="267" r="64" fill="#E3A15A"></circle>
+<path d="M242 300 L242 262" stroke="#1C1420" stroke-width="7" stroke-linecap="round" fill="none"></path>
+<path d="M242 270 C224 270 214 256 216 240 C232 240 242 252 242 270 Z" fill="#1C1420"></path>
+<path d="M242 262 C258 260 270 246 270 230 C254 230 242 242 242 262 Z" fill="#1C1420"></path>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #B9A58F">96</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 48px; height: 48px; border-radius: 11px; background: #1C1420; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="34" height="34" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12"></circle>
+<circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"></circle>
+<circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"></circle>
+<circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"></circle>
+<line x1="300" y1="210" x2="440" y2="72" stroke="#1C1420" stroke-width="14" stroke-linecap="round"></line>
+<circle cx="242" cy="267" r="64" fill="#E3A15A"></circle>
+<path d="M242 300 L242 262" stroke="#1C1420" stroke-width="7" stroke-linecap="round" fill="none"></path>
+<path d="M242 270 C224 270 214 256 216 240 C232 240 242 252 242 270 Z" fill="#1C1420"></path>
+<path d="M242 262 C258 260 270 246 270 230 C254 230 242 242 242 262 Z" fill="#1C1420"></path>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #B9A58F">48</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 32px; height: 32px; border-radius: 7px; background: #1C1420; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="24" height="24" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="212" fill="none" stroke="#E3A15A" stroke-width="44"></circle>
+<circle cx="248" cy="262" r="128" fill="none" stroke="#E3A15A" stroke-width="36"></circle>
+<line x1="310" y1="200" x2="452" y2="58" stroke="#1C1420" stroke-width="44" stroke-linecap="round"></line>
+<circle cx="244" cy="266" r="56" fill="#E3A15A"></circle>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #B9A58F">32 · Favicon</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 16px; height: 16px; border-radius: 4px; background: #1C1420; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="12" height="12" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="212" fill="none" stroke="#E3A15A" stroke-width="44"></circle>
+<circle cx="248" cy="262" r="128" fill="none" stroke="#E3A15A" stroke-width="36"></circle>
+<line x1="310" y1="200" x2="452" y2="58" stroke="#1C1420" stroke-width="44" stroke-linecap="round"></line>
+<circle cx="244" cy="266" r="56" fill="#E3A15A"></circle>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #B9A58F">16</div>
+</div>
+</div>
+<div style="height: 320px; background: #EFE6D6; display: flex; align-items: flex-end; justify-content: center; gap: 48px; padding: 0 64px 48px 64px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 180px; height: 180px; border-radius: 40px; background: #9A5520; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="130" height="130" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="236" fill="none" stroke="#F3EBDD" stroke-width="12"></circle>
+<circle cx="251" cy="259" r="192" fill="none" stroke="#F3EBDD" stroke-width="9" opacity="0.85"></circle>
+<circle cx="247" cy="262" r="150" fill="none" stroke="#F3EBDD" stroke-width="9" opacity="0.7"></circle>
+<circle cx="244" cy="265" r="112" fill="none" stroke="#F3EBDD" stroke-width="8" opacity="0.85"></circle>
+<line x1="300" y1="210" x2="440" y2="72" stroke="#9A5520" stroke-width="14" stroke-linecap="round"></line>
+<circle cx="242" cy="267" r="64" fill="#F3EBDD"></circle>
+<path d="M242 300 L242 262" stroke="#9A5520" stroke-width="7" stroke-linecap="round" fill="none"></path>
+<path d="M242 270 C224 270 214 256 216 240 C232 240 242 252 242 270 Z" fill="#9A5520"></path>
+<path d="M242 262 C258 260 270 246 270 230 C254 230 242 242 242 262 Z" fill="#9A5520"></path>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #6B5640">180 · App</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 96px; height: 96px; border-radius: 21px; background: #9A5520; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="70" height="70" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="236" fill="none" stroke="#F3EBDD" stroke-width="12"></circle>
+<circle cx="251" cy="259" r="192" fill="none" stroke="#F3EBDD" stroke-width="9" opacity="0.85"></circle>
+<circle cx="247" cy="262" r="150" fill="none" stroke="#F3EBDD" stroke-width="9" opacity="0.7"></circle>
+<circle cx="244" cy="265" r="112" fill="none" stroke="#F3EBDD" stroke-width="8" opacity="0.85"></circle>
+<line x1="300" y1="210" x2="440" y2="72" stroke="#9A5520" stroke-width="14" stroke-linecap="round"></line>
+<circle cx="242" cy="267" r="64" fill="#F3EBDD"></circle>
+<path d="M242 300 L242 262" stroke="#9A5520" stroke-width="7" stroke-linecap="round" fill="none"></path>
+<path d="M242 270 C224 270 214 256 216 240 C232 240 242 252 242 270 Z" fill="#9A5520"></path>
+<path d="M242 262 C258 260 270 246 270 230 C254 230 242 242 242 262 Z" fill="#9A5520"></path>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #6B5640">96</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 48px; height: 48px; border-radius: 11px; background: #9A5520; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="34" height="34" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="236" fill="none" stroke="#F3EBDD" stroke-width="12"></circle>
+<circle cx="251" cy="259" r="192" fill="none" stroke="#F3EBDD" stroke-width="9" opacity="0.85"></circle>
+<circle cx="247" cy="262" r="150" fill="none" stroke="#F3EBDD" stroke-width="9" opacity="0.7"></circle>
+<circle cx="244" cy="265" r="112" fill="none" stroke="#F3EBDD" stroke-width="8" opacity="0.85"></circle>
+<line x1="300" y1="210" x2="440" y2="72" stroke="#9A5520" stroke-width="14" stroke-linecap="round"></line>
+<circle cx="242" cy="267" r="64" fill="#F3EBDD"></circle>
+<path d="M242 300 L242 262" stroke="#9A5520" stroke-width="7" stroke-linecap="round" fill="none"></path>
+<path d="M242 270 C224 270 214 256 216 240 C232 240 242 252 242 270 Z" fill="#9A5520"></path>
+<path d="M242 262 C258 260 270 246 270 230 C254 230 242 242 242 262 Z" fill="#9A5520"></path>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #6B5640">48</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 32px; height: 32px; border-radius: 7px; background: #9A5520; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="24" height="24" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="212" fill="none" stroke="#F3EBDD" stroke-width="44"></circle>
+<circle cx="248" cy="262" r="128" fill="none" stroke="#F3EBDD" stroke-width="36"></circle>
+<line x1="310" y1="200" x2="452" y2="58" stroke="#9A5520" stroke-width="44" stroke-linecap="round"></line>
+<circle cx="244" cy="266" r="56" fill="#F3EBDD"></circle>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #6B5640">32 · Favicon</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<div style="width: 16px; height: 16px; border-radius: 4px; background: #9A5520; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(227,161,90,0.18)">
+<svg width="12" height="12" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="212" fill="none" stroke="#F3EBDD" stroke-width="44"></circle>
+<circle cx="248" cy="262" r="128" fill="none" stroke="#F3EBDD" stroke-width="36"></circle>
+<line x1="310" y1="200" x2="452" y2="58" stroke="#9A5520" stroke-width="44" stroke-linecap="round"></line>
+<circle cx="244" cy="266" r="56" fill="#F3EBDD"></circle>
+</svg>
+</div>
+<div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; color: #6B5640">16</div>
+</div>
+</div>
+</div>
+</body>
+</html>

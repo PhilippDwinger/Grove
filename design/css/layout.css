@@ -8,7 +8,7 @@
   position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px var(--gap);
-  background: rgba(26, 15, 28, .7);
+  background: rgba(22, 15, 25, .8);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -27,7 +27,7 @@
   padding: 60px var(--gap);
   text-align: center;
 }
-.hero__logo { width: clamp(150px, 26vw, 230px); height: auto; filter: drop-shadow(0 18px 40px rgba(232,163,61,.18)); }
+.hero__logo { border-radius: 22%; width: clamp(150px, 26vw, 230px); height: auto; filter: drop-shadow(0 18px 40px rgba(227,161,90,.16)); }
 .hero__tagline { max-width: 34ch; color: var(--muted); font-size: clamp(1rem, 2vw, 1.15rem); }
 
 /* ---------- Projekte ---------- */
@@ -50,11 +50,11 @@
   border-radius: var(--radius);
   transition: transform .35s ease, border-color .35s ease, background .35s ease;
 }
-.card:hover { transform: translateY(-4px); border-color: rgba(232,163,61,.45); background: var(--aubergine-700); }
+.card:hover { transform: translateY(-4px); border-color: rgba(227,161,90,.45); background: var(--aubergine-700); }
 .card h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; margin: 6px 0 8px; }
 .card p  { color: var(--muted); font-size: .97rem; }
 
-.card--featured { grid-column: span 2; border-color: rgba(232,163,61,.4); }
+.card--featured { grid-column: span 2; border-color: rgba(227,161,90,.4); }
 @media (max-width: 620px) { .card--featured { grid-column: span 1; } }
 
 .card--empty {

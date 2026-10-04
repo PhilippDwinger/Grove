@@ -41,9 +41,12 @@
   84%,100% { max-width: 0;     opacity: 0; transform: translateY(0); }
 }
 
-/* ---------- Platte dreht sich ---------- */
-.vinyl-spin { animation: vinyl-spin 14s linear infinite; }
-@keyframes vinyl-spin { to { transform: rotate(360deg); } }
+/* ---------- Logo atmet (leichtes Pulsieren im Takt) ---------- */
+.logo-breathe { animation: logo-breathe 4.5s ease-in-out infinite; }
+@keyframes logo-breathe {
+  0%, 100% { transform: scale(1);     filter: drop-shadow(0 18px 40px rgba(227,161,90,.12)); }
+  50%      { transform: scale(1.035); filter: drop-shadow(0 18px 48px rgba(227,161,90,.30)); }
+}
 
 /* ---------- Equalizer ---------- */
 .eq { display: flex; align-items: flex-end; gap: 5px; height: 26px; margin-top: 6px; }
@@ -66,8 +69,8 @@
 /* ---------- Status-Punkt pulsiert ---------- */
 .status::before { animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(232,163,61,.6); }
-  50%      { box-shadow: 0 0 0 6px rgba(232,163,61,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(227,161,90,.6); }
+  50%      { box-shadow: 0 0 0 6px rgba(227,161,90,0); }
 }
 
 /* ---------- Sanftes Einblenden ---------- */

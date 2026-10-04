@@ -1,6 +1,7 @@
 # Geheimnisse (Passwörter, API-Keys) – NIE hochladen
 .env
 .env.*
+!.env.example
 
 # Node / Python (für später im Backend)
 node_modules/
@@ -16,3 +17,6 @@ CLAUDE.md
 # System-Müll
 Thumbs.db
 .DS_Store
+
+# Build-Ergebnis von Vite
+dist/

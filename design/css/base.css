@@ -4,20 +4,32 @@
    ========================================================== */
 
 :root {
-  /* Farben */
-  --aubergine-900: #1a0f1c;   /* tiefster Hintergrund */
-  --aubergine-800: #24152a;   /* Karten, Flächen */
-  --aubergine-700: #321d39;   /* Hover, Lichtschein */
-  --amber-500:     #e8a33d;   /* Hauptakzent */
-  --amber-400:     #f2bb5c;
-  --amber-300:     #f7d08a;
-  --cream:         #f4e9d8;   /* Text */
-  --muted:         #b4a2b3;   /* Nebentext */
-  --line:          rgba(232, 163, 61, .18);
+  /* Farben – exakt aus dem Grove-Design ("Lichtung") */
+  --ground:        #1C1420;   /* Grundfarbe, auch Logo-Hintergrund */
+  --ground-deep:   #160F19;   /* Seitenleiste, Kopfzeile */
+  --surface:       #241A27;   /* Karten */
+  --surface-hi:    #2A1F2C;   /* hervorgehobene Karte, aktiver Menüpunkt */
+  --border:        #2E2231;
+  --border-hi:     #3A2C3D;
+  --amber:         #E3A15A;   /* Hauptakzent (Logo) */
+  --amber-light:   #F2C08A;   /* Hover, aktiver Text */
+  --text:          #EFE6D6;
+  --text-soft:     #CDBFAE;
+  --muted:         #A8957F;
+  --line:          rgba(227, 161, 90, .18);
+
+  /* alte Namen → neue Farben (damit layout.css weiter passt) */
+  --aubergine-900: var(--ground);
+  --aubergine-800: var(--surface);
+  --aubergine-700: var(--surface-hi);
+  --amber-500:     var(--amber);
+  --amber-400:     var(--amber-light);
+  --amber-300:     var(--amber-light);
+  --cream:         var(--text);
 
   /* Schriften */
   --font-display: 'Fraunces', Georgia, serif;
-  --font-body:    'Manrope', system-ui, sans-serif;
+  --font-body:    'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
 
   /* Abstände & Radien */
   --gap: clamp(16px, 3vw, 32px);
