@@ -13,6 +13,7 @@ __pycache__/
 .claude/settings.local.json
 .vscode/
 CLAUDE.md
+anleitungen/
 
 # System-Müll
 Thumbs.db
