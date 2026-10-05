@@ -1,7 +1,6 @@
 # Geheimnisse (Passwörter, API-Keys) – NIE hochladen
 .env
 .env.*
-!.env.example
 
 # Node / Python (für später im Backend)
 node_modules/
@@ -9,15 +8,21 @@ __pycache__/
 *.pyc
 .venv/
 
-# Persönliche Einstellungen
-.claude/settings.local.json
-.vscode/
+# Claude / KI-Arbeitsdateien (bleiben nur lokal)
+.claude/
+Claude outputs/
 CLAUDE.md
 anleitungen/
+
+# Persönliche Einstellungen
+.vscode/
 
 # System-Müll
 Thumbs.db
 .DS_Store
+desktop.ini
+*.log
+npm-debug.log*
 
 # Build-Ergebnis von Vite
 dist/
