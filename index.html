@@ -13,15 +13,21 @@
 
   <!-- Design (Claude) -->
   <link rel="stylesheet" href="design/css/base.css">
-  <link rel="stylesheet" href="design/css/layout.css">
   <link rel="stylesheet" href="design/css/grove-animationen.css">
+  <link rel="stylesheet" href="design/css/auth.css">
   <link rel="stylesheet" href="design/css/animations.css">
 </head>
-<body>
-  <script type="module">
-    import { supabase } from './scripts/supabase.js'
-    console.log('Verbunden?', supabase)
-  </script>
+<body class="geschuetzt">
 
+  <!-- Vorläufige Startseite – wird ersetzt, sobald du Inhalte baust -->
+  <main class="home-hero">
+    <img class="a02" src="design/img/grove-icon.svg" alt="Grove Logo">
+    <h1 class="a01" aria-label="Grove"><span aria-hidden="true">Gr</span><span class="o" aria-hidden="true">o</span><span class="o x" style="--i:1" aria-hidden="true">o</span><span class="o x" style="--i:2" aria-hidden="true">o</span><span class="o x" style="--i:3" aria-hidden="true">o</span><span class="o x" style="--i:4" aria-hidden="true">o</span><span aria-hidden="true">ve</span></h1>
+    <p>Du bist drin. Hier wächst bald deine digitale Welt.</p>
+  </main>
+
+  <!-- ================= PADDY-ZONE (Claude ändert hier nichts) ================= -->
+  <script type="module" src="/scripts/schutz.js"></script>
+  <!-- ================= ENDE PADDY-ZONE ================= -->
 </body>
 </html>
