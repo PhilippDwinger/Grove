@@ -4,7 +4,7 @@
 //
 // Neuen Dienst hinzufügen:
 //   1. Hier einen Eintrag ergänzen
-//   2. Seite anlegen: src/dienste/<id>/index.html  (Vorlage: src/dienste/echo/index.html)
+//   2. Seite anlegen: src/dienste/<id>/index.html  (Vorlage: src/dienste/mail/index.html)
 //   3. Bild ablegen:  public/bilder/dienste/<id>.svg
 //
 // status:  "aktiv"    → läuft, Karte ist klickbar
@@ -14,12 +14,12 @@
 
 export const dienste = [
     {
-        id: "echo",
-        name: "Echo",
-        art: "Mail",
-        beschreibung: "Deine Nachrichten. Du rufst in den Wald – und die Antwort kommt zurück.",
-        pfad: "/dienste/echo/",
-        bild: "/bilder/dienste/echo.svg",
+        id: "mail",
+        name: "Grove Mail",
+        art: "E-Mail",
+        beschreibung: "Dein Postfach mit eigener Grove-Adresse – schreiben, empfangen, sortieren.",
+        pfad: "/dienste/mail/",
+        bild: "/bilder/dienste/mail.svg",
         status: "vorschau",
     },
     {

@@ -1,59 +1,59 @@
 /* ==========================================================
-   Grove · Echo (Mail) – Vorschau-Oberfläche  (Claude)
+   Grove Mail – Oberfläche
    ========================================================== */
 
-.echo { height: calc(100vh - 65px); display: grid; grid-template-rows: auto 1fr; }
+.mail { height: calc(100vh - 65px); display: grid; grid-template-rows: auto 1fr; }
 
-.echo-hinweis {
+.mail-hinweis {
   display: flex; align-items: center; justify-content: center; gap: 10px;
   padding: 9px 16px;
   background: rgba(227,161,90,.08); border-bottom: 1px solid rgba(227,161,90,.22);
   color: var(--amber-light); font-size: .88rem; text-align: center;
 }
-.echo-hinweis svg { width: 16px; height: 16px; flex: none; }
+.mail-hinweis svg { width: 16px; height: 16px; flex: none; }
 
-.echo-raum {
+.mail-raum {
   display: grid;
   grid-template-columns: 230px minmax(280px, 380px) 1fr;
   min-height: 0;
 }
 
 /* ---------- Ordner ---------- */
-.echo-ordner {
+.mail-ordner {
   padding: 20px 14px; border-right: 1px solid var(--border);
   display: flex; flex-direction: column; gap: 4px;
   background: var(--ground-deep);
 }
-.echo-neu {
+.mail-neu {
   height: 46px; margin-bottom: 14px; border: 0; border-radius: 14px; cursor: pointer;
   font: inherit; font-weight: 600; color: var(--ground); background: var(--amber);
   display: flex; align-items: center; justify-content: center; gap: 8px;
   transition: background .2s;
 }
-.echo-neu:hover { background: var(--amber-light); }
-.echo-neu svg { width: 18px; height: 18px; }
+.mail-neu:hover { background: var(--amber-light); }
+.mail-neu svg { width: 18px; height: 18px; }
 
-.echo-ordner a {
+.mail-ordner a {
   display: flex; align-items: center; gap: 12px;
   padding: 10px 12px; border-radius: 10px;
   color: var(--text-soft); font-size: .94rem;
   transition: background .2s, color .2s;
 }
-.echo-ordner a svg { width: 18px; height: 18px; flex: none; opacity: .85; }
-.echo-ordner a:hover { background: var(--surface); color: var(--text); }
-.echo-ordner a[aria-current="page"] { background: var(--surface-hi); color: var(--amber-light); font-weight: 600; }
-.echo-ordner .zahl { margin-left: auto; font-size: .78rem; font-weight: 600; color: var(--ground); background: var(--amber); border-radius: 999px; padding: 1px 8px; }
+.mail-ordner a svg { width: 18px; height: 18px; flex: none; opacity: .85; }
+.mail-ordner a:hover { background: var(--surface); color: var(--text); }
+.mail-ordner a[aria-current="page"] { background: var(--surface-hi); color: var(--amber-light); font-weight: 600; }
+.mail-ordner .zahl { margin-left: auto; font-size: .78rem; font-weight: 600; color: var(--ground); background: var(--amber); border-radius: 999px; padding: 1px 8px; }
 
 /* ---------- Liste ---------- */
-.echo-liste { border-right: 1px solid var(--border); overflow-y: auto; }
-.echo-liste__kopf { padding: 18px 18px 12px; display: flex; flex-direction: column; gap: 12px; position: sticky; top: 0; background: var(--ground); z-index: 1; }
-.echo-liste__kopf h1 { font-family: var(--font-display); font-weight: 400; font-size: 1.6rem; }
-.echo-suche {
+.mail-liste { border-right: 1px solid var(--border); overflow-y: auto; }
+.mail-liste__kopf { padding: 18px 18px 12px; display: flex; flex-direction: column; gap: 12px; position: sticky; top: 0; background: var(--ground); z-index: 1; }
+.mail-liste__kopf h1 { font-family: var(--font-display); font-weight: 400; font-size: 1.6rem; }
+.mail-suche {
   height: 42px; padding: 0 14px; border-radius: 12px;
   font: inherit; font-size: .93rem; color: var(--text);
   background: var(--surface); border: 1px solid var(--border-hi);
 }
-.echo-suche:focus { outline: none; border-color: var(--amber); }
+.mail-suche:focus { outline: none; border-color: var(--amber); }
 
 .post { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 14px 18px; border-top: 1px solid var(--border); cursor: pointer; transition: background .2s; }
 .post:hover { background: var(--surface); }
@@ -69,7 +69,7 @@
 .post--neu .post__von::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--amber); margin-right: 7px; vertical-align: middle; }
 
 /* ---------- Lesebereich ---------- */
-.echo-lesen { overflow-y: auto; padding: 36px clamp(20px, 4vw, 56px); }
+.mail-lesen { overflow-y: auto; padding: 36px clamp(20px, 4vw, 56px); }
 .brief { max-width: 680px; display: flex; flex-direction: column; gap: 22px; }
 .brief__betreff { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1.15; }
 .brief__meta { display: flex; align-items: center; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
@@ -84,17 +84,17 @@
 
 /* ---------- Kleine Bildschirme ---------- */
 @media (max-width: 980px) {
-  .echo-raum { grid-template-columns: 76px minmax(260px, 340px) 1fr; }
-  .echo-ordner a span:not(.zahl), .echo-neu span { display: none; }
-  .echo-ordner a { justify-content: center; }
-  .echo-ordner .zahl { display: none; }
+  .mail-raum { grid-template-columns: 76px minmax(260px, 340px) 1fr; }
+  .mail-ordner a span:not(.zahl), .mail-neu span { display: none; }
+  .mail-ordner a { justify-content: center; }
+  .mail-ordner .zahl { display: none; }
 }
 @media (max-width: 720px) {
-  .echo { height: auto; }
-  .echo-raum { grid-template-columns: 1fr; }
-  .echo-ordner { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--border); padding: 10px; }
-  .echo-neu { margin: 0; padding: 0 14px; flex: none; }
-  .echo-ordner a { flex: none; }
-  .echo-liste { border-right: 0; }
-  .echo-lesen { border-top: 1px solid var(--border); }
+  .mail { height: auto; }
+  .mail-raum { grid-template-columns: 1fr; }
+  .mail-ordner { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--border); padding: 10px; }
+  .mail-neu { margin: 0; padding: 0 14px; flex: none; }
+  .mail-ordner a { flex: none; }
+  .mail-liste { border-right: 0; }
+  .mail-lesen { border-top: 1px solid var(--border); }
 }
