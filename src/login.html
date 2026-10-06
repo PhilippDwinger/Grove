@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grove – Einloggen</title>
+  <link rel="icon" href="/bilder/marke/favicon.svg" type="image/svg+xml">
+
+  <!-- Schriften -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Design (Claude) -->
+  <link rel="stylesheet" href="/css/basis.css">
+  <link rel="stylesheet" href="/css/animationen.css">
+  <link rel="stylesheet" href="/css/seiten/konto.css">
+</head>
+<body>
+
+  <main class="auth-page">
+    <!-- Hintergrund: Animation 30 (Ringe) + 11 (Glühwürmchen) -->
+    <div class="auth-bg" aria-hidden="true">
+      <div class="a30"><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/></svg><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/></svg></div>
+      <div class="a11"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+
+    <section class="auth-card">
+      <header class="auth-head">
+        <img class="a02" src="/bilder/marke/grove-icon.svg" alt="Grove Logo">
+        <h1>Willkommen im <em>Grove</em></h1>
+        <p>Schön, dass du da bist. Melde dich an.</p>
+      </header>
+
+      <!-- IDs gehören zu scripts/login.js – nicht umbenennen -->
+      <form id="login-form" class="auth-form" novalidate>
+        <div class="field">
+          <label for="login-email">E-Mail</label>
+          <input id="login-email" type="email" name="email" autocomplete="email" placeholder="du@beispiel.de" required>
+          <p class="field-hint">Bitte gib eine gültige E-Mail-Adresse ein.</p>
+        </div>
+        <div class="field">
+          <label for="login-passwort">Passwort</label>
+          <input id="login-passwort" type="password" name="password" autocomplete="current-password" placeholder="••••••••" required>
+          <p class="field-hint">Bitte gib dein Passwort ein.</p>
+        </div>
+
+        <p id="auth-meldung" class="auth-message" role="alert" aria-live="polite"></p>
+
+        <button class="auth-button" type="submit">Einloggen</button>
+      </form>
+
+      <p class="auth-switch">Noch kein Konto? <a href="/registrieren.html">Registrieren</a></p>
+
+      <p class="auth-foot">Grove · deine digitale Welt</p>
+    </section>
+  </main>
+
+  <!-- ================= SCRIPTE ================= -->
+  <script type="module" src="/js/seiten/login.js"></script>
+  <!-- ================= ENDE SCRIPTE ================= -->
+</body>
+</html>

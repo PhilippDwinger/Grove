@@ -1,21 +1,20 @@
 # Grove · Animations-Bibliothek
 
 30 nummerierte Animationen im Grove-Stil (Wald + Jazz). Reines CSS, kein JavaScript.
-Live ansehen: `design/beispiele/animationen-katalog.html` – oben Nummern zum Springen.
+Live ansehen: `docs/design/animationen-katalog.html` – oben Nummern zum Springen.
 
 ## So benutzt du eine Animation
 
 1. Im `<head>` einbinden (Reihenfolge wichtig):
    ```html
-   <link rel="stylesheet" href="design/css/base.css">
-   <link rel="stylesheet" href="design/css/grove-animationen.css">
-   <link rel="stylesheet" href="design/css/animations.css">  <!-- respektiert „Animationen reduzieren“ -->
+   <link rel="stylesheet" href="/css/basis.css">
+   <link rel="stylesheet" href="/css/animationen.css">
    ```
 2. Das HTML-Snippet der gewünschten Nummer kopieren und einfügen.
 3. Größe anpassen: Die meisten Snippets haben feste Größen (`width`/`height` in der CSS-Klasse) –
    für andere Größen eine eigene Klasse ergänzen, nicht die Bibliothek umbauen.
 
-Pfade in den Snippets (`design/img/...`) gelten für Seiten im Grove-Hauptordner.
+Pfade in den Snippets (`/bilder/marke/...`) gelten für Seiten im Grove-Hauptordner.
 Für Seiten in Unterordnern (z. B. `design/beispiele/`) entsprechend `../` voranstellen.
 
 Hinweis zu Containern: Die Animationen 11, 12, 13, 22, 30 füllen ihren Eltern-Container
@@ -62,7 +61,7 @@ Hinweis zu Containern: Die Animationen 11, 12, 13, 22, 30 füllen ihren Eltern-C
 
 „Grove“ klappt zu „Groooooove“ auf, die o’s wippen im Takt und klappen wieder ein.
 
-- **Klasse:** `.a01` (CSS in `design/css/grove-animationen.css`, Abschnitt 01)
+- **Klasse:** `.a01` (CSS in `/css/animationen.css`, Abschnitt 01)
 - **Idee für:** Startseite, Hero
 
 ```html
@@ -75,11 +74,11 @@ Hinweis zu Containern: Die Animationen 11, 12, 13, 22, 30 füllen ihren Eltern-C
 
 Das App-Icon pulsiert langsam und leuchtet dabei warm auf.
 
-- **Klasse:** `.a02` (CSS in `design/css/grove-animationen.css`, Abschnitt 02)
+- **Klasse:** `.a02` (CSS in `/css/animationen.css`, Abschnitt 02)
 - **Idee für:** Hero, Ladebildschirm
 
 ```html
-<img class="a02" src="design/img/grove-icon.svg" alt="">
+<img class="a02" src="/bilder/marke/grove-icon.svg" alt="">
 ```
 
 ---
@@ -88,7 +87,7 @@ Das App-Icon pulsiert langsam und leuchtet dabei warm auf.
 
 Das Logo zeichnet sich Ring für Ring, dann springt der Keimling in die Mitte.
 
-- **Klasse:** `.a03` (CSS in `design/css/grove-animationen.css`, Abschnitt 03)
+- **Klasse:** `.a03` (CSS in `/css/animationen.css`, Abschnitt 03)
 - **Idee für:** Intro, Seitenstart
 
 ```html
@@ -101,7 +100,7 @@ Das Logo zeichnet sich Ring für Ring, dann springt der Keimling in die Mitte.
 
 Nur die Ringe drehen sich wie eine Schallplatte, der Keimling bleibt aufrecht stehen.
 
-- **Klasse:** `.a04` (CSS in `design/css/grove-animationen.css`, Abschnitt 04)
+- **Klasse:** `.a04` (CSS in `/css/animationen.css`, Abschnitt 04)
 - **Idee für:** Musik läuft, „aktiv“-Zustand
 
 ```html
@@ -114,7 +113,7 @@ Nur die Ringe drehen sich wie eine Schallplatte, der Keimling bleibt aufrecht st
 
 Der Tonarm schwenkt auf die Platte, sie dreht drei Runden, der Arm fährt zurück.
 
-- **Klasse:** `.a05` (CSS in `design/css/grove-animationen.css`, Abschnitt 05)
+- **Klasse:** `.a05` (CSS in `/css/animationen.css`, Abschnitt 05)
 - **Idee für:** Bridge startet, Verbinden
 
 ```html
@@ -133,7 +132,7 @@ Der Tonarm schwenkt auf die Platte, sie dreht drei Runden, der Arm fährt zurüc
 
 Zwölf Balken hüpfen in unterschiedlichen Tempi.
 
-- **Klasse:** `.a06` (CSS in `design/css/grove-animationen.css`, Abschnitt 06)
+- **Klasse:** `.a06` (CSS in `/css/animationen.css`, Abschnitt 06)
 - **Idee für:** Status „läuft“, Musik
 
 ```html
@@ -146,7 +145,7 @@ Zwölf Balken hüpfen in unterschiedlichen Tempi.
 
 Ein Stiel wächst aus der Erde, zwei Blätter entfalten sich und wiegen sanft.
 
-- **Klasse:** `.a07` (CSS in `design/css/grove-animationen.css`, Abschnitt 07)
+- **Klasse:** `.a07` (CSS in `/css/animationen.css`, Abschnitt 07)
 - **Idee für:** Neues Projekt angelegt
 
 ```html
@@ -164,11 +163,11 @@ Ein Stiel wächst aus der Erde, zwei Blätter entfalten sich und wiegen sanft.
 
 Ringe laufen vom Logo nach außen, wie Schall oder ein Funksignal.
 
-- **Klasse:** `.a08` (CSS in `design/css/grove-animationen.css`, Abschnitt 08)
+- **Klasse:** `.a08` (CSS in `/css/animationen.css`, Abschnitt 08)
 - **Idee für:** Bridge sendet, Gerät online
 
 ```html
-<div class="a08" aria-hidden="true"><i></i><i></i><i></i><img src="design/img/grove-logo-klein.svg" alt=""></div>
+<div class="a08" aria-hidden="true"><i></i><i></i><i></i><img src="/bilder/marke/grove-logo-klein.svg" alt=""></div>
 ```
 
 ---
@@ -177,7 +176,7 @@ Ringe laufen vom Logo nach außen, wie Schall oder ein Funksignal.
 
 Die Buchstaben von „Grove“ hüpfen nacheinander wie eine Welle.
 
-- **Klasse:** `.a09` (CSS in `design/css/grove-animationen.css`, Abschnitt 09)
+- **Klasse:** `.a09` (CSS in `/css/animationen.css`, Abschnitt 09)
 - **Idee für:** Überschriften, Hover
 
 ```html
@@ -190,7 +189,7 @@ Die Buchstaben von „Grove“ hüpfen nacheinander wie eine Welle.
 
 Ein Becken schlägt den typischen Jazz-Rhythmus: ding · ding-a · ding · ding-a.
 
-- **Klasse:** `.a10` (CSS in `design/css/grove-animationen.css`, Abschnitt 10)
+- **Klasse:** `.a10` (CSS in `/css/animationen.css`, Abschnitt 10)
 - **Idee für:** Taktgeber für andere Animationen
 
 ```html
@@ -203,7 +202,7 @@ Ein Becken schlägt den typischen Jazz-Rhythmus: ding · ding-a · ding · ding-
 
 Warme Lichtpunkte schweben und blinken, wie abends auf einer Lichtung.
 
-- **Klasse:** `.a11` (CSS in `design/css/grove-animationen.css`, Abschnitt 11)
+- **Klasse:** `.a11` (CSS in `/css/animationen.css`, Abschnitt 11)
 - **Idee für:** Hintergrund, Nachtmodus
 
 ```html
@@ -216,7 +215,7 @@ Warme Lichtpunkte schweben und blinken, wie abends auf einer Lichtung.
 
 Kleine Noten steigen schwingend nach oben und lösen sich auf.
 
-- **Klasse:** `.a12` (CSS in `design/css/grove-animationen.css`, Abschnitt 12)
+- **Klasse:** `.a12` (CSS in `/css/animationen.css`, Abschnitt 12)
 - **Idee für:** Erfolg, „gespeichert“
 
 ```html
@@ -229,7 +228,7 @@ Kleine Noten steigen schwingend nach oben und lösen sich auf.
 
 Blätter segeln drehend von oben herab.
 
-- **Klasse:** `.a13` (CSS in `design/css/grove-animationen.css`, Abschnitt 13)
+- **Klasse:** `.a13` (CSS in `/css/animationen.css`, Abschnitt 13)
 - **Idee für:** Herbst-Stimmung, Löschen
 
 ```html
@@ -242,7 +241,7 @@ Blätter segeln drehend von oben herab.
 
 Ein Spotlight wandert über den Schriftzug wie auf einer Clubbühne.
 
-- **Klasse:** `.a14` (CSS in `design/css/grove-animationen.css`, Abschnitt 14)
+- **Klasse:** `.a14` (CSS in `/css/animationen.css`, Abschnitt 14)
 - **Idee für:** Hero-Überschrift
 
 ```html
@@ -255,7 +254,7 @@ Ein Spotlight wandert über den Schriftzug wie auf einer Clubbühne.
 
 Fahr mit der Maus drüber: Die Karte hebt sich, die Ringe drehen sich, der Pfeil rückt vor.
 
-- **Klasse:** `.a15` (CSS in `design/css/grove-animationen.css`, Abschnitt 15)
+- **Klasse:** `.a15` (CSS in `/css/animationen.css`, Abschnitt 15)
 - **Idee für:** Projekt-Karten
 
 ```html
@@ -268,7 +267,7 @@ Fahr mit der Maus drüber: Die Karte hebt sich, die Ringe drehen sich, der Pfeil
 
 Datenpakete wandern hin und her, das Ziel-Display blinkt beim Empfang.
 
-- **Klasse:** `.a16` (CSS in `design/css/grove-animationen.css`, Abschnitt 16)
+- **Klasse:** `.a16` (CSS in `/css/animationen.css`, Abschnitt 16)
 - **Idee für:** Bridge-Übersicht
 
 ```html
@@ -286,7 +285,7 @@ Datenpakete wandern hin und her, das Ziel-Display blinkt beim Empfang.
 
 Knoten tauchen auf und verbinden sich wie Wurzeln unter dem Waldboden.
 
-- **Klasse:** `.a17` (CSS in `design/css/grove-animationen.css`, Abschnitt 17)
+- **Klasse:** `.a17` (CSS in `/css/animationen.css`, Abschnitt 17)
 - **Idee für:** Geräte-Netzwerk, Bridge
 
 ```html
@@ -309,7 +308,7 @@ Knoten tauchen auf und verbinden sich wie Wurzeln unter dem Waldboden.
 
 „Guten Abend.“ tippt sich Buchstabe für Buchstabe, mit blinkendem Cursor.
 
-- **Klasse:** `.a18` (CSS in `design/css/grove-animationen.css`, Abschnitt 18)
+- **Klasse:** `.a18` (CSS in `/css/animationen.css`, Abschnitt 18)
 - **Idee für:** Begrüßung auf „Heute“
 
 ```html
@@ -322,7 +321,7 @@ Knoten tauchen auf und verbinden sich wie Wurzeln unter dem Waldboden.
 
 Ein Lichtschimmer läuft über den Schriftzug.
 
-- **Klasse:** `.a19` (CSS in `design/css/grove-animationen.css`, Abschnitt 19)
+- **Klasse:** `.a19` (CSS in `/css/animationen.css`, Abschnitt 19)
 - **Idee für:** Logo-Schriftzug, Buttons
 
 ```html
@@ -335,7 +334,7 @@ Ein Lichtschimmer läuft über den Schriftzug.
 
 Ein Pendel schwingt im Takt von 80 Schlägen pro Minute.
 
-- **Klasse:** `.a20` (CSS in `design/css/grove-animationen.css`, Abschnitt 20)
+- **Klasse:** `.a20` (CSS in `/css/animationen.css`, Abschnitt 20)
 - **Idee für:** Ladezustand, Timer
 
 ```html
@@ -352,7 +351,7 @@ Ein Pendel schwingt im Takt von 80 Schlägen pro Minute.
 
 Feine Rillen, ein Lichtreflex, das Label dreht mit 33⅓ Umdrehungen pro Minute.
 
-- **Klasse:** `.a21` (CSS in `design/css/grove-animationen.css`, Abschnitt 21)
+- **Klasse:** `.a21` (CSS in `/css/animationen.css`, Abschnitt 21)
 - **Idee für:** Musik-Bereich, Hain
 
 ```html
@@ -365,7 +364,7 @@ Feine Rillen, ein Lichtreflex, das Label dreht mit 33⅓ Umdrehungen pro Minute.
 
 Bäume schießen nacheinander aus dem Boden – ein kleiner Wald entsteht.
 
-- **Klasse:** `.a22` (CSS in `design/css/grove-animationen.css`, Abschnitt 22)
+- **Klasse:** `.a22` (CSS in `/css/animationen.css`, Abschnitt 22)
 - **Idee für:** Projekt-Übersicht, Wachstum
 
 ```html
@@ -378,7 +377,7 @@ Bäume schießen nacheinander aus dem Boden – ein kleiner Wald entsteht.
 
 „Grove“ als Leuchtreklame im Jazzclub – mit gelegentlichem Flackern.
 
-- **Klasse:** `.a23` (CSS in `design/css/grove-animationen.css`, Abschnitt 23)
+- **Klasse:** `.a23` (CSS in `/css/animationen.css`, Abschnitt 23)
 - **Idee für:** Nachtmodus, Fehlerseite 404
 
 ```html
@@ -391,7 +390,7 @@ Bäume schießen nacheinander aus dem Boden – ein kleiner Wald entsteht.
 
 Drei Ringe drehen in verschiedenen Richtungen und Tempi um einen pulsierenden Kern.
 
-- **Klasse:** `.a24` (CSS in `design/css/grove-animationen.css`, Abschnitt 24)
+- **Klasse:** `.a24` (CSS in `/css/animationen.css`, Abschnitt 24)
 - **Idee für:** Laden, Warten auf Bridge
 
 ```html
@@ -404,7 +403,7 @@ Drei Ringe drehen in verschiedenen Richtungen und Tempi um einen pulsierenden Ke
 
 Ein Lichtstreifen läuft um den Button. Beim Drüberfahren füllt er sich in Amber.
 
-- **Klasse:** `.a25` (CSS in `design/css/grove-animationen.css`, Abschnitt 25)
+- **Klasse:** `.a25` (CSS in `/css/animationen.css`, Abschnitt 25)
 - **Idee für:** Haupt-Buttons
 
 ```html
@@ -417,7 +416,7 @@ Ein Lichtstreifen läuft um den Button. Beim Drüberfahren füllt er sich in Amb
 
 Jedes Wort steigt einzeln aus einer unsichtbaren Linie und verschwindet nach oben.
 
-- **Klasse:** `.a26` (CSS in `design/css/grove-animationen.css`, Abschnitt 26)
+- **Klasse:** `.a26` (CSS in `/css/animationen.css`, Abschnitt 26)
 - **Idee für:** Seitenüberschriften
 
 ```html
@@ -430,7 +429,7 @@ Jedes Wort steigt einzeln aus einer unsichtbaren Linie und verschwindet nach obe
 
 Zwei Wellen laufen gegeneinander, wie ein Audiosignal.
 
-- **Klasse:** `.a27` (CSS in `design/css/grove-animationen.css`, Abschnitt 27)
+- **Klasse:** `.a27` (CSS in `/css/animationen.css`, Abschnitt 27)
 - **Idee für:** Sprach-/Audio-Funktionen
 
 ```html
@@ -443,7 +442,7 @@ Zwei Wellen laufen gegeneinander, wie ein Audiosignal.
 
 Ein warmer Lichtschein flackert unruhig hinter dem Text, wie Kerzen an der Bar.
 
-- **Klasse:** `.a28` (CSS in `design/css/grove-animationen.css`, Abschnitt 28)
+- **Klasse:** `.a28` (CSS in `/css/animationen.css`, Abschnitt 28)
 - **Idee für:** Abend-Begrüßung, Hintergrund
 
 ```html
@@ -456,7 +455,7 @@ Ein warmer Lichtschein flackert unruhig hinter dem Text, wie Kerzen an der Bar.
 
 Ein Ring füllt sich, die Zahl in der Mitte zählt mit hoch.
 
-- **Klasse:** `.a29` (CSS in `design/css/grove-animationen.css`, Abschnitt 29)
+- **Klasse:** `.a29` (CSS in `/css/animationen.css`, Abschnitt 29)
 - **Idee für:** Projekt-Fortschritt, Uploads
 
 ```html
@@ -469,7 +468,7 @@ Ein Ring füllt sich, die Zahl in der Mitte zählt mit hoch.
 
 Große, blasse Jahresringe drehen und treiben ganz langsam hinter dem Inhalt.
 
-- **Klasse:** `.a30` (CSS in `design/css/grove-animationen.css`, Abschnitt 30)
+- **Klasse:** `.a30` (CSS in `/css/animationen.css`, Abschnitt 30)
 - **Idee für:** Seitenhintergrund, große Karten
 
 ```html

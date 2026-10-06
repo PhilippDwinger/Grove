@@ -2,17 +2,14 @@
 .env
 .env.*
 
-# Node / Python (für später im Backend)
+# Node
 node_modules/
-__pycache__/
-*.pyc
-.venv/
 
 # Claude / KI-Arbeitsdateien (bleiben nur lokal)
 .claude/
 Claude outputs/
 CLAUDE.md
-anleitungen/
+docs/anleitungen/
 
 # Persönliche Einstellungen
 .vscode/

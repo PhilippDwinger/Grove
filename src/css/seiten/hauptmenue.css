@@ -1,0 +1,99 @@
+/* ==========================================================
+   Grove · hauptmenue.css  (Claude)
+   Die Lichtung: Begrüßung + Dienste
+   ========================================================== */
+
+/* ---------- Hero ---------- */
+.lichtung {
+  position: relative; overflow: hidden;
+  min-height: 380px;
+  display: flex; align-items: flex-start;
+  background: linear-gradient(180deg, #140E17 0%, var(--ground) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.lichtung__szene {
+  position: absolute; inset: auto 0 0 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center bottom;
+  pointer-events: none;
+}
+.lichtung .a11 { position: absolute; inset: 0 0 30% 0; }
+.lichtung .a11 span { opacity: .5; }
+.lichtung__text { position: relative; padding: 64px 0 120px; display: flex; flex-direction: column; gap: 10px; }
+.lichtung__datum { font-size: .82rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.lichtung__gruss {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 3.8rem); line-height: 1.05;
+  min-height: 1.05em;
+}
+.lichtung__unter { color: var(--text-soft); font-size: 1.05rem; max-width: 42ch; }
+.lichtung__unter em { color: var(--amber-light); font-style: normal; }
+
+.lichtung__text > * { animation: hoch .7s cubic-bezier(.2,.8,.2,1) both; }
+.lichtung__text > *:nth-child(2) { animation-delay: .08s; }
+.lichtung__text > *:nth-child(3) { animation-delay: .16s; }
+
+/* ---------- Dienste ---------- */
+.bereich { padding: 48px 0 16px; }
+.bereich__kopf { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+.bereich__titel { font-family: var(--font-display); font-weight: 400; font-size: 1.9rem; }
+.bereich__info { color: var(--muted); font-size: .9rem; }
+
+.raster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 22px;
+}
+
+.dienst {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  overflow: hidden;
+  animation: hoch .6s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: calc(.12s + var(--i, 0) * .07s);
+  transition: translate .3s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .3s;
+}
+a.dienst:hover { translate: 0 -4px; border-color: rgba(227,161,90,.45); box-shadow: 0 18px 44px rgba(0,0,0,.35); }
+a.dienst:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
+
+.dienst__buehne {
+  height: 168px;
+  display: grid; place-items: center;
+  background: radial-gradient(ellipse at 50% 120%, rgba(227,161,90,.14), transparent 60%), var(--ground);
+  border-bottom: 1px solid var(--border);
+}
+.dienst__bild { width: 78%; max-height: 150px; transition: scale .5s cubic-bezier(.2,.8,.2,1); }
+a.dienst:hover .dienst__bild { scale: 1.05; }
+
+.dienst__inhalt { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.dienst__zeile { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.dienst__name { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; line-height: 1.1; }
+.dienst__art { color: var(--muted); font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; }
+.dienst__text { color: var(--text-soft); font-size: .95rem; margin-top: 4px; }
+.dienst__los { margin-top: auto; padding-top: 14px; color: var(--amber-light); font-weight: 600; font-size: .92rem; }
+.dienst__los::after { content: " →"; display: inline-block; transition: translate .3s; }
+a.dienst:hover .dienst__los::after { translate: 4px 0; }
+
+.dienst__status {
+  flex: none;
+  padding: 4px 10px; border-radius: 999px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  border: 1px solid var(--border-hi); color: var(--muted);
+}
+.dienst[data-status="aktiv"] .dienst__status    { color: #BFE3B4; border-color: rgba(191,227,180,.35); }
+.dienst[data-status="vorschau"] .dienst__status { color: var(--amber-light); border-color: rgba(227,161,90,.4); }
+
+/* "bald" = noch nicht klickbar */
+.dienst[aria-disabled="true"] .dienst__bild { opacity: .55; filter: saturate(.6); }
+.dienst[aria-disabled="true"] .dienst__los { color: var(--muted); }
+.dienst[aria-disabled="true"] .dienst__los::after { content: ""; }
+
+/* Platzhalter-Kachel am Ende */
+.dienst--platz { background: transparent; border-style: dashed; border-color: var(--border-hi); }
+.dienst--platz .dienst__buehne { background: transparent; border-bottom-style: dashed; border-color: var(--border-hi); }
+.dienst--platz .dienst__bild { opacity: .7; }
+.dienst--platz .dienst__name { font-weight: 400; font-style: italic; color: var(--text-soft); }
+
+@keyframes hoch { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }

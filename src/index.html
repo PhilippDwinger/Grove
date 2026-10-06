@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grove</title>
+  <link rel="icon" href="/bilder/marke/favicon.svg" type="image/svg+xml">
+
+  <!-- Schriften -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Design -->
+  <link rel="stylesheet" href="/css/basis.css">
+  <link rel="stylesheet" href="/css/animationen.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/seiten/hauptmenue.css">
+</head>
+<body class="geschuetzt">
+
+  <header class="kopf">
+    <div class="wrap kopf__inner">
+      <a class="marke" href="/"><img src="/bilder/marke/grove-logo-klein.svg" alt=""> Grove</a>
+      <details class="nutzer">
+        <summary aria-label="Nutzermenü öffnen">
+          <span class="avatar" data-nutzer-initial>·</span>
+          <span class="nutzer__name" data-nutzer-name>…</span>
+          <svg class="nutzer__pfeil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="nutzer__panel">
+          <div class="nutzer__info">
+            <strong data-nutzer-name>…</strong>
+            <span data-nutzer-email>…</span>
+          </div>
+          <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero: die Lichtung ===== -->
+    <section class="lichtung">
+      <img class="lichtung__szene" src="/bilder/lichtung.svg" alt="">
+      <div class="a11" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="wrap lichtung__text">
+        <p class="lichtung__datum" id="datum">&nbsp;</p>
+        <h1 class="lichtung__gruss" id="begruessung">&nbsp;</h1>
+        <p class="lichtung__unter">Willkommen auf deiner <em>Lichtung</em>. Hier wächst alles zusammen, was zu dir gehört.</p>
+      </div>
+    </section>
+
+    <!-- ===== Dienste ===== -->
+    <section class="wrap bereich" aria-labelledby="dienste-titel">
+      <div class="bereich__kopf">
+        <h2 class="bereich__titel" id="dienste-titel">Deine Dienste</h2>
+      </div>
+
+      <!-- Die Karten baut scripts/hauptmenue.js aus scripts/dienste.js -->
+      <div class="raster" id="dienste-raster">
+        <div class="dienst dienst--platz" id="dienst-platzhalter">
+          <div class="dienst__buehne"><img class="dienst__bild" src="/bilder/dienste/mehr.svg" alt=""></div>
+          <div class="dienst__inhalt">
+            <span class="dienst__name">Hier wächst bald mehr</span>
+            <p class="dienst__text">Der nächste Dienst schlägt hier Wurzeln.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vorlage für eine Dienst-Karte -->
+      <template id="dienst-vorlage">
+        <a class="dienst" href="#">
+          <div class="dienst__buehne"><img class="dienst__bild" src="" alt=""></div>
+          <div class="dienst__inhalt">
+            <div class="dienst__zeile">
+              <span class="dienst__name"></span>
+              <span class="dienst__status"></span>
+            </div>
+            <span class="dienst__art"></span>
+            <p class="dienst__text"></p>
+            <span class="dienst__los">Öffnen</span>
+          </div>
+        </a>
+      </template>
+    </section>
+  </main>
+
+  <footer class="fuss">Grove · deine digitale Welt</footer>
+
+  <!-- ================= SCRIPTE ================= -->
+  <script type="module" src="/js/seiten/hauptmenue.js"></script>
+</body>
+</html>

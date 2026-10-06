@@ -1,16 +1,15 @@
 /* ==========================================================
-   Grove · grove-animationen.css  (Claude)
+   Grove · animationen.css
    Animations-Bibliothek: 30 nummerierte Animationen (.a01 – .a30)
    Reines CSS – kein JavaScript.
 
    Benutzen:
    1. Diese Datei einbinden:
-      <link rel="stylesheet" href="design/css/grove-animationen.css">
-   2. Das passende HTML-Snippet aus design/ANIMATIONEN.md kopieren.
-   Voraussetzung: base.css (Farben/Schriften) ist eingebunden.
+      <link rel="stylesheet" href="/css/animationen.css">
+   2. Das passende HTML-Snippet aus docs/design/ANIMATIONEN.md kopieren.
+   Voraussetzung: basis.css (Farben/Schriften) ist eingebunden.
 
-   Auf echten Seiten zusätzlich animations.css einbinden – die
-   enthält die Regel für „Animationen reduzieren“ (Barrierefreiheit).
+   Die Regel für „Animationen reduzieren“ steht in app.css / konto.css.
    ========================================================== */
 
 /* Gemeinsame Bausteine */

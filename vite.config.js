@@ -1,28 +1,38 @@
+// ==========================================================
 // Grove · Vite-Konfiguration
-// Baut automatisch ALLE .html-Dateien im Hauptordner (index.html, login.html, …)
-// und alle Seiten in design/beispiele/ mit nach dist/.
+//   src/          → die Website (Vite-Root)
+//   src/public/   → Dateien, die 1:1 kopiert werden (Bilder)
+//   .env          → liegt im Hauptordner (envDir)
+//   dist/         → fertiger Build für Render
+// Alle .html-Seiten in src/ werden automatisch gefunden.
+// ==========================================================
 import { readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { resolve } from 'node:path'
+import { resolve, relative } from 'node:path'
 import { defineConfig } from 'vite'
 
-const root = fileURLToPath(new URL('.', import.meta.url))
+const projekt = fileURLToPath(new URL('.', import.meta.url))
+const src = resolve(projekt, 'src')
 
-function htmlSeiten(ordner, prefix = '') {
-  return Object.fromEntries(
-    readdirSync(resolve(root, ordner))
-      .filter((datei) => datei.endsWith('.html'))
-      .map((datei) => [prefix + datei.replace('.html', ''), resolve(root, ordner, datei)])
-  )
+function htmlSeiten(ordner, seiten = {}) {
+  for (const eintrag of readdirSync(ordner, { withFileTypes: true })) {
+    if (eintrag.name === 'public' || eintrag.name.startsWith('.')) continue
+    const pfad = resolve(ordner, eintrag.name)
+    if (eintrag.isDirectory()) htmlSeiten(pfad, seiten)
+    else if (eintrag.name.endsWith('.html')) {
+      const name = relative(src, pfad).replace(/\\/g, '/').replace(/\.html$/, '').replace(/\//g, '-')
+      seiten[name] = pfad
+    }
+  }
+  return seiten
 }
 
 export default defineConfig({
+  root: src,
+  envDir: projekt,
   build: {
-    rollupOptions: {
-      input: {
-        ...htmlSeiten('.'),
-        ...htmlSeiten('design/beispiele', 'beispiele-'),
-      },
-    },
+    outDir: resolve(projekt, 'dist'),
+    emptyOutDir: true,
+    rollupOptions: { input: htmlSeiten(src) },
   },
 })

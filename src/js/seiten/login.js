@@ -1,4 +1,4 @@
-import { signIn } from "./auth.js";
+import { signIn } from "../kern/auth.js";
 
 const formular = document.querySelector("#login-form")
 const meldung = document.querySelector("#auth-meldung")

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Echo · Grove</title>
+  <link rel="icon" href="/bilder/marke/favicon.svg" type="image/svg+xml">
+
+  <!-- Schriften -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Design -->
+  <link rel="stylesheet" href="/css/basis.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/dienste/echo.css">
+</head>
+<body class="geschuetzt">
+
+  <header class="kopf">
+    <div class="wrap kopf__inner" style="width: calc(100% - 32px); max-width: none;">
+      <div style="display:flex;align-items:center;gap:6px">
+        <a class="zurueck" href="/" aria-label="Zurück zur Lichtung">←</a>
+        <a class="marke" href="/dienste/echo/"><img src="/bilder/dienste/echo-zeichen.svg" alt="" style="width:40px;height:auto"> Echo <span class="marke__zusatz">Mail</span></a>
+      </div>
+      <details class="nutzer">
+        <summary aria-label="Nutzermenü öffnen">
+          <span class="avatar" data-nutzer-initial>·</span>
+          <span class="nutzer__name" data-nutzer-name>…</span>
+          <svg class="nutzer__pfeil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="nutzer__panel">
+          <div class="nutzer__info">
+            <strong data-nutzer-name>…</strong>
+            <span data-nutzer-email>…</span>
+          </div>
+          <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main class="echo">
+    <p class="echo-hinweis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> Vorschau – so wird Echo aussehen. Echte Mails kommen, sobald der Dienst verbunden ist.</p>
+
+    <div class="echo-raum">
+      <!-- Ordner -->
+      <nav class="echo-ordner" aria-label="Ordner">
+        <button class="echo-neu" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> <span>Neue Nachricht</span></button>
+        <a href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg><span>Eingang</span><span class="zahl">2</span></a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg><span>Gesendet</span></a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg><span>Entwürfe</span></a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9"/><path d="M10 13h4"/></svg><span>Archiv</span></a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg><span>Papierkorb</span></a>
+      </nav>
+
+      <!-- Liste -->
+      <section class="echo-liste" aria-label="Nachrichten">
+        <div class="echo-liste__kopf">
+          <h1>Eingang</h1>
+          <input class="echo-suche" type="search" placeholder="Nachrichten durchsuchen" aria-label="Nachrichten durchsuchen">
+        </div>
+          <article class="post post--neu" aria-current="true">
+            <div class="post__avatar"><img src="/bilder/marke/grove-logo-klein.svg" alt=""></div>
+            <div>
+              <div class="post__oben"><span class="post__von">Grove</span><span class="post__zeit">21:40</span></div>
+              <div class="post__betreff">Willkommen bei Echo</div>
+              <div class="post__vorschau">Schön, dass du da bist. Hier ein kurzer Rundgang durch deinen neuen Briefkasten …</div>
+            </div>
+          </article>
+          <article class="post post--neu">
+            <div class="post__avatar">B</div>
+            <div>
+              <div class="post__oben"><span class="post__von">Bridge</span><span class="post__zeit">20:12</span></div>
+              <div class="post__betreff">Neues Gerät verbunden</div>
+              <div class="post__vorschau">Laptop „Werkbank“ ist jetzt mit Bridge verbunden und kann Aufgaben empfangen.</div>
+            </div>
+          </article>
+          <article class="post">
+            <div class="post__avatar">D</div>
+            <div>
+              <div class="post__oben"><span class="post__von">Du</span><span class="post__zeit">Gestern</span></div>
+              <div class="post__betreff">Notiz an mich</div>
+              <div class="post__vorschau">Ideen für den Hain: Fotoarchiv, Plattensammlung, Rezepte …</div>
+            </div>
+          </article>
+          <article class="post">
+            <div class="post__avatar"><img src="/bilder/marke/grove-logo-klein.svg" alt=""></div>
+            <div>
+              <div class="post__oben"><span class="post__von">Grove</span><span class="post__zeit">Mo.</span></div>
+              <div class="post__betreff">Dein Konto ist bereit</div>
+              <div class="post__vorschau">Dein Grove-Konto wurde erfolgreich angelegt.</div>
+            </div>
+          </article>
+      </section>
+
+      <!-- Lesebereich -->
+      <section class="echo-lesen" aria-label="Nachricht lesen">
+        <article class="brief">
+          <h2 class="brief__betreff">Willkommen bei Echo</h2>
+          <div class="brief__meta">
+            <div class="post__avatar"><img src="/bilder/marke/grove-logo-klein.svg" alt=""></div>
+            <div><strong>Grove</strong><span>an dich · heute, 21:40</span></div>
+          </div>
+          <div class="brief__text">
+            <p>Hallo <span data-nutzer-name>…</span>,</p>
+            <p><strong>Echo</strong> ist dein Briefkasten in Grove. Der Name kommt vom Wald und von der Musik: Du rufst etwas hinein – und eine Antwort hallt zurück.</p>
+            <img class="brief__bild" src="/bilder/dienste/echo.svg" alt="">
+            <p>Links findest du deine Ordner, in der Mitte die Nachrichten, hier rechts liest du sie. Bald kannst du hier echte Mails schreiben und empfangen – und auch Bridge wird dir hier Bescheid geben, wenn deine Geräte etwas zu melden haben.</p>
+            <p>Bis gleich auf der Lichtung.</p>
+          </div>
+          <div class="brief__aktionen">
+            <button class="knopf-leise" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 5 5v5"/></svg> Antworten</button>
+            <button class="knopf-leise" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9"/><path d="M10 13h4"/></svg> Archivieren</button>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <!-- ================= SCRIPTE ================= -->
+  <script type="module" src="/js/seiten/dienst.js"></script>
+</body>
+</html>
