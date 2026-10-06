@@ -42,84 +42,93 @@
   </header>
 
   <main class="mail">
-    <p class="mail-hinweis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> Vorschau – so wird Grove Mail aussehen. Echte Mails kommen, sobald der Dienst verbunden ist.</p>
+    <p class="mail-hinweis" id="domain-hinweis" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> <span>Deine Adresse wird aktiv, sobald <strong>groveme.eu.org</strong> freigeschaltet ist. Bis dahin siehst du hier schon dein echtes Postfach.</span></p>
 
-    <div class="mail-raum">
-      <!-- Ordner -->
+    <div class="mail-raum" id="raum">
+      <!-- ===== Ordner ===== -->
       <nav class="mail-ordner" aria-label="Ordner">
-        <button class="mail-neu" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> <span>Neue Nachricht</span></button>
-        <a href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg><span>Eingang</span><span class="zahl">2</span></a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg><span>Gesendet</span></a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg><span>Entwürfe</span></a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9"/><path d="M10 13h4"/></svg><span>Archiv</span></a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg><span>Papierkorb</span></a>
+        <button class="mail-neu" id="neue-nachricht" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> <span>Neue Nachricht</span></button>
+        <div class="mail-adresse">
+          <span class="mail-adresse__label">Deine Adresse</span>
+          <div class="mail-adresse__zeile">
+            <span id="meine-adresse">…</span>
+            <button class="mail-adresse__kopieren" id="adresse-kopieren" type="button" aria-label="Adresse kopieren" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
+          </div>
+        </div>
+        <a href="#eingang" data-ordner="eingang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg><span>Eingang</span><span class="zahl" id="zahl-eingang" hidden>0</span></a>
+        <a href="#archiv" data-ordner="archiv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9"/><path d="M10 13h4"/></svg><span>Archiv</span></a>
+        <a href="#gesendet" data-ordner="gesendet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg><span>Gesendet</span></a>
+        <a href="#entwuerfe" data-ordner="entwuerfe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg><span>Entwürfe</span></a>
+        <a href="#papierkorb" data-ordner="papierkorb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg><span>Papierkorb</span></a>
       </nav>
 
-      <!-- Liste -->
+      <!-- ===== Liste ===== -->
       <section class="mail-liste" aria-label="Nachrichten">
         <div class="mail-liste__kopf">
-          <h1>Eingang</h1>
-          <input class="mail-suche" type="search" placeholder="Nachrichten durchsuchen" aria-label="Nachrichten durchsuchen">
+          <h1 id="ordner-titel">Eingang</h1>
+          <input class="mail-suche" id="suche" type="search" placeholder="Nachrichten durchsuchen" aria-label="Nachrichten durchsuchen">
         </div>
-          <article class="post post--neu" aria-current="true">
-            <div class="post__avatar"><img src="/bilder/marke/grove-logo-klein.svg" alt=""></div>
-            <div>
-              <div class="post__oben"><span class="post__von">Grove</span><span class="post__zeit">21:40</span></div>
-              <div class="post__betreff">Willkommen bei Grove Mail</div>
-              <div class="post__vorschau">Schön, dass du da bist. Hier ein kurzer Rundgang durch deinen neuen Briefkasten …</div>
+        <div id="liste" class="mail-liste__eintraege"></div>
+        <div class="leer" id="liste-leer" hidden>
+          <img src="/bilder/dienste/mehr.svg" alt="">
+          <strong id="liste-leer-titel"></strong>
+          <span id="liste-leer-text"></span>
+        </div>
+
+        <template id="post-vorlage">
+          <article class="post" tabindex="0">
+            <div class="post__avatar"></div>
+            <div class="post__mitte">
+              <div class="post__oben"><span class="post__von"></span><span class="post__zeit"></span></div>
+              <div class="post__betreff"></div>
+              <div class="post__unten"><span class="post__vorschau"></span><span class="post__klammer" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12l-8.5 8.5a5 5 0 0 1-7-7L14 5a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 8"/></svg></span></div>
             </div>
           </article>
-          <article class="post post--neu">
-            <div class="post__avatar">B</div>
-            <div>
-              <div class="post__oben"><span class="post__von">Bridge</span><span class="post__zeit">20:12</span></div>
-              <div class="post__betreff">Neues Gerät verbunden</div>
-              <div class="post__vorschau">Laptop „Werkbank“ ist jetzt mit Bridge verbunden und kann Aufgaben empfangen.</div>
-            </div>
-          </article>
-          <article class="post">
-            <div class="post__avatar">D</div>
-            <div>
-              <div class="post__oben"><span class="post__von">Du</span><span class="post__zeit">Gestern</span></div>
-              <div class="post__betreff">Notiz an mich</div>
-              <div class="post__vorschau">Ideen für den Hain: Fotoarchiv, Plattensammlung, Rezepte …</div>
-            </div>
-          </article>
-          <article class="post">
-            <div class="post__avatar"><img src="/bilder/marke/grove-logo-klein.svg" alt=""></div>
-            <div>
-              <div class="post__oben"><span class="post__von">Grove</span><span class="post__zeit">Mo.</span></div>
-              <div class="post__betreff">Dein Konto ist bereit</div>
-              <div class="post__vorschau">Dein Grove-Konto wurde erfolgreich angelegt.</div>
-            </div>
-          </article>
+        </template>
       </section>
 
-      <!-- Lesebereich -->
-      <section class="mail-lesen" aria-label="Nachricht lesen">
-        <article class="brief">
-          <h2 class="brief__betreff">Willkommen bei Grove Mail</h2>
+      <!-- ===== Lesebereich ===== -->
+      <section class="mail-lesen" id="lesen" aria-label="Nachricht lesen">
+        <div class="leer leer--lesen" id="lesen-leer">
+          <img src="/bilder/dienste/mail.svg" alt="">
+          <strong>Wähle eine Nachricht</strong>
+          <span>Sie erscheint dann hier.</span>
+        </div>
+
+        <article class="brief" id="brief" hidden>
+          <button class="brief__zurueck" id="brief-zurueck" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg> Zurück</button>
+          <h2 class="brief__betreff" id="brief-betreff"></h2>
           <div class="brief__meta">
-            <div class="post__avatar"><img src="/bilder/marke/grove-logo-klein.svg" alt=""></div>
-            <div><strong>Grove</strong><span>an dich · heute, 21:40</span></div>
+            <div class="post__avatar" id="brief-avatar"></div>
+            <div class="brief__wer">
+              <div><strong id="brief-von"></strong> <span id="brief-adresse"></span></div>
+              <span id="brief-an"></span> · <span id="brief-datum"></span>
+            </div>
           </div>
-          <div class="brief__text">
-            <p>Hallo <span data-nutzer-name>…</span>,</p>
-            <p><strong>Grove Mail</strong> ist dein Briefkasten in Grove – mit deiner eigenen Grove-Adresse.</p>
-            <img class="brief__bild" src="/bilder/dienste/mail.svg" alt="">
-            <p>Links findest du deine Ordner, in der Mitte die Nachrichten, hier rechts liest du sie. Bald kannst du hier echte Mails schreiben und empfangen – direkt von deiner Grove-Adresse aus.</p>
-            <p>Bis gleich auf der Lichtung.</p>
-          </div>
+
           <div class="brief__aktionen">
-            <button class="knopf-leise" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 5 5v5"/></svg> Antworten</button>
-            <button class="knopf-leise" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9"/><path d="M10 13h4"/></svg> Archivieren</button>
+            <button class="knopf-leise" type="button" data-aktion="antworten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 5 5v5"/></svg> Antworten</button>
+            <button class="knopf-leise" type="button" data-aktion="archivieren"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10h14V9"/><path d="M10 13h4"/></svg> Archivieren</button>
+            <button class="knopf-leise" type="button" data-aktion="wiederherstellen" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></svg> In den Eingang</button>
+            <button class="knopf-leise" type="button" data-aktion="ungelesen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Ungelesen</button>
+            <button class="knopf-leise knopf-leise--warn" type="button" data-aktion="loeschen">Löschen</button>
           </div>
+
+          <div class="bilder-hinweis" id="bilder-hinweis" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg> <span>Bilder von fremden Servern sind blockiert, damit niemand sieht, wann du die Mail liest.</span>
+            <button type="button" id="bilder-laden">Bilder laden</button>
+          </div>
+
+          <div id="brief-inhalt"></div>
+          <div class="brief__anhaenge" id="brief-anhaenge" hidden></div>
         </article>
       </section>
     </div>
   </main>
 
+  <div class="hinweis-blase" id="hinweis" role="status" aria-live="polite"></div>
+
   <!-- ================= SCRIPTE ================= -->
-  <script type="module" src="/js/seiten/dienst.js"></script>
+  <script type="module" src="/js/seiten/mail.js"></script>
 </body>
 </html>

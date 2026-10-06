@@ -1,0 +1,12 @@
+# Grove Mail · Empfangs-Worker (Cloudflare)
+# Jede Mail an <username>@groveme.eu.org landet hier und wird in Supabase gespeichert.
+name = "grove-mail-empfang"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+MAIL_DOMAIN  = "groveme.eu.org"
+SUPABASE_URL = "https://dmkprjcsbyfezywernqv.supabase.co"
+
+# Geheim (NICHT hier eintragen), einmalig setzen mit:
+#   npx wrangler secret put SUPABASE_SECRET_KEY
