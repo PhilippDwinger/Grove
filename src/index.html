@@ -22,20 +22,37 @@
   <header class="kopf">
     <div class="wrap kopf__inner">
       <a class="marke" href="/"><img src="/bilder/marke/grove-logo-klein.svg" alt=""> Grove</a>
-      <details class="nutzer">
-        <summary aria-label="Nutzermenü öffnen">
-          <span class="avatar" data-nutzer-initial>·</span>
-          <span class="nutzer__name" data-nutzer-name>…</span>
-          <svg class="nutzer__pfeil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </summary>
-        <div class="nutzer__panel">
-          <div class="nutzer__info">
-            <strong data-nutzer-name>…</strong>
-            <span data-nutzer-email>…</span>
+      <div class="kopf__rechts">
+        <!-- Benachrichtigungen (js/glocke.js) -->
+        <details class="glocke ausklapp" id="glocke">
+          <summary aria-label="Benachrichtigungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="glocke__punkt" hidden>0</span></summary>
+          <div class="glocke__panel">
+            <div class="glocke__kopf"><strong>Benachrichtigungen</strong><a href="#" data-alle-gelesen hidden>Alle gelesen</a></div>
+            <div class="glocke__liste"></div>
+            <p class="glocke__leer" hidden>Alles ruhig auf der Lichtung.</p>
           </div>
-          <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
-        </div>
-      </details>
+        </details>
+        <template id="glocke-vorlage">
+          <a class="meldung"><span class="meldung__punkt"></span><span class="meldung__inhalt"><strong class="meldung__titel"></strong><span class="meldung__text"></span><span class="meldung__zeit"></span></span></a>
+        </template>
+
+        <!-- Nutzermenü (js/nutzermenue.js) -->
+        <details class="nutzer ausklapp">
+          <summary aria-label="Nutzermenü öffnen">
+            <span class="avatar" data-nutzer-initial>·</span>
+            <span class="nutzer__name" data-nutzer-name>…</span>
+            <svg class="nutzer__pfeil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="nutzer__panel">
+            <div class="nutzer__info">
+              <strong data-nutzer-name>…</strong>
+              <span data-nutzer-email>…</span>
+            </div>
+            <a class="knopf-leise" href="/konto.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Mein Konto</a>
+            <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
+          </div>
+        </details>
+      </div>
     </div>
   </header>
 

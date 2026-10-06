@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Grove – Konto anlegen</title>
+  <title>Grove – Passwort vergessen</title>
   <link rel="icon" href="/bilder/marke/favicon.svg" type="image/svg+xml">
 
   <!-- Schriften -->
@@ -28,46 +28,31 @@
     <section class="auth-card">
       <header class="auth-head">
         <img class="a02" src="/bilder/marke/grove-icon.svg" alt="Grove Logo">
-        <h1>Dein Platz im <em>Grove</em></h1>
-        <p>Leg dir ein Konto an – dauert keine Minute.</p>
+        <h1>Passwort <em>vergessen?</em></h1>
+        <p>Kein Problem. Gib deine E-Mail-Adresse ein – wir schicken dir einen Link, mit dem du ein neues Passwort setzt.</p>
       </header>
 
-      <!-- IDs gehören zu js/seiten/registrieren.js -->
-      <form id="register-form" class="auth-form" novalidate>
+      <form id="vergessen-form" class="auth-form" novalidate>
         <div class="field">
-          <label for="register-username">Username</label>
-          <input id="register-username" type="text" name="username" autocomplete="username" placeholder="paddy" pattern="[a-zA-Z0-9][a-zA-Z0-9._\-]{2,29}" minlength="3" maxlength="30" required>
-          <p class="field-hint">3–30 Zeichen: a–z, Ziffern, Punkt, Minus oder Unterstrich. Er wird zu deiner Mail-Adresse.</p>
-        </div>
-        <div class="field">
-          <label for="register-email">E-Mail</label>
-          <input id="register-email" type="email" name="email" autocomplete="email" placeholder="du@beispiel.de" required>
+          <label for="vergessen-email">E-Mail</label>
+          <input id="vergessen-email" type="email" name="email" autocomplete="email" placeholder="du@beispiel.de" required>
           <p class="field-hint">Bitte gib eine gültige E-Mail-Adresse ein.</p>
-        </div>
-        <div class="field">
-          <label for="register-passwort">Passwort</label>
-          <input id="register-passwort" type="password" name="new-password" autocomplete="new-password" placeholder="mindestens 8 Zeichen" minlength="8" required>
-          <p class="field-hint">Mindestens 8 Zeichen.</p>
-        </div>
-        <div class="field">
-          <label for="register-passwort2">Passwort wiederholen</label>
-          <input id="register-passwort2" type="password" name="new-password-repeat" autocomplete="new-password" placeholder="nochmal dasselbe" minlength="8" required>
-          <p class="field-hint">Mindestens 8 Zeichen.</p>
         </div>
 
         <p id="auth-meldung" class="auth-message" role="alert" aria-live="polite"></p>
+        <p id="auth-info" class="auth-info" role="status" aria-live="polite"></p>
 
-        <button class="auth-button" type="submit">Konto anlegen</button>
+        <button class="auth-button" type="submit">Link schicken</button>
       </form>
 
-      <p class="auth-switch">Schon dabei? <a href="/login.html">Einloggen</a></p>
+      <p class="auth-switch">Doch wieder eingefallen? <a href="/login.html">Einloggen</a></p>
 
       <p class="auth-foot">Grove · deine digitale Welt</p>
     </section>
   </main>
 
   <!-- ================= SCRIPTE ================= -->
-  <script type="module" src="/js/seiten/registrieren.js"></script>
+  <script type="module" src="/js/seiten/passwort-vergessen.js"></script>
   <!-- ================= ENDE SCRIPTE ================= -->
 </body>
 </html>

@@ -84,6 +84,71 @@ body.geschuetzt.geprueft { opacity: 1; transition: opacity .4s ease; }
   .nutzer summary { padding-right: 8px; }
 }
 
+/* ---------- Rechte Seite der Kopfzeile ---------- */
+.kopf__rechts { display: flex; align-items: center; gap: 10px; }
+.avatar { overflow: hidden; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+a.knopf-leise { text-decoration: none; }
+
+/* ---------- Glocke (Benachrichtigungen) ---------- */
+.glocke { position: relative; }
+.glocke summary {
+  list-style: none; cursor: pointer; position: relative;
+  width: 42px; height: 42px; border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--text-soft); border: 1px solid var(--border-hi);
+  transition: color .2s, border-color .2s, background .2s;
+}
+.glocke summary::-webkit-details-marker { display: none; }
+.glocke summary:hover, .glocke[open] summary { color: var(--text); border-color: rgba(227,161,90,.5); background: var(--surface); }
+.glocke summary:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
+.glocke summary svg { width: 20px; height: 20px; }
+.glocke__punkt {
+  position: absolute; top: -3px; right: -3px;
+  min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
+  display: grid; place-items: center;
+  font-size: .68rem; font-weight: 700; color: var(--ground); background: var(--amber);
+  border: 2px solid var(--ground-deep);
+}
+.glocke__punkt[hidden] { display: none; }
+.glocke.wackelt summary svg { animation: glocke-wackeln .8s ease; transform-origin: 50% 10%; }
+@keyframes glocke-wackeln {
+  0%, 100% { rotate: 0deg; } 15% { rotate: 14deg; } 30% { rotate: -12deg; }
+  45% { rotate: 8deg; } 60% { rotate: -5deg; } 75% { rotate: 2deg; }
+}
+
+.glocke__panel {
+  position: absolute; right: 0; top: calc(100% + 10px);
+  width: min(360px, calc(100vw - 32px));
+  background: var(--surface-hi);
+  border: 1px solid var(--border-hi); border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.45);
+  animation: panel-auf .18s ease-out;
+  overflow: hidden;
+}
+@media (max-width: 520px) { .glocke__panel { position: fixed; left: 16px; right: 16px; top: 72px; width: auto; } }
+.glocke__kopf { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border-hi); }
+.glocke__kopf strong { font-weight: 600; }
+.glocke__kopf a { color: var(--amber-light); font-size: .85rem; }
+.glocke__kopf a:hover { text-decoration: underline; }
+.glocke__liste { max-height: min(420px, 60vh); overflow-y: auto; }
+.glocke__leer { padding: 28px 16px; text-align: center; color: var(--muted); font-size: .92rem; }
+.glocke__leer[hidden] { display: none; }
+
+.meldung {
+  display: flex; gap: 12px; padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background .2s;
+}
+.meldung[href]:hover { background: rgba(227,161,90,.06); }
+.meldung__punkt { flex: none; width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: transparent; }
+.meldung.ungelesen .meldung__punkt { background: var(--amber); }
+.meldung__inhalt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.meldung__titel { font-size: .92rem; font-weight: 500; color: var(--text-soft); }
+.meldung.ungelesen .meldung__titel { color: var(--text); font-weight: 600; }
+.meldung__text { font-size: .86rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.meldung__zeit { font-size: .76rem; color: var(--muted); opacity: .8; }
+
 /* ---------- Fußzeile ---------- */
 .fuss { padding: 40px 0 48px; color: var(--muted); font-size: .85rem; text-align: center; }
 

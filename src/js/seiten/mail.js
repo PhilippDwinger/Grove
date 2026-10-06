@@ -3,6 +3,7 @@
 // Steuert Ordner, Liste, Lesebereich und Live-Updates.
 // ==========================================================
 import "../kern/schutz.js"
+import "../glocke.js"
 import { ladeNutzer } from "../nutzermenue.js"
 import { MAIL_DOMAIN, DOMAIN_AKTIV, ORDNER } from "../mail/konfig.js"
 import * as daten from "../mail/daten.js"

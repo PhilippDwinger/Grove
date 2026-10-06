@@ -2,6 +2,7 @@
 // Grove · Hauptmenü (index.html)
 // ==========================================================
 import "../kern/schutz.js"                       // zuerst: nur Eingeloggte
+import "../glocke.js"
 import { ladeNutzer } from "../nutzermenue.js"
 import { dienste, statusText } from "../dienste.js"
 

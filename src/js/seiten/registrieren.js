@@ -1,4 +1,5 @@
 import { signUp, getCurrentUser } from "../kern/auth.js"
+import { deutscheMeldung } from "../kern/meldungen.js"
 
 const formular = document.querySelector("#register-form")
 const meldung  = document.querySelector("#auth-meldung")
@@ -38,8 +39,6 @@ formular.addEventListener("submit", async (event) => {
             meldung.textContent = "Fast geschafft! Bitte bestätige deine E-Mail."
         }
     } catch (fehler) {
-        meldung.textContent = fehler.message === "Database error saving new user"
-            ? "Dieser Username ist schon vergeben."
-            : fehler.message
+        meldung.textContent = deutscheMeldung(fehler)
     }
 })

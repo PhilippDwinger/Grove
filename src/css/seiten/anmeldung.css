@@ -1,0 +1,223 @@
+/* ==========================================================
+   Grove · auth.css  (Claude)
+   Login-Seite (login.html)
+   Nutzt Animationen aus grove-animationen.css:
+   02 Logo atmet · 11 Glühwürmchen · 25 Groove-Rand · 30 Ringe
+   ========================================================== */
+
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 48px 16px;
+  overflow: hidden;
+}
+
+/* Hintergrund: Ringe (30) + Glühwürmchen (11) */
+.auth-bg { position: fixed; inset: 0; pointer-events: none; }
+.auth-bg .a30 svg { opacity: .12; }
+.auth-bg .a11 span { opacity: .6; }
+
+/* ---------- Karte ---------- */
+.auth-card {
+  position: relative; z-index: 1;
+  width: min(420px, 100%);
+  padding: 40px 36px 32px;
+  background: rgba(36, 26, 39, .82);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-hi);
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
+  display: flex; flex-direction: column; gap: 28px;
+  animation: auth-in .8s cubic-bezier(.2, .8, .2, 1) both;
+}
+@keyframes auth-in {
+  from { opacity: 0; translate: 0 18px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+@media (max-width: 480px) { .auth-card { padding: 32px 22px 26px; border-radius: 22px; } }
+
+.auth-head { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.auth-head .a02 { width: 84px; }
+.auth-head h1 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 2.1rem; line-height: 1.1;
+}
+.auth-head h1 em { color: var(--amber); font-weight: 600; }
+.auth-head p { color: var(--text-soft); font-size: .97rem; }
+
+/* ---------- Formular ---------- */
+.auth-form { display: flex; flex-direction: column; gap: 18px; }
+
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field label { font-size: .85rem; color: var(--text-soft); font-weight: 500; }
+.field input {
+  height: 50px; padding: 0 18px;
+  font: inherit; font-size: 1rem; color: var(--text);
+  background: var(--ground);
+  border: 1px solid var(--border-hi);
+  border-radius: 14px;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+}
+.field input::placeholder { color: var(--muted); opacity: .7; }
+.field input:hover { border-color: #4a3a4c; }
+.field input:focus {
+  outline: none;
+  border-color: var(--amber);
+  box-shadow: 0 0 0 4px rgba(227, 161, 90, .16);
+  background: #1f1623;
+}
+
+/* ---------- Button: ruhig, gefüllt, ohne Dauer-Animation ---------- */
+.auth-button {
+  width: 100%; height: 54px; margin-top: 6px;
+  border: 0; border-radius: 27px; cursor: pointer;
+  font: inherit; font-size: 1.02rem; font-weight: 600;
+  color: var(--ground);
+  background: var(--amber);
+  transition: background .2s ease, transform .2s ease;
+}
+.auth-button:hover  { background: var(--amber-light); }
+.auth-button:active { transform: scale(.98); }
+.auth-button:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
+
+/* ---------- Feld-Hinweise ----------
+   Die Browser-Sprechblasen sind per novalidate aus (die lassen sich nicht gestalten).
+   Stattdessen: Erst wenn dein Script nach dem Abschicken etwas in #auth-meldung
+   schreibt, werden ungültige Felder markiert und bekommen einen kurzen Hinweis.
+   Sobald das Feld korrigiert ist, verschwindet die Markierung sofort wieder. */
+.field-hint {
+  display: none;
+  font-size: .82rem;
+  color: #F2B3A3;
+  padding-left: 4px;
+}
+.auth-form:has(.auth-message:not(:empty)) .field:has(input:invalid) input {
+  border-color: rgba(214, 106, 84, .7);
+  box-shadow: 0 0 0 4px rgba(214, 106, 84, .12);
+}
+.auth-form:has(.auth-message:not(:empty)) .field:has(input:invalid) .field-hint { display: block; }
+
+/* ---------- Meldung (#auth-meldung) ----------
+   Unsichtbar, solange leer – erscheint, sobald dein Script Text hineinschreibt */
+.auth-message {
+  min-height: 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(214, 106, 84, .12);
+  border: 1px solid rgba(214, 106, 84, .35);
+  color: #F2B3A3;
+  font-size: .92rem;
+  animation: auth-shake .45s ease;
+}
+.auth-message:empty { display: none; }
+@keyframes auth-shake {
+  0%, 100% { translate: 0 0; }
+  20%      { translate: -6px 0; }
+  40%      { translate: 5px 0; }
+  60%      { translate: -3px 0; }
+  80%      { translate: 2px 0; }
+}
+
+/* Positive Meldung (z. B. "Link verschickt") */
+.auth-info {
+  padding: 12px 16px; border-radius: 12px;
+  background: rgba(191, 227, 180, .08); border: 1px solid rgba(191, 227, 180, .3);
+  color: #CFE8C6; font-size: .92rem;
+}
+.auth-info:empty { display: none; }
+.auth-message a { color: var(--amber-light); font-weight: 600; text-decoration: underline; }
+.auth-message[hidden] { display: none; }
+.auth-form[hidden] { display: none; }
+
+.field__zeile { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.field__link { font-size: .84rem; color: var(--amber-light); }
+.field__link:hover { text-decoration: underline; }
+
+.auth-foot { text-align: center; font-size: .85rem; color: var(--muted); }
+
+/* ==========================================================
+   Startseite (index.html) – vorläufiger Hero
+   ========================================================== */
+.home-hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px; padding: 48px 16px; text-align: center;
+}
+.home-hero .a02 { width: clamp(120px, 22vw, 180px); }
+.home-hero p { color: var(--text-soft); max-width: 36ch; }
+
+/* ==========================================================
+   Geschützte Seiten (body.geschuetzt)
+   Unsichtbar, bis scripts/schutz.js den Login geprüft hat
+   und die Klasse "geprueft" setzt – kein Aufblitzen mehr.
+   ========================================================== */
+body.geschuetzt { opacity: 0; }
+body.geschuetzt.geprueft { opacity: 1; transition: opacity .4s ease; }
+
+/* ---------- Wechsel Login ↔ Registrieren ---------- */
+.auth-switch { text-align: center; font-size: .95rem; color: var(--text-soft); margin-top: -8px; }
+.auth-switch a {
+  color: var(--amber-light); font-weight: 600;
+  text-decoration: underline; text-decoration-color: rgba(242,192,138,.35); text-underline-offset: 4px;
+  transition: text-decoration-color .25s;
+}
+.auth-switch a:hover { text-decoration-color: var(--amber-light); }
+
+/* ==========================================================
+   Test-Startseite (index.html)
+   ========================================================== */
+.home-test { min-height: 100vh; display: grid; place-items: center; padding: 48px 16px; }
+.home-card {
+  width: min(460px, 100%);
+  padding: 40px 36px 32px;
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center;
+  box-shadow: 0 30px 80px rgba(0,0,0,.4);
+}
+.home-card .a02 { width: 96px; }
+.home-card h1 { font-family: var(--font-display); font-weight: 400; font-size: 2.2rem; line-height: 1.1; }
+.home-card h1 em { color: var(--amber); font-weight: 600; }
+.home-lead { color: var(--text-soft); font-size: .97rem; max-width: 36ch; }
+
+.status-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px;
+  background: rgba(227,161,90,.12); border: 1px solid rgba(227,161,90,.35);
+  color: var(--amber-light); font-size: .82rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+}
+.status-pill i {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--amber);
+  animation: pill-pulse 2s ease-in-out infinite;
+}
+@keyframes pill-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(227,161,90,.6); }
+  50%      { box-shadow: 0 0 0 6px rgba(227,161,90,0); }
+}
+
+.home-data {
+  width: 100%; margin-top: 6px;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+}
+.home-data div { display: flex; justify-content: space-between; gap: 16px; padding: 14px 18px; text-align: left; }
+.home-data div + div { border-top: 1px solid var(--border); }
+.home-data dt { color: var(--muted); font-size: .9rem; }
+.home-data dd { color: var(--text); font-weight: 500; overflow-wrap: anywhere; text-align: right; }
+
+.home-logout {
+  margin-top: 6px; height: 46px; padding: 0 26px; border-radius: 23px; cursor: pointer;
+  font: inherit; font-weight: 600; color: var(--text-soft);
+  background: transparent; border: 1px solid var(--border-hi);
+  transition: color .25s, border-color .25s, background .25s;
+}
+.home-logout:hover { color: var(--text); border-color: var(--amber); background: rgba(227,161,90,.08); }
+.home-logout:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
+
+/* ---------- Weniger Bewegung, wenn im System so eingestellt ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

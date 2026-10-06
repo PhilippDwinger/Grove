@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mein Konto · Grove</title>
+  <link rel="icon" href="/bilder/marke/favicon.svg" type="image/svg+xml">
+
+  <!-- Schriften -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Design -->
+  <link rel="stylesheet" href="/css/basis.css">
+  <link rel="stylesheet" href="/css/animationen.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/seiten/konto.css">
+</head>
+<body class="geschuetzt">
+
+  <header class="kopf">
+    <div class="wrap kopf__inner">
+      <div style="display:flex;align-items:center;gap:6px">
+        <a class="zurueck" href="/" aria-label="Zurück zur Lichtung">←</a>
+        <a class="marke" href="/"><img src="/bilder/marke/grove-logo-klein.svg" alt=""> Grove <span class="marke__zusatz">Konto</span></a>
+      </div>
+      <div class="kopf__rechts">
+        <!-- Benachrichtigungen (js/glocke.js) -->
+        <details class="glocke ausklapp" id="glocke">
+          <summary aria-label="Benachrichtigungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="glocke__punkt" hidden>0</span></summary>
+          <div class="glocke__panel">
+            <div class="glocke__kopf"><strong>Benachrichtigungen</strong><a href="#" data-alle-gelesen hidden>Alle gelesen</a></div>
+            <div class="glocke__liste"></div>
+            <p class="glocke__leer" hidden>Alles ruhig auf der Lichtung.</p>
+          </div>
+        </details>
+        <template id="glocke-vorlage">
+          <a class="meldung"><span class="meldung__punkt"></span><span class="meldung__inhalt"><strong class="meldung__titel"></strong><span class="meldung__text"></span><span class="meldung__zeit"></span></span></a>
+        </template>
+
+        <!-- Nutzermenü (js/nutzermenue.js) -->
+        <details class="nutzer ausklapp">
+          <summary aria-label="Nutzermenü öffnen">
+            <span class="avatar" data-nutzer-initial>·</span>
+            <span class="nutzer__name" data-nutzer-name>…</span>
+            <svg class="nutzer__pfeil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="nutzer__panel">
+            <div class="nutzer__info">
+              <strong data-nutzer-name>…</strong>
+              <span data-nutzer-email>…</span>
+            </div>
+            <a class="knopf-leise" href="/konto.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Mein Konto</a>
+            <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap konto">
+    <header class="konto__kopf">
+      <h1>Mein Konto</h1>
+      <p>Wie du in Grove auftauchst – und wie du dich anmeldest.</p>
+    </header>
+
+    <!-- ===== Profil ===== -->
+    <section class="karte" aria-labelledby="t-profil">
+      <div class="karte__titel"><h2 id="t-profil">Profil</h2><p>So sehen dich andere in Grove.</p></div>
+
+      <div class="profil">
+        <div class="profil__bild">
+          <span class="avatar avatar--gross" id="avatar-vorschau" data-nutzer-initial>·</span>
+          <label class="knopf-leise profil__hochladen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Bild ändern
+            <input type="file" id="avatar-datei" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+          </label>
+          <button class="textknopf" type="button" id="avatar-entfernen" hidden>Bild entfernen</button>
+        </div>
+
+        <form class="formular" id="profil-form" novalidate>
+          <div class="feld">
+            <label for="anzeigename">Anzeigename</label>
+            <input id="anzeigename" type="text" maxlength="40" placeholder="z. B. Paddy" autocomplete="nickname">
+            <p class="feld__hilfe">Wird in Grove angezeigt. Leer lassen = Username.</p>
+          </div>
+          <div class="feld">
+            <label>Username &amp; Mail-Adresse</label>
+            <div class="feld__fest"><strong id="username">…</strong><span id="mail-adresse"></span></div>
+            <p class="feld__hilfe">Der Username lässt sich nicht ändern – er ist deine Grove-Mail-Adresse.</p>
+          </div>
+          <p class="form-meldung" id="profil-meldung" role="status" aria-live="polite"></p>
+          <button class="knopf-voll" type="submit">Speichern</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== Anmeldung ===== -->
+    <section class="karte" aria-labelledby="t-anmeldung">
+      <div class="karte__titel"><h2 id="t-anmeldung">Anmeldung</h2><p>Deine E-Mail für den Login und dein Passwort.</p></div>
+
+      <form class="formular" id="email-form" novalidate>
+        <div class="feld">
+          <label for="neue-email">Login-E-Mail</label>
+          <input id="neue-email" type="email" autocomplete="email" required>
+          <p class="feld__hilfe">Nach dem Ändern bekommst du eine Bestätigungs-Mail.</p>
+        </div>
+        <p class="form-meldung" id="email-meldung" role="status" aria-live="polite"></p>
+        <button class="knopf-voll" type="submit">E-Mail ändern</button>
+      </form>
+
+      <hr class="trenner">
+
+      <form class="formular" id="passwort-form" novalidate>
+        <div class="feld">
+          <label for="pw-aktuell">Aktuelles Passwort</label>
+          <input id="pw-aktuell" type="password" autocomplete="current-password" required>
+        </div>
+        <div class="feld-reihe">
+          <div class="feld">
+            <label for="pw-neu">Neues Passwort</label>
+            <input id="pw-neu" type="password" autocomplete="new-password" minlength="8" placeholder="mindestens 8 Zeichen" required>
+          </div>
+          <div class="feld">
+            <label for="pw-neu2">Wiederholen</label>
+            <input id="pw-neu2" type="password" autocomplete="new-password" minlength="8" required>
+          </div>
+        </div>
+        <p class="form-meldung" id="passwort-meldung" role="status" aria-live="polite"></p>
+        <button class="knopf-voll" type="submit">Passwort ändern</button>
+      </form>
+    </section>
+
+    <!-- ===== Konto löschen ===== -->
+    <section class="karte karte--gefahr" aria-labelledby="t-loeschen">
+      <div class="karte__titel"><h2 id="t-loeschen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg> Konto löschen</h2><p>Löscht dein Konto, dein Profil, alle Mails und Benachrichtigungen. Das lässt sich nicht rückgängig machen.</p></div>
+      <form class="formular" id="loeschen-form" novalidate>
+        <div class="feld">
+          <label for="loeschen-wort">Tippe <strong>LÖSCHEN</strong> zur Bestätigung</label>
+          <input id="loeschen-wort" type="text" autocomplete="off" spellcheck="false">
+        </div>
+        <p class="form-meldung" id="loeschen-meldung" role="status" aria-live="polite"></p>
+        <button class="knopf-gefahr" type="submit" id="loeschen-knopf" disabled>Konto endgültig löschen</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="fuss">Grove · deine digitale Welt</footer>
+
+  <!-- ================= SCRIPTE ================= -->
+  <script type="module" src="/js/seiten/konto.js"></script>
+</body>
+</html>
