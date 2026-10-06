@@ -23,6 +23,15 @@ export const dienste = [
         status: "vorschau",
     },
     {
+        id: "myzel",
+        name: "Myzel",
+        art: "Verknüpfte Notizen",
+        beschreibung: "Deine Gedanken, verbunden wie das Geflecht unter dem Waldboden. Mit [[ verknüpfst du Notizen.",
+        pfad: "/dienste/myzel/",
+        bild: "/bilder/dienste/myzel.svg",
+        status: "aktiv",
+    },
+    {
         id: "bridge",
         name: "Bridge",
         art: "Geräte & Aufgaben",

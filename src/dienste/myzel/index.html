@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Myzel · Grove</title>
+  <link rel="icon" href="/bilder/marke/favicon.svg" type="image/svg+xml">
+
+  <!-- Schriften -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Design -->
+  <link rel="stylesheet" href="/css/basis.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/dienste/myzel.css">
+</head>
+<body class="geschuetzt">
+
+  <header class="kopf">
+    <div class="wrap kopf__inner" style="width: calc(100% - 32px); max-width: none;">
+      <div style="display:flex;align-items:center;gap:6px">
+        <a class="zurueck" href="/" aria-label="Zurück zur Lichtung">←</a>
+        <a class="marke" href="/dienste/myzel/"><img src="/bilder/dienste/myzel-zeichen.svg" alt="" style="width:34px;height:auto"> Myzel <span class="marke__zusatz">Notizen</span></a>
+      </div>
+      <div class="kopf__rechts">
+        <!-- Benachrichtigungen (js/glocke.js) -->
+        <details class="glocke ausklapp" id="glocke">
+          <summary aria-label="Benachrichtigungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="glocke__punkt" hidden>0</span></summary>
+          <div class="glocke__panel">
+            <div class="glocke__kopf"><strong>Benachrichtigungen</strong><a href="#" data-alle-gelesen hidden>Alle gelesen</a></div>
+            <div class="glocke__liste"></div>
+            <p class="glocke__leer" hidden>Alles ruhig auf der Lichtung.</p>
+          </div>
+        </details>
+        <template id="glocke-vorlage">
+          <a class="meldung"><span class="meldung__punkt"></span><span class="meldung__inhalt"><strong class="meldung__titel"></strong><span class="meldung__text"></span><span class="meldung__zeit"></span></span></a>
+        </template>
+
+        <!-- Nutzermenü (js/nutzermenue.js) -->
+        <details class="nutzer ausklapp">
+          <summary aria-label="Nutzermenü öffnen">
+            <span class="avatar" data-nutzer-initial>·</span>
+            <span class="nutzer__name" data-nutzer-name>…</span>
+            <svg class="nutzer__pfeil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="nutzer__panel">
+            <div class="nutzer__info">
+              <strong data-nutzer-name>…</strong>
+              <span data-nutzer-email>…</span>
+            </div>
+            <a class="knopf-leise" href="/konto.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Mein Konto</a>
+            <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  <main class="myzel">
+    <!-- ===== Liste ===== -->
+    <aside class="myzel-liste" aria-label="Notizen">
+      <div class="myzel-liste__kopf">
+        <button class="myzel-neu" id="neu" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> Neue Notiz</button>
+        <input class="myzel-suche" id="suche" type="search" placeholder="Notizen durchsuchen" aria-label="Notizen durchsuchen">
+        <div class="tag-filter" id="tag-filter" hidden></div>
+        <div class="myzel-liste__fuss"><span class="myzel-anzahl" id="anzahl"></span><button class="myzel-netzknopf" type="button" data-ansicht="netz">Netz ansehen</button></div>
+      </div>
+      <div id="liste"></div>
+      <div class="leer" id="liste-leer" hidden>
+        <img src="/bilder/dienste/myzel.svg" alt="">
+        <span id="liste-leer-text"></span>
+      </div>
+      <template id="notiz-vorlage">
+        <button class="notiz-eintrag" type="button"><strong></strong><span class="auszug"></span><span class="meta"></span></button>
+      </template>
+    </aside>
+
+    <!-- ===== Arbeitsfläche ===== -->
+    <section class="myzel-arbeit" id="arbeit">
+      <div class="myzel-leiste">
+        <div class="umschalter" role="tablist" aria-label="Ansicht">
+          <button type="button" role="tab" data-ansicht="notiz" aria-selected="true">Notiz</button>
+          <button type="button" role="tab" data-ansicht="netz" aria-selected="false">Netz</button>
+        </div>
+        <span class="speicher-status" id="status" role="status" aria-live="polite"></span>
+      </div>
+
+      <div class="myzel-notiz" id="notiz-ansicht">
+        <div class="leer leer--gross" id="notiz-leer">
+          <img src="/bilder/dienste/myzel.svg" alt="">
+          <strong>Wähle eine Notiz – oder pflanz eine neue.</strong>
+          <span>Mit <kbd>[[</kbd> verbindest du Gedanken miteinander.</span>
+        </div>
+
+        <article class="blatt" id="blatt" hidden>
+          <button class="blatt__zurueck" id="blatt-zurueck" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg> Alle Notizen</button>
+          <div class="blatt__kopf">
+            <input class="blatt__titel" id="titel" type="text" placeholder="Titel" aria-label="Titel" maxlength="140">
+            <button class="knopf-leise blatt__modus" id="modus" type="button">Bearbeiten</button>
+          </div>
+          <div class="blatt__schreiben">
+            <textarea id="inhalt" placeholder="Schreib los … Mit [[ verknüpfst du andere Notizen. **fett**, *kursiv*, - Liste, # Überschrift" aria-label="Inhalt"></textarea>
+            <div class="vorschlaege" id="vorschlaege" hidden></div>
+          </div>
+          <div class="blatt__lesen markdown" id="lesen"></div>
+        </article>
+
+        <aside class="myzel-seite" id="seite" hidden>
+          <section>
+            <h3>Tags</h3>
+            <div class="tags" id="tags"></div>
+            <input class="tag-eingabe" id="tag-neu" type="text" placeholder="+ Tag hinzufügen" aria-label="Tag hinzufügen">
+          </section>
+          <section>
+            <h3>Verknüpft mit</h3>
+            <div class="verweise" id="ausgehend"></div>
+          </section>
+          <section>
+            <h3>Rückverweise</h3>
+            <div class="verweise" id="eingehend"></div>
+          </section>
+          <section class="seite__aktionen">
+            <button class="knopf-leise" id="per-mail" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Per Grove Mail senden</button>
+            <button class="knopf-leise knopf-leise--warn" id="loeschen" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg> Notiz löschen</button>
+          </section>
+        </aside>
+      </div>
+
+      <div class="myzel-netz" id="netz-ansicht" hidden>
+        <canvas id="netz" aria-label="Netz aller Notizen und ihrer Verknüpfungen"></canvas>
+        <p class="netz-hilfe">Ziehen zum Verschieben · Scrollen zum Zoomen · Klick öffnet die Notiz</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= SCRIPTE ================= -->
+  <script type="module" src="/js/seiten/myzel.js"></script>
+</body>
+</html>
