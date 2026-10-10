@@ -166,6 +166,11 @@
 .g-verbindung a { flex: 1; color: var(--text); text-decoration: none; }
 .g-verbindung a:hover { color: var(--amber-light); }
 .g-verbindung-tot { flex: 1; color: var(--muted); }
+.g-verbindung-quelle {   /* Marke: Verbindung entsteht durch [[Link]] im Text */
+  flex: none; padding: 1px 7px; border-radius: 999px; cursor: help;
+  font: 600 11px/1.5 ui-monospace, monospace; color: var(--amber-light);
+  border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
+}
 
 /* Lupe in der Kopfzeile (öffnet die Suche, wie Strg+K) */
 .suche-knopf {

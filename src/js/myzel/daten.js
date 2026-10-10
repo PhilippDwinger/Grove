@@ -19,6 +19,14 @@ export async function ladeLinks() {
     return data
 }
 
+// Manuell gesetzte Verbindungen Notiz ↔ Notiz (Knopf „Verknüpfen“, Tabelle verbindungen)
+export async function ladeManuelle() {
+    const { data, error } = await supabase.from("verbindungen").select("id, von_id, nach_id")
+        .eq("von_typ", "myzel").eq("nach_typ", "myzel")
+    if (error) throw error
+    return data
+}
+
 export async function neu(felder = {}) {
     const { data, error } = await supabase.from("notizen").insert({ titel: "", inhalt: "", ...felder })
         .select(SPALTEN).single()

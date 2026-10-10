@@ -21,7 +21,9 @@ const $ = (s) => document.querySelector(s)
 
 // ---------- Zustand ----------
 let notizen = []          // alle Notizen (ohne archivierte)
-let links = []            // Verknüpfungen Notiz → Notiz
+let links = []            // [[Links]] aus dem Text: Notiz → Notiz (Tabelle verknuepfungen)
+let manuell = []          // manuelle Verbindungen Notiz ↔ Notiz (Tabelle verbindungen)
+let verbunden = null      // Bereich „Verbunden mit“ der offenen Notiz
 let aktiv = null          // geöffnete Notiz
 let modus = "lesen"       // "lesen" | "schreiben"
 let tagFilter = null
@@ -36,7 +38,7 @@ const nachTitel = (t) => notizen.find((n) => n.titel.trim().toLowerCase() === t.
 // ---------- Start ----------
 const nutzer = await ladeNutzer()
 try {
-    ;[notizen, links] = await Promise.all([daten.ladeAlle(), daten.ladeLinks()])
+    ;[notizen, links, manuell] = await Promise.all([daten.ladeAlle(), daten.ladeLinks(), daten.ladeManuelle().catch(() => [])])
 } catch (fehler) {
     console.error(fehler)
     status(deutscheMeldung(fehler), "fehler")
@@ -143,7 +145,10 @@ async function oeffne(id, { schreiben = false } = {}) {
     zeichneSeite()
     // Verbunden mit (Grove-weit: Mails, Passwörter, …) – getrennt von den [[Links]]
     $("#grove-verbindungen").replaceChildren()
-    verbindungsBereich($("#grove-verbindungen"), { typ: "myzel", id })
+    verbunden = verbindungsBereich($("#grove-verbindungen"), { typ: "myzel", id }, {
+        zusatz: async () => textVerbindungen(id),          // [[Links]] erscheinen hier mit
+        beiAenderung: manuelleNeuLaden,                     // manuell verknüpft/gelöst → Netz nachziehen
+    })
     document.querySelectorAll(".notiz-eintrag").forEach((el) => el.toggleAttribute("aria-current", el.dataset.id === id))
     status("")
 }
@@ -230,16 +235,52 @@ async function speichereJetzt() {
         const gespeichert = await daten.speichere(n.id, { titel, inhalt })
         Object.assign(n, gespeichert)
         await aktualisiereLinks(n)
+        if (n === aktiv) verbunden?.neuLaden()            // [[ dazu/weg → „Verbunden mit“ aktualisieren
         if (altTitel && titel && altTitel !== titel) await benenneVerweiseUm(n.id, altTitel, titel)
         zeichneListe()
         zeichneSeite()
-        if (netz) netz.setzeDaten(notizen, links, aktiv?.id)
+        if (netz) netz.setzeDaten(notizen, netzLinks(), aktiv?.id)
         status("Gespeichert", "ok")
     } catch (fehler) {
         console.error(fehler)
         ungespeichert = true
         status(fehler.code === "23505" ? "Diesen Titel gibt es schon" : deutscheMeldung(fehler), "fehler")
     }
+}
+
+// ---------- Verbindungen: [[Links]] + manuelle zusammen ----------
+// Beide Herkünfte bleiben getrennt gespeichert. Erst beim Anzeigen werden sie
+// vereint – dasselbe Paar erscheint nur einmal. Löscht man den [[Link]],
+// bleibt eine manuelle Verbindung darum trotzdem bestehen.
+const paar = (a, b) => (a < b ? `${a}|${b}` : `${b}|${a}`)
+
+// Alle Fäden fürs Netz (ungerichtet, ohne Doppelte)
+function netzLinks() {
+    const gesehen = new Set()
+    const alle = []
+    for (const l of [...links, ...manuell]) {
+        const k = paar(l.von_id, l.nach_id)
+        if (gesehen.has(k)) continue
+        gesehen.add(k)
+        alle.push({ von_id: l.von_id, nach_id: l.nach_id })
+    }
+    return alle
+}
+
+// Notizen, mit denen eine Notiz über [[Links]] verbunden ist (beide Richtungen)
+function textVerbindungen(id) {
+    const ids = new Set()
+    for (const l of links) {
+        if (l.von_id === id) ids.add(l.nach_id)
+        if (l.nach_id === id) ids.add(l.von_id)
+    }
+    ids.delete(id)
+    return [...ids].filter((x) => nachId(x)).map((x) => ({ typ: "myzel", id: x }))
+}
+
+async function manuelleNeuLaden() {
+    try { manuell = await daten.ladeManuelle() } catch (fehler) { console.error(fehler); return }
+    if (netz && !$("#netz-ansicht").hidden) netz.setzeDaten(notizen, netzLinks(), aktiv?.id)
 }
 
 // [[Titel]] im Text → Verknüpfungen in der Datenbank
@@ -273,9 +314,7 @@ function zeichneSeite() {
         return el
     }))
 
-    const ausgehend = links.filter((l) => l.von_id === aktiv.id).map((l) => nachId(l.nach_id)).filter(Boolean)
     const eingehend = links.filter((l) => l.nach_id === aktiv.id).map((l) => nachId(l.von_id)).filter(Boolean)
-    zeichneVerweise($("#ausgehend"), ausgehend, "Noch keine. Schreib [[ im Text.")
     zeichneVerweise($("#eingehend"), eingehend, "Noch zeigt keine Notiz hierher.", true)
 }
 
@@ -331,6 +370,7 @@ $("#loeschen").addEventListener("click", async (e) => {
         alleVerbindungenLoeschen({ typ: "myzel", id }).catch(console.error)
         notizen = notizen.filter((n) => n.id !== id)
         links = links.filter((l) => l.von_id !== id && l.nach_id !== id)
+        manuell = manuell.filter((l) => l.von_id !== id && l.nach_id !== id)
         $("#blatt-zurueck").click()
         zeichneListe(); zeichneTagFilter()
         status("Gelöscht", "ok")
@@ -350,7 +390,7 @@ async function zeigeAnsicht(ansicht) {
         await speichereJetzt()
         history.replaceState(null, "", "#netz")
         if (!netz) netz = erstelleNetz($("#netz"), { beiKlick: (id) => oeffne(id) })
-        netz.setzeDaten(notizen, links, aktiv?.id)
+        netz.setzeDaten(notizen, netzLinks(), aktiv?.id)
         $("#arbeit").classList.add("offen")
     } else {
         netz?.stop()

@@ -214,3 +214,7 @@ kbd { font: inherit; font-size: .85em; padding: 1px 6px; border-radius: calc(6px
 .myzel-seite .g-verbindungen-kopf h3 { margin: 0; font: 600 .72rem/1.6 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .myzel-seite .g-verbindungen-kopf .g-knopf-leise { height: 30px; padding: 0 12px; font-size: 13px; }
 .myzel-seite .g-verbindungen-liste > .g-leise { font-size: .85rem; }
+/* Schmale Seitenleiste: Dienst-Etikett über den Titel, damit Titel nicht umbrechen */
+.myzel-seite .g-verbindung { flex-wrap: wrap; gap: 2px 8px; padding: 8px 10px; }
+.myzel-seite .g-verbindung-dienst { width: 100%; min-width: 0; font-size: 11px; letter-spacing: .04em; }
+.myzel-seite .g-verbindung a, .myzel-seite .g-verbindung-tot { min-width: 0; overflow-wrap: anywhere; }
