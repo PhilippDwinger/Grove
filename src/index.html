@@ -13,16 +13,17 @@
 
   <!-- Design -->
   <link rel="stylesheet" href="/css/basis.css">
-  <link rel="stylesheet" href="/css/animationen.css">
   <link rel="stylesheet" href="/css/app.css">
   <link rel="stylesheet" href="/css/seiten/hauptmenue.css">
 </head>
-<body class="geschuetzt">
+<body class="geschuetzt" data-dienst="lichtung">
 
   <header class="kopf">
     <div class="wrap kopf__inner">
-      <a class="marke" href="/"><img src="/bilder/marke/grove-logo-klein.svg" alt=""> Grove</a>
+      <a class="marke" href="/"><img src="/bilder/marke/grove-logo-klein.svg" alt="" data-logo> Grove</a>
       <div class="kopf__rechts">
+        <!-- Suche über alle Dienste (js/kern/suche.js, auch Strg+K) -->
+        <button class="suche-knopf" type="button" data-suche aria-label="Grove durchsuchen" title="Suchen (Strg K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
         <!-- Benachrichtigungen (js/glocke.js) -->
         <details class="glocke ausklapp" id="glocke">
           <summary aria-label="Benachrichtigungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="glocke__punkt" hidden>0</span></summary>
@@ -48,6 +49,7 @@
               <strong data-nutzer-name>…</strong>
               <span data-nutzer-email>…</span>
             </div>
+            <a class="knopf-leise" href="/dienste/laub/" data-laub-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c-4.5 0-8-3.5-8-8 0-5 4-9 9-9 4.4 0 7 2.6 7 5.6 0 2.3-1.8 3.9-4 3.9h-1.6a1.6 1.6 0 0 0-1.1 2.8c.4.4.6.9.6 1.4 0 1.8-.9 3.3-1.9 3.3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/></svg> Gestaltung</a>
             <a class="knopf-leise" href="/konto.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Mein Konto</a>
             <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
           </div>
@@ -59,8 +61,9 @@
   <main>
     <!-- ===== Hero: die Lichtung ===== -->
     <section class="lichtung">
-      <img class="lichtung__szene" src="/bilder/lichtung.svg" alt="">
-      <div class="a11" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <img class="lichtung__szene" src="/bilder/lichtung.svg" alt="" data-szene>
+      <!-- Hintergrund-Animation (Standard: 11 Glühwürmchen) – setzt js/kern/thema.js, einstellbar in Laub -->
+      <div class="lichtung__atmo" data-atmo aria-hidden="true"></div>
       <div class="wrap lichtung__text">
         <p class="lichtung__datum" id="datum">&nbsp;</p>
         <h1 class="lichtung__gruss" id="begruessung">&nbsp;</h1>
@@ -88,7 +91,7 @@
       <!-- Vorlage für eine Dienst-Karte -->
       <template id="dienst-vorlage">
         <a class="dienst" href="#">
-          <div class="dienst__buehne"><img class="dienst__bild" src="" alt=""></div>
+          <div class="dienst__buehne"><img class="dienst__bild" src="" alt="" data-karte></div>
           <div class="dienst__inhalt">
             <div class="dienst__zeile">
               <span class="dienst__name"></span>

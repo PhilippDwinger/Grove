@@ -1,6 +1,7 @@
 # Grove · Animations-Bibliothek
 
-30 nummerierte Animationen im Grove-Stil (Wald + Jazz). Reines CSS, kein JavaScript.
+44 nummerierte Animationen im Grove-Stil (Wald + Jazz). Reines CSS (41 braucht ein paar Zeilen aus `js/kern/thema.js`).
+Ab Nummer 31 sind sie für **Laub** gemacht – dort kann man sie auf feste Plätze legen (Hintergrund, Zeichen, Begrüßung, Erscheinen, Karten).
 Live ansehen: `docs/design/animationen-katalog.html` – oben Nummern zum Springen.
 
 ## So benutzt du eine Animation
@@ -17,7 +18,7 @@ Live ansehen: `docs/design/animationen-katalog.html` – oben Nummern zum Spring
 Pfade in den Snippets (`/bilder/marke/...`) gelten für Seiten im Grove-Hauptordner.
 Für Seiten in Unterordnern (z. B. `design/beispiele/`) entsprechend `../` voranstellen.
 
-Hinweis zu Containern: Die Animationen 11, 12, 13, 22, 30 füllen ihren Eltern-Container
+Hinweis zu Containern: Die Animationen 11, 12, 13, 22, 30–36 füllen ihren Eltern-Container
 (`position: absolute; inset: 0`). Der Container braucht `position: relative; overflow: hidden;` und eine Höhe.
 
 ## Übersicht
@@ -54,6 +55,20 @@ Hinweis zu Containern: Die Animationen 11, 12, 13, 22, 30 füllen ihren Eltern-C
 | 28 | Barlicht | `.a28` | Abend-Begrüßung, Hintergrund |
 | 29 | Fortschrittsring | `.a29` | Projekt-Fortschritt, Uploads |
 | 30 | Ringe im Hintergrund | `.a30` | Seitenhintergrund, große Karten |
+| 31 | Sternschnuppen | `.a31` | Hintergrund (Laub), Nachthimmel, Hero |
+| 32 | Regen | `.a32` | Hintergrund (Laub), ruhige Stimmung |
+| 33 | Sporen steigen auf | `.a33` | Hintergrund (Laub), Myzel |
+| 34 | Nebelschwaden | `.a34` | Hintergrund (Laub), Morgentau |
+| 35 | Schnee | `.a35` | Hintergrund (Laub), Winter |
+| 36 | Polarlicht | `.a36` | Hintergrund (Laub), Abendrot |
+| 37 | Zeichen glimmt | `.a37` | Zeichen in der Kopfzeile (Laub) |
+| 38 | Zeichen schaukelt | `.a38` | Zeichen in der Kopfzeile (Laub) |
+| 39 | Bass | `.a39` | Zeichen in der Kopfzeile (Laub), Jazzkeller |
+| 40 | Karte leuchtet | `.a40` | Karten beim Drüberfahren (Laub) |
+| 41 | Karte kippt (3D) | `.a41` | Karten beim Drüberfahren (Laub) |
+| 42 | Schrift aus dem Nebel | `.a42` | Begrüßung (Laub), Seitenüberschriften |
+| 43 | Wachsen | `.a43` | Erscheinen von Karten (Laub) |
+| 44 | Aufblättern | `.a44` | Erscheinen von Karten (Laub) |
 
 ---
 
@@ -473,4 +488,186 @@ Große, blasse Jahresringe drehen und treiben ganz langsam hinter dem Inhalt.
 
 ```html
 <div class="a30" aria-hidden="true"><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/></svg><svg viewBox="0 0 512 512" aria-hidden="true"><circle cx="256" cy="256" r="236" fill="none" stroke="#E3A15A" stroke-width="12" opacity="1"/><circle cx="251" cy="259" r="192" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.85"/><circle cx="247" cy="262" r="150" fill="none" stroke="#E3A15A" stroke-width="9" opacity="0.7"/><circle cx="244" cy="265" r="112" fill="none" stroke="#E3A15A" stroke-width="8" opacity="0.85"/></svg></div><div class="a30__text"><h3>Guten Abend.</h3><p>Ruhiger Tag. Zwei Dinge warten noch auf dich.</p></div>
+```
+
+---
+
+## 31 · Sternschnuppen
+
+Ab und zu zieht eine Sternschnuppe schräg über den Himmel.
+
+- **Klasse:** `.a31` (CSS in `/css/animationen.css`, Abschnitt 31)
+- **Idee für:** Hintergrund (Laub), Nachthimmel, Hero
+
+```html
+<div class="a31" aria-hidden="true"><i style="--x:53%;--y:6%;--d:13.2s;--v:-0.2s"></i><i style="--x:68%;--y:15%;--d:8.5s;--v:-4.2s"></i><i style="--x:33%;--y:17%;--d:8.6s;--v:-5.7s"></i><i style="--x:60%;--y:33%;--d:9.0s;--v:-8.8s"></i><i style="--x:74%;--y:38%;--d:12.6s;--v:-12.0s"></i></div>
+```
+
+---
+
+## 32 · Regen
+
+Feine Regenfäden fallen leicht schräg – wie Regen auf dem Blätterdach.
+
+- **Klasse:** `.a32` (CSS in `/css/animationen.css`, Abschnitt 32)
+- **Idee für:** Hintergrund (Laub), ruhige Stimmung
+
+```html
+<div class="a32" aria-hidden="true"><i style="--x:24%;--d:1.28s;--v:-0.74s;--o:0.60"></i><i style="--x:63%;--d:0.95s;--v:-0.03s;--o:0.72"></i><i style="--x:26%;--d:1.06s;--v:-1.99s;--o:0.54"></i><i style="--x:84%;--d:1.23s;--v:-1.28s;--o:0.38"></i><i style="--x:63%;--d:1.51s;--v:-1.05s;--o:0.67"></i><i style="--x:67%;--d:0.94s;--v:-1.52s;--o:0.60"></i><i style="--x:30%;--d:0.92s;--v:-1.73s;--o:0.54"></i><i style="--x:72%;--d:1.52s;--v:-1.43s;--o:0.76"></i><i style="--x:39%;--d:1.46s;--v:-0.89s;--o:0.77"></i><i style="--x:88%;--d:0.97s;--v:-0.27s;--o:0.41"></i><i style="--x:97%;--d:1.21s;--v:-1.25s;--o:0.45"></i><i style="--x:51%;--d:1.17s;--v:-0.70s;--o:0.59"></i><i style="--x:58%;--d:1.53s;--v:-1.36s;--o:0.76"></i><i style="--x:86%;--d:1.59s;--v:-1.34s;--o:0.38"></i><i style="--x:86%;--d:1.58s;--v:-1.81s;--o:0.58"></i><i style="--x:71%;--d:1.05s;--v:-1.66s;--o:0.59"></i><i style="--x:28%;--d:0.94s;--v:-1.71s;--o:0.79"></i><i style="--x:9%;--d:1.46s;--v:-0.82s;--o:0.38"></i><i style="--x:29%;--d:1.44s;--v:-1.75s;--o:0.32"></i><i style="--x:61%;--d:0.93s;--v:-1.44s;--o:0.47"></i><i style="--x:88%;--d:1.59s;--v:-1.01s;--o:0.80"></i><i style="--x:31%;--d:0.95s;--v:-1.20s;--o:0.32"></i><i style="--x:20%;--d:1.19s;--v:-1.22s;--o:0.38"></i><i style="--x:4%;--d:1.51s;--v:-0.63s;--o:0.78"></i></div>
+```
+
+---
+
+## 33 · Sporen steigen auf
+
+Kleine Lichtpunkte steigen langsam und wiegend nach oben – wie Sporen im Myzel.
+
+- **Klasse:** `.a33` (CSS in `/css/animationen.css`, Abschnitt 33)
+- **Idee für:** Hintergrund (Laub), Myzel
+
+```html
+<div class="a33" aria-hidden="true"><i style="--x:45%;--d:18.7s;--v:-18.5s;--g:3.4px"></i><i style="--x:51%;--d:19.0s;--v:-3.7s;--g:3.5px"></i><i style="--x:63%;--d:21.5s;--v:-1.9s;--g:2.9px"></i><i style="--x:9%;--d:21.7s;--v:-13.9s;--g:2.1px"></i><i style="--x:98%;--d:23.6s;--v:-13.1s;--g:3.8px"></i><i style="--x:16%;--d:12.2s;--v:-10.6s;--g:2.2px"></i><i style="--x:19%;--d:14.9s;--v:-0.6s;--g:3.4px"></i><i style="--x:44%;--d:22.1s;--v:-10.4s;--g:3.9px"></i><i style="--x:50%;--d:19.9s;--v:-9.1s;--g:2.8px"></i><i style="--x:100%;--d:23.9s;--v:-16.8s;--g:4.1px"></i><i style="--x:32%;--d:14.8s;--v:-5.8s;--g:2.2px"></i><i style="--x:77%;--d:16.8s;--v:-16.9s;--g:3.2px"></i><i style="--x:96%;--d:22.2s;--v:-0.0s;--g:2.6px"></i><i style="--x:91%;--d:17.6s;--v:-19.6s;--g:3.2px"></i></div>
+```
+
+---
+
+## 34 · Nebelschwaden
+
+Weiche Nebelbänke treiben sehr langsam von links nach rechts.
+
+- **Klasse:** `.a34` (CSS in `/css/animationen.css`, Abschnitt 34)
+- **Idee für:** Hintergrund (Laub), Morgentau
+
+```html
+<div class="a34" aria-hidden="true"><i style="--y:-15%;--d:34s"></i><i style="--y:-3%;--d:44s;--v:-12s"></i><i style="--y:9%;--d:38s;--v:-25s"></i></div>
+```
+
+---
+
+## 35 · Schnee
+
+Flocken in verschiedenen Größen fallen und wiegen dabei hin und her.
+
+- **Klasse:** `.a35` (CSS in `/css/animationen.css`, Abschnitt 35)
+- **Idee für:** Hintergrund (Laub), Winter
+
+```html
+<div class="a35" aria-hidden="true"><i style="--x:52%;--d:17.1s;--v:-17.3s;--g:3.2px"></i><i style="--x:77%;--d:16.0s;--v:-11.9s;--g:2.4px"></i><i style="--x:3%;--d:12.8s;--v:-13.4s;--g:3.0px"></i><i style="--x:50%;--d:12.2s;--v:-15.2s;--g:5.8px"></i><i style="--x:40%;--d:19.0s;--v:-1.1s;--g:5.3px"></i><i style="--x:88%;--d:10.5s;--v:-12.7s;--g:4.2px"></i><i style="--x:96%;--d:11.1s;--v:-9.7s;--g:5.5px"></i><i style="--x:64%;--d:12.1s;--v:-1.5s;--g:5.8px"></i><i style="--x:47%;--d:19.0s;--v:-2.5s;--g:5.2px"></i><i style="--x:81%;--d:18.2s;--v:-0.3s;--g:3.5px"></i><i style="--x:5%;--d:16.5s;--v:-6.4s;--g:5.8px"></i><i style="--x:37%;--d:16.7s;--v:-15.6s;--g:3.0px"></i><i style="--x:56%;--d:18.6s;--v:-9.5s;--g:3.4px"></i><i style="--x:27%;--d:16.9s;--v:-3.5s;--g:4.4px"></i><i style="--x:56%;--d:14.5s;--v:-2.3s;--g:4.6px"></i><i style="--x:92%;--d:12.2s;--v:-6.0s;--g:5.6px"></i><i style="--x:58%;--d:11.7s;--v:-0.2s;--g:5.0px"></i><i style="--x:35%;--d:13.7s;--v:-4.9s;--g:4.5px"></i><i style="--x:73%;--d:12.1s;--v:-1.4s;--g:5.9px"></i><i style="--x:91%;--d:9.2s;--v:-10.2s;--g:4.7px"></i><i style="--x:40%;--d:16.3s;--v:-17.3s;--g:4.4px"></i><i style="--x:39%;--d:11.0s;--v:-4.5s;--g:2.6px"></i></div>
+```
+
+---
+
+## 36 · Polarlicht
+
+Zwei weiche Lichtbänder in Akzent, Flieder und Grün wogen am Himmel.
+
+- **Klasse:** `.a36` (CSS in `/css/animationen.css`, Abschnitt 36)
+- **Idee für:** Hintergrund (Laub), Abendrot
+
+```html
+<div class="a36" aria-hidden="true"><i style="--y:0%;--d:18s"></i><i style="--y:14%;--d:24s;--v:-9s"></i></div>
+```
+
+---
+
+## 37 · Zeichen glimmt
+
+Ein unruhiger, warmer Schein um das Zeichen – wie eine Laterne.
+
+- **Klasse:** `.a37` (CSS in `/css/animationen.css`, Abschnitt 37)
+- **Idee für:** Zeichen in der Kopfzeile (Laub)
+
+```html
+<img class="a37" src="/bilder/marke/grove-logo-klein.svg" alt="" width="110">
+```
+
+---
+
+## 38 · Zeichen schaukelt
+
+Das Zeichen schaukelt sanft wie ein Blatt im Wind (nur ±4°, der Keimling bleibt aufrecht).
+
+- **Klasse:** `.a38` (CSS in `/css/animationen.css`, Abschnitt 38)
+- **Idee für:** Zeichen in der Kopfzeile (Laub)
+
+```html
+<img class="a38" src="/bilder/marke/grove-logo-klein.svg" alt="" width="110">
+```
+
+---
+
+## 39 · Bass
+
+Das Zeichen pulsiert im 4/4-Takt mit 120 BPM, die Eins am stärksten.
+
+- **Klasse:** `.a39` (CSS in `/css/animationen.css`, Abschnitt 39)
+- **Idee für:** Zeichen in der Kopfzeile (Laub), Jazzkeller
+
+```html
+<img class="a39" src="/bilder/marke/grove-logo-klein.svg" alt="" width="110">
+```
+
+---
+
+## 40 · Karte leuchtet
+
+Beim Drüberfahren läuft ein Lichtstreif über die Karte, der Rand glüht warm.
+
+- **Klasse:** `.a40` (CSS in `/css/animationen.css`, Abschnitt 40)
+- **Idee für:** Karten beim Drüberfahren (Laub)
+
+```html
+<div class="a40" style="width:min(300px,90%);padding:22px;border:1px solid var(--border-hi);border-radius:18px;background:var(--surface-hi)"><h3 style="font-family:var(--font-display);font-weight:600;font-size:1.5rem">Myzel</h3><p style="color:var(--text-soft);font-size:.9rem">Fahr mit der Maus drüber.</p></div>
+```
+
+---
+
+## 41 · Karte kippt (3D)
+
+Die Karte neigt sich zur Maus, ein Lichtpunkt folgt dem Zeiger. Braucht js/kern/thema.js.
+
+- **Klasse:** `.a41` (CSS in `/css/animationen.css`, Abschnitt 41)
+- **Idee für:** Karten beim Drüberfahren (Laub)
+
+```html
+<div class="a41" style="position:relative;width:min(300px,90%);padding:22px;border:1px solid var(--border-hi);border-radius:18px;background:var(--surface-hi)"><h3 style="font-family:var(--font-display);font-weight:600;font-size:1.5rem">Rinde</h3><p style="color:var(--text-soft);font-size:.9rem">Beweg die Maus über die Karte.</p></div>
+```
+
+---
+
+## 42 · Schrift aus dem Nebel
+
+Buchstaben tauchen einzeln unscharf auf und werden klar (einmal beim Laden).
+
+- **Klasse:** `.a42` (CSS in `/css/animationen.css`, Abschnitt 42)
+- **Idee für:** Begrüßung (Laub), Seitenüberschriften
+
+```html
+<h3 class="a42" aria-label="Guten Abend." style="font-family:var(--font-display);font-size:3rem;font-weight:400"><span aria-hidden="true" style="--i:0">G</span><span aria-hidden="true" style="--i:1">u</span><span aria-hidden="true" style="--i:2">t</span><span aria-hidden="true" style="--i:3">e</span><span aria-hidden="true" style="--i:4">n</span><span aria-hidden="true" style="--i:5"> </span><span aria-hidden="true" style="--i:6">A</span><span aria-hidden="true" style="--i:7">b</span><span aria-hidden="true" style="--i:8">e</span><span aria-hidden="true" style="--i:9">n</span><span aria-hidden="true" style="--i:10">d</span><span aria-hidden="true" style="--i:11">.</span></h3>
+```
+
+---
+
+## 43 · Wachsen
+
+Ein Element wächst mit kleinem Federn aus dem Boden (einmal beim Laden).
+
+- **Klasse:** `.a43` (CSS in `/css/animationen.css`, Abschnitt 43)
+- **Idee für:** Erscheinen von Karten (Laub)
+
+```html
+<div style="display:flex;gap:12px"><div class="a43" style="--i:0;width:64px;height:84px;border-radius:14px;background:var(--surface-hi);border:1px solid var(--border-hi)"></div><div class="a43" style="--i:1;width:64px;height:84px;border-radius:14px;background:var(--surface-hi);border:1px solid var(--border-hi)"></div><div class="a43" style="--i:2;width:64px;height:84px;border-radius:14px;background:var(--surface-hi);border:1px solid var(--border-hi)"></div><div class="a43" style="--i:3;width:64px;height:84px;border-radius:14px;background:var(--surface-hi);border:1px solid var(--border-hi)"></div></div>
+```
+
+---
+
+## 44 · Aufblättern
+
+Elemente klappen von oben herunter wie umgeschlagene Seiten (einmal beim Laden).
+
+- **Klasse:** `.a44` (CSS in `/css/animationen.css`, Abschnitt 44)
+- **Idee für:** Erscheinen von Karten (Laub)
+
+```html
+<div style="display:flex;gap:12px"><div class="a44" style="--i:0;width:64px;height:84px;border-radius:14px;background:var(--surface-hi);border:1px solid var(--border-hi)"></div><div class="a44" style="--i:1;width:64px;height:84px;border-radius:14px;background:var(--surface-hi);border:1px solid var(--border-hi)"></div><div class="a44" style="--i:2;width:64px;height:84px;border-radius:14px;background:var(--surface-hi);border:1px solid var(--border-hi)"></div><div class="a44" style="--i:3;width:64px;height:84px;border-radius:14px;background:var(--surface-hi);border:1px solid var(--border-hi)"></div></div>
 ```

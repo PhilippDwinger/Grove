@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Stern -->
+  <path d="M24 4 L28.7 17.6 L43 18 L31.6 26.7 L35.8 40.5 L24 32.3 L12.2 40.5 L16.4 26.7 L5 18 L19.3 17.6 Z" fill="#E3A15A" stroke="#E3A15A" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M24 12 L26.2 19.5 L33 19.8 L27.6 23.8" fill="none" stroke="#F2C08A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+</svg>

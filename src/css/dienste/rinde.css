@@ -1,0 +1,245 @@
+/* ==========================================================
+   Grove · Rinde (Passwörter) – nur für src/dienste/rinde/
+   ========================================================== */
+
+.r-inhalt {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
+}
+.r-status { color: var(--muted); }
+
+/* Einrichten / Entsperren */
+.r-tor {
+  max-width: 440px;
+  margin: 6vh auto 0;
+  padding: 32px;
+  border-radius: calc(20px * var(--ecken));
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.r-tor h2 { margin: 0; font: 400 30px/1.15 var(--font-display); }
+.r-tor p { margin: 0; color: var(--text-soft); line-height: 1.55; }
+.r-tor strong { color: var(--text); font-weight: 600; }
+.r-tor .r-warnung { color: var(--amber-light); font-size: 14px; }
+.r-tor .g-knopf { align-self: flex-start; }
+
+/* Felder */
+.r-feld { display: flex; flex-direction: column; gap: 6px; }
+.r-feld > span,
+.r-feld > label { font-size: 13px; color: var(--muted); }
+.r-feld > input,
+.r-feld > textarea,
+.r-zeile > input {
+  width: 100%;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0 14px;
+  border: 1px solid var(--border-hi);
+  border-radius: calc(12px * var(--ecken));
+  background: var(--ground);
+  color: var(--text);
+  font: 15px var(--font-body);
+}
+.r-feld > textarea { height: auto; padding: 12px 14px; line-height: 1.5; resize: vertical; }
+.rinde input:focus-visible,
+.rinde textarea:focus-visible,
+.rinde summary:focus-visible,
+.rinde a:focus-visible,
+.rinde button:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+.r-zeile { display: flex; gap: 8px; }
+.r-zeile > input { flex: 1; min-width: 0; }
+
+.r-meldung { margin: 0; font-size: 14px; color: var(--fehler); }
+.r-meldung:empty { display: none; }
+
+/* Offener Tresor */
+.r-offen {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.r-liste {
+  position: sticky;
+  top: 20px;
+  padding: 14px;
+  border-radius: calc(18px * var(--ecken));
+  background: var(--ground-deep);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.r-liste-kopf { display: flex; gap: 8px; }
+.r-filter {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border-hi);
+  border-radius: calc(20px * var(--ecken));
+  background: var(--ground);
+  color: var(--text);
+  font: 14px var(--font-body);
+}
+
+.r-eintraege {
+  max-height: 60vh;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.r-eintrag {
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: calc(10px * var(--ecken));
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+}
+.r-eintrag:hover { background: var(--surface); }
+.r-eintrag[aria-current="true"] {
+  background: var(--surface-hi);
+  box-shadow: inset 2px 0 0 var(--amber);
+}
+.r-eintrag-name { font-size: 15px; }
+.r-eintrag-info {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.r-leer { padding: 12px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+
+.r-lesezeichen {
+  padding-top: 10px;
+  border-top: 1px solid var(--border-hi);
+  font-size: 13px;
+  color: var(--muted);
+}
+.r-lesezeichen summary { cursor: pointer; padding: 4px 0; }
+.r-lesezeichen summary:hover { color: var(--text-soft); }
+.r-lesezeichen p { margin: 8px 0 12px; line-height: 1.5; }
+.r-lesezeichen-link {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px dashed var(--amber);
+  border-radius: calc(16px * var(--ecken));
+  color: var(--amber-light);
+  text-decoration: none;
+  cursor: grab;
+}
+
+.r-detail {
+  min-height: 360px;
+  padding: clamp(20px, 3vw, 32px);
+  border-radius: calc(20px * var(--ecken));
+  background: var(--surface);
+}
+.r-detail-leer {
+  min-height: 300px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--muted);
+}
+
+.r-form { max-width: 620px; display: flex; flex-direction: column; gap: 16px; }
+.r-form h2 { margin: 0 0 4px; font: 400 28px/1.15 var(--font-display); overflow-wrap: anywhere; }
+
+/* Das eine auffällige Detail: Passwörter mit eingefärbten Zeichenarten */
+.r-pw {
+  font: 500 19px/1.5 var(--font-body);
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.r-pw-ansicht {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: calc(12px * var(--ecken));
+  background: var(--ground);
+}
+.r-z-buchstabe { color: var(--text); }
+.r-z-ziffer { color: var(--amber); }
+.r-z-sonder { color: var(--flieder); font-weight: 600; }
+
+.r-gen-schalter {
+  align-self: flex-start;
+  margin-top: 10px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--amber-light);
+  font: 500 14px var(--font-body);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--amber-light) 40%, transparent);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.r-gen {
+  margin-top: 12px;
+  padding: 18px;
+  border-radius: calc(16px * var(--ecken));
+  background: var(--ground);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.r-gen[hidden] { display: none; }
+.r-gen-vorschau { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.r-gen-vorschau .r-pw { flex: 1; min-width: 0; }
+.r-gen-laenge {
+  display: grid;
+  grid-template-columns: auto 1fr 2.5em;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+.r-gen-laenge output { text-align: right; font-variant-numeric: tabular-nums; }
+.r-gen input[type="range"],
+.r-gen input[type="checkbox"] { accent-color: var(--amber); }
+.r-gen-optionen { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; color: var(--text-soft); }
+.r-gen-optionen label { cursor: pointer; }
+.r-gen-staerke { margin: 0; font-size: 13px; color: var(--muted); }
+.r-gen .g-knopf { align-self: flex-start; }
+
+.r-aktionen { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 4px; }
+.r-loeschen {
+  padding: 8px;
+  border: 0;
+  border-radius: calc(8px * var(--ecken));
+  background: none;
+  color: var(--muted);
+  font: 500 14px var(--font-body);
+  cursor: pointer;
+}
+.r-loeschen:hover,
+.r-loeschen[data-sicher="ja"] { color: var(--fehler); }
+
+@media (max-width: 760px) {
+  .r-offen { grid-template-columns: 1fr; }
+  .r-liste { position: static; }
+  .r-eintraege { max-height: 40vh; }
+  .r-zeile { flex-wrap: wrap; }
+  .r-zeile > input { flex-basis: 100%; }
+}

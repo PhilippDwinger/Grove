@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Rinde-Zeichen: Jahresringe mit Schlüsselloch -->
+  <g fill="none" stroke="#E3A15A" stroke-width="2" stroke-linecap="round" opacity=".8">
+    <ellipse cx="24" cy="24" rx="19" ry="20"/>
+    <ellipse cx="24" cy="24.5" rx="13" ry="14" opacity=".75"/>
+  </g>
+  <circle cx="24" cy="21" r="4" fill="#E3A15A"/>
+  <path d="M22 23.5h4l1.2 8h-6.4z" fill="#E3A15A"/>
+</svg>

@@ -1,0 +1,180 @@
+/* ==========================================================
+   Grove · kern.css
+   Bausteine für alle Dienste: Knöpfe .g-*, Suche (Strg+K),
+   Bereich "Verbunden mit". Farben kommen aus basis.css.
+   Wird von js/kern/auswahl.js + verknuepfen.js importiert.
+   ========================================================== */
+
+
+/* Knöpfe – ruhig, ohne Dauer-Animation */
+.g-knopf {
+  height: 40px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: calc(20px * var(--ecken));
+  background: var(--amber);
+  color: var(--auf-akzent);
+  font: 600 14px/1 var(--font-body);
+  cursor: pointer;
+}
+.g-knopf:hover { background: var(--amber-light); }
+.g-knopf:disabled { opacity: 0.6; cursor: default; }
+
+.g-knopf-leise {
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border-hi);
+  border-radius: calc(20px * var(--ecken));
+  background: transparent;
+  color: var(--text-soft);
+  font: 500 14px/1 var(--font-body);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.g-knopf-leise:hover { border-color: var(--amber); color: var(--text); }
+
+.g-knopf-text {
+  padding: 4px 6px;
+  border: 0;
+  border-radius: calc(6px * var(--ecken));
+  background: none;
+  color: var(--muted);
+  font: 500 13px var(--font-body);
+  cursor: pointer;
+}
+.g-knopf-text:hover { color: var(--amber-light); }
+
+:where(.g-knopf, .g-knopf-leise, .g-knopf-text, .g-auswahl-feld, .g-verbindung a):focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.g-leise { color: var(--muted); }
+.g-fehler { color: var(--fehler); }
+
+
+.g-auswahl kbd,
+.g-knopf-leise kbd {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border: 1px solid var(--border-hi);
+  border-radius: calc(5px * var(--ecken));
+  color: var(--muted);
+  font: 500 11px var(--font-body);
+}
+
+/* Auswahl-Dialog (Suche + Verknüpfen) */
+.g-auswahl {
+  width: min(620px, calc(100vw - 32px));
+  max-height: min(560px, calc(100vh - 96px));
+  margin: 12vh auto auto;
+  padding: 0;
+  border: 1px solid var(--border-hi);
+  border-radius: calc(18px * var(--ecken));
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.g-auswahl:not([open]) { display: none; }
+.g-auswahl::backdrop { background: color-mix(in srgb, var(--ground-deep) 72%, transparent); }
+
+.g-auswahl-kopf {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border-hi);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.g-auswahl-titel { font: 400 20px/1.2 var(--font-display); }
+.g-auswahl-feld {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border-hi);
+  border-radius: calc(12px * var(--ecken));
+  background: var(--ground);
+  color: var(--text);
+  font: 15px var(--font-body);
+}
+
+.g-auswahl-liste {
+  flex: 1;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  overflow-y: auto;
+}
+.g-auswahl-liste > .g-leise { padding: 16px 12px; }
+.g-auswahl-gruppe { padding: 12px 12px 4px; font-size: 12px; color: var(--muted); }
+.g-auswahl-treffer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: calc(10px * var(--ecken));
+  cursor: pointer;
+}
+.g-auswahl-treffer:hover { background: var(--ground); }
+.g-auswahl-treffer[aria-selected="true"] {
+  background: var(--surface-hi);
+  box-shadow: inset 2px 0 0 var(--amber);
+}
+.g-auswahl-treffer small { font-size: 13px; color: var(--muted); }
+.g-auswahl-fuss {
+  margin: 0;
+  padding: 10px 20px;
+  border-top: 1px solid var(--border-hi);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* "Verbunden mit" */
+.g-verbindungen {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-hi);
+}
+.g-verbindungen-kopf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.g-verbindungen-kopf h3 { margin: 0; font: 400 18px var(--font-display); }
+.g-verbindungen-liste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.g-verbindungen-liste > .g-leise,
+.g-verbindungen-liste > .g-fehler { padding: 6px 0; font-size: 14px; }
+.g-verbindung {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: calc(10px * var(--ecken));
+  background: var(--ground);
+}
+.g-verbindung-dienst { min-width: 56px; font-size: 12px; color: var(--amber); }
+.g-verbindung a { flex: 1; color: var(--text); text-decoration: none; }
+.g-verbindung a:hover { color: var(--amber-light); }
+.g-verbindung-tot { flex: 1; color: var(--muted); }
+
+/* Lupe in der Kopfzeile (öffnet die Suche, wie Strg+K) */
+.suche-knopf {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--border-hi); background: none;
+  color: var(--text-soft); cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.suche-knopf:hover { color: var(--text); border-color: color-mix(in srgb, var(--amber) 50%, transparent); background: var(--surface); }
+.suche-knopf:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
+.suche-knopf svg { width: 19px; height: 19px; }

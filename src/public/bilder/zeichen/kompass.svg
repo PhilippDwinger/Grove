@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Kompass -->
+  <circle cx="24" cy="24" r="19" fill="none" stroke="#E3A15A" stroke-width="2.2"/>
+  <path d="M24 5 L24 9 M24 39 L24 43 M5 24 L9 24 M39 24 L43 24" fill="none" stroke="#E3A15A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 12 L28.5 24 L24 36 L19.5 24 Z" fill="#E3A15A"/>
+  <path d="M24 12 L28.5 24 L19.5 24 Z" fill="#F2C08A"/>
+  <circle cx="24" cy="24" r="2" fill="#1C1420"/>
+</svg>

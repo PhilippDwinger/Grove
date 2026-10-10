@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Schallplatte -->
+  <circle cx="24" cy="24" r="20" fill="none" stroke="#E3A15A" stroke-width="2.4"/>
+  <circle cx="24" cy="24" r="15" fill="none" stroke="#E3A15A" stroke-width="1.6" opacity=".7"/>
+  <circle cx="24" cy="24" r="10.5" fill="none" stroke="#E3A15A" stroke-width="1.4" opacity=".5"/>
+  <circle cx="24" cy="24" r="6" fill="#E3A15A"/><circle cx="24" cy="24" r="1.6" fill="#1C1420"/>
+  <path d="M10 13 A17 17 0 0 1 17 8" fill="none" stroke="#F2C08A" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+</svg>

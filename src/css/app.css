@@ -13,7 +13,7 @@ body.geschuetzt.geprueft { opacity: 1; transition: opacity .4s ease; }
 /* ---------- Kopfzeile ---------- */
 .kopf {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(22, 15, 25, .78);
+  background: color-mix(in srgb, var(--ground-deep) 78%, transparent);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
@@ -26,7 +26,7 @@ body.geschuetzt.geprueft { opacity: 1; transition: opacity .4s ease; }
 
 .zurueck {
   display: inline-flex; align-items: center; gap: 6px;
-  color: var(--text-soft); font-size: .92rem; padding: 8px 12px; border-radius: 10px;
+  color: var(--text-soft); font-size: .92rem; padding: 8px 12px; border-radius: calc(10px * var(--ecken));
   transition: color .2s, background .2s;
 }
 .zurueck:hover { color: var(--text); background: var(--surface); }
@@ -41,13 +41,13 @@ body.geschuetzt.geprueft { opacity: 1; transition: opacity .4s ease; }
   transition: border-color .2s, background .2s;
 }
 .nutzer summary::-webkit-details-marker { display: none; }
-.nutzer summary:hover, .nutzer[open] summary { border-color: rgba(227,161,90,.5); background: var(--surface); }
+.nutzer summary:hover, .nutzer[open] summary { border-color: color-mix(in srgb, var(--amber) 50%, transparent); background: var(--surface); }
 .nutzer summary:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
 
 .avatar {
   width: 32px; height: 32px; border-radius: 50%;
   display: grid; place-items: center;
-  background: var(--amber); color: var(--ground);
+  background: var(--amber); color: var(--auf-akzent);
   font-weight: 700; font-size: .95rem;
 }
 .nutzer__name { font-size: .93rem; font-weight: 500; max-width: 16ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -58,7 +58,7 @@ body.geschuetzt.geprueft { opacity: 1; transition: opacity .4s ease; }
   position: absolute; right: 0; top: calc(100% + 10px);
   width: 260px; padding: 16px;
   background: var(--surface-hi);
-  border: 1px solid var(--border-hi); border-radius: 16px;
+  border: 1px solid var(--border-hi); border-radius: calc(16px * var(--ecken));
   box-shadow: 0 20px 50px rgba(0,0,0,.45);
   display: flex; flex-direction: column; gap: 14px;
   animation: panel-auf .18s ease-out;
@@ -69,13 +69,13 @@ body.geschuetzt.geprueft { opacity: 1; transition: opacity .4s ease; }
 .nutzer__info span { color: var(--muted); font-size: .87rem; overflow-wrap: anywhere; }
 
 .knopf-leise {
-  height: 42px; border-radius: 12px; cursor: pointer;
+  height: 42px; border-radius: calc(12px * var(--ecken)); cursor: pointer;
   font: inherit; font-weight: 600; font-size: .93rem;
   color: var(--text-soft); background: transparent; border: 1px solid var(--border-hi);
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   transition: color .2s, border-color .2s, background .2s;
 }
-.knopf-leise:hover { color: var(--text); border-color: var(--amber); background: rgba(227,161,90,.08); }
+.knopf-leise:hover { color: var(--text); border-color: var(--amber); background: color-mix(in srgb, var(--amber) 8%, transparent); }
 .knopf-leise:disabled { opacity: .6; cursor: wait; }
 .knopf-leise svg { width: 16px; height: 16px; }
 
@@ -100,14 +100,14 @@ a.knopf-leise { text-decoration: none; }
   transition: color .2s, border-color .2s, background .2s;
 }
 .glocke summary::-webkit-details-marker { display: none; }
-.glocke summary:hover, .glocke[open] summary { color: var(--text); border-color: rgba(227,161,90,.5); background: var(--surface); }
+.glocke summary:hover, .glocke[open] summary { color: var(--text); border-color: color-mix(in srgb, var(--amber) 50%, transparent); background: var(--surface); }
 .glocke summary:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
 .glocke summary svg { width: 20px; height: 20px; }
 .glocke__punkt {
   position: absolute; top: -3px; right: -3px;
-  min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
+  min-width: 18px; height: 18px; padding: 0 5px; border-radius: calc(9px * var(--ecken));
   display: grid; place-items: center;
-  font-size: .68rem; font-weight: 700; color: var(--ground); background: var(--amber);
+  font-size: .68rem; font-weight: 700; color: var(--auf-akzent); background: var(--amber);
   border: 2px solid var(--ground-deep);
 }
 .glocke__punkt[hidden] { display: none; }
@@ -121,7 +121,7 @@ a.knopf-leise { text-decoration: none; }
   position: absolute; right: 0; top: calc(100% + 10px);
   width: min(360px, calc(100vw - 32px));
   background: var(--surface-hi);
-  border: 1px solid var(--border-hi); border-radius: 16px;
+  border: 1px solid var(--border-hi); border-radius: calc(16px * var(--ecken));
   box-shadow: 0 20px 50px rgba(0,0,0,.45);
   animation: panel-auf .18s ease-out;
   overflow: hidden;
@@ -140,7 +140,7 @@ a.knopf-leise { text-decoration: none; }
   border-bottom: 1px solid var(--border);
   transition: background .2s;
 }
-.meldung[href]:hover { background: rgba(227,161,90,.06); }
+.meldung[href]:hover { background: color-mix(in srgb, var(--amber) 6%, transparent); }
 .meldung__punkt { flex: none; width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: transparent; }
 .meldung.ungelesen .meldung__punkt { background: var(--amber); }
 .meldung__inhalt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }

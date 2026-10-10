@@ -1,10 +1,12 @@
 /* ==========================================================
-   Grove · base.css  (Claude)
+   Grove · basis.css  (Claude)
    Farben, Schriften, Reset – die Grundlage für alles andere
    ========================================================== */
 
 :root {
-  /* Farben – exakt aus dem Grove-Design ("Lichtung") */
+  /* ---------- Farben – Standard = Preset „Lichtung“ ----------
+     Laub (der Gestaltungs-Dienst) überschreibt diese Werte live über
+     js/kern/thema.js. Hier stehen nur die Standardwerte. */
   --ground:        #1C1420;   /* Grundfarbe, auch Logo-Hintergrund */
   --ground-deep:   #160F19;   /* Seitenleiste, Kopfzeile */
   --surface:       #241A27;   /* Karten */
@@ -16,9 +18,24 @@
   --text:          #EFE6D6;
   --text-soft:     #CDBFAE;
   --muted:         #A8957F;
-  --line:          rgba(227, 161, 90, .18);
+  --flieder:       #C9A7D1;   /* zweite Akzentfarbe (z. B. Sonderzeichen in Rinde) */
+  --fehler:        #E8907E;   /* Fehlermeldungen */
+  --gut:           #BFE3B4;   /* Erfolg, „aktiv“ */
 
-  /* alte Namen → neue Farben (damit layout.css weiter passt) */
+  /* abgeleitete Farben – thema.js berechnet sie aus den Farben oben */
+  --auf-akzent:    #1C1420;   /* Text auf Amber-Flächen (Knöpfe, Avatar) */
+  --fehler-hell:   #F2B3A3;
+  --fehler-tief:   #D66A54;
+  --gut-hell:      #CFE8C6;
+  --himmel:        #140E17;   /* oberer Rand von Hero-Verläufen */
+  --glanz:         #FFE6C2;   /* Lichtreflexe in Animationen */
+  --wald-tief:     #0F0A11;   /* Szenen: vorderste Silhouetten */
+  --wald:          #2B2030;   /* Szenen: hintere Bäume */
+  --wald-mitte:    #211824;
+  --nebel:         #CDBFAE;   /* Nebel-Animation (34) */
+  --line:          color-mix(in srgb, var(--amber) 18%, transparent);
+
+  /* alte Namen → neue Farben (damit ältere Stellen weiter passen) */
   --aubergine-900: var(--ground);
   --aubergine-800: var(--surface);
   --aubergine-700: var(--surface-hi);
@@ -30,20 +47,30 @@
   /* Schriften */
   --font-display: 'Fraunces', Georgia, serif;
   --font-body:    'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
+  --schrift-faktor: 1;        /* 1 = 100 % */
 
-  /* Abstände & Radien */
+  /* Form: alle Rundungen werden mit --ecken multipliziert (0 = eckig, 1 = Standard) */
+  --ecken: 1;
   --gap: clamp(16px, 3vw, 32px);
-  --radius: 18px;
+  --radius: calc(18px * var(--ecken));
+
+  /* Hintergrund */
+  --korn: .06;                         /* Filmkorn-Deckkraft */
+  --schein-farbe: var(--surface-hi);   /* warmer Schein oben */
+  --muster: none;                      /* optionales Muster (setzt thema.js) */
+  --muster-groesse: 48px;
+  --farbschema: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { color-scheme: dark; scroll-behavior: smooth; }
+html { color-scheme: var(--farbschema); scroll-behavior: smooth; font-size: calc(100% * var(--schrift-faktor)); }
 
 body {
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, var(--aubergine-700), transparent 70%),
+    radial-gradient(ellipse 80% 50% at 50% -10%, var(--schein-farbe), transparent 70%),
+    var(--muster) 0 0 / var(--muster-groesse) repeat,
     var(--aubergine-900);
   color: var(--cream);
   font-family: var(--font-body);
@@ -56,7 +83,7 @@ body::before {
   content: "";
   position: fixed; inset: 0;
   pointer-events: none;
-  opacity: .06;
+  opacity: var(--korn);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 

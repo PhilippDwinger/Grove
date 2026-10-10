@@ -1,6 +1,7 @@
 // Grove · Neues Passwort setzen
 // Der Link aus der Mail bringt eine vorübergehende Anmeldung mit (steht in der Adresse).
 // Supabase liest sie automatisch aus – danach darf man das Passwort ändern.
+import "../kern/thema.js"                        // zuerst: Gestaltung aus Laub (Farben, Schriften, Bewegung)
 import { supabase } from "../kern/supabase.js"
 import { deutscheMeldung } from "../kern/meldungen.js"
 

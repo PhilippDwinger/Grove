@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rinde – Grove</title>
+  <link rel="icon" href="/bilder/marke/favicon.svg" type="image/svg+xml">
+
+  <!-- Schriften -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Design -->
+  <link rel="stylesheet" href="/css/basis.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/dienste/rinde.css">
+</head>
+<body class="geschuetzt" data-dienst="rinde">
+
+  <header class="kopf">
+    <div class="wrap kopf__inner" style="width: calc(100% - 32px); max-width: none;">
+      <div style="display:flex;align-items:center;gap:6px">
+        <a class="zurueck" href="/" aria-label="Zurück zur Lichtung">←</a>
+        <a class="marke" href="/dienste/rinde/"><img src="/bilder/dienste/rinde-zeichen.svg" alt="" data-zeichen style="width:34px;height:auto"> Rinde <span class="marke__zusatz">Passwörter</span></a>
+      </div>
+      <div class="kopf__rechts">
+        <button class="knopf-leise" type="button" id="sperren" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Sperren</button>
+        <!-- Suche über alle Dienste (js/kern/suche.js, auch Strg+K) -->
+        <button class="suche-knopf" type="button" data-suche aria-label="Grove durchsuchen" title="Suchen (Strg K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+        <!-- Benachrichtigungen (js/glocke.js) -->
+        <details class="glocke ausklapp" id="glocke">
+          <summary aria-label="Benachrichtigungen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="glocke__punkt" hidden>0</span></summary>
+          <div class="glocke__panel">
+            <div class="glocke__kopf"><strong>Benachrichtigungen</strong><a href="#" data-alle-gelesen hidden>Alle gelesen</a></div>
+            <div class="glocke__liste"></div>
+            <p class="glocke__leer" hidden>Alles ruhig auf der Lichtung.</p>
+          </div>
+        </details>
+        <template id="glocke-vorlage">
+          <a class="meldung"><span class="meldung__punkt"></span><span class="meldung__inhalt"><strong class="meldung__titel"></strong><span class="meldung__text"></span><span class="meldung__zeit"></span></span></a>
+        </template>
+
+        <!-- Nutzermenü (js/nutzermenue.js) -->
+        <details class="nutzer ausklapp">
+          <summary aria-label="Nutzermenü öffnen">
+            <span class="avatar" data-nutzer-initial>·</span>
+            <span class="nutzer__name" data-nutzer-name>…</span>
+            <svg class="nutzer__pfeil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="nutzer__panel">
+            <div class="nutzer__info">
+              <strong data-nutzer-name>…</strong>
+              <span data-nutzer-email>…</span>
+            </div>
+            <a class="knopf-leise" href="/dienste/laub/" data-laub-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c-4.5 0-8-3.5-8-8 0-5 4-9 9-9 4.4 0 7 2.6 7 5.6 0 2.3-1.8 3.9-4 3.9h-1.6a1.6 1.6 0 0 0-1.1 2.8c.4.4.6.9.6 1.4 0 1.8-.9 3.3-1.9 3.3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/></svg> Gestaltung</a>
+            <a class="knopf-leise" href="/konto.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Mein Konto</a>
+            <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  <main id="rinde" class="rinde r-inhalt"></main>
+
+  <!-- ================= SCRIPTE ================= -->
+  <script type="module" src="/js/seiten/rinde.js"></script>
+</body>
+</html>

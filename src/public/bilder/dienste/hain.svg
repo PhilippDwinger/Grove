@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <!-- Grove · Hain: ein kleiner Wald, der wächst -->
+  <path d="M30 150 Q160 140 290 150" fill="none" stroke="#3A2C3D" stroke-width="3" stroke-linecap="round"/>
+  <path d="M78 88 L96 136 L81 136 L81 150 L75 150 L75 136 L60 136 Z" fill="#E3A15A" opacity="0.55"/><path d="M110 58 L132 130 L113 130 L113 150 L107 150 L107 130 L88 130 Z" fill="#E3A15A" opacity="0.8"/><path d="M146 76 L166 134 L149 134 L149 150 L143 150 L143 134 L126 134 Z" fill="#F2C08A" opacity="0.7"/><path d="M178 32 L204 124 L181 124 L181 150 L175 150 L175 124 L152 124 Z" fill="#E3A15A" opacity="1"/><path d="M214 66 L235 132 L217 132 L217 150 L211 150 L211 132 L193 132 Z" fill="#E3A15A" opacity="0.75"/><path d="M246 50 L268 128 L249 128 L249 150 L243 150 L243 128 L224 128 Z" fill="#F2C08A" opacity="0.65"/><path d="M272 94 L288 138 L275 138 L275 150 L269 150 L269 138 L256 138 Z" fill="#E3A15A" opacity="0.5"/>
+  <circle cx="178" cy="22" r="2.4" fill="#F2C08A"/><path d="M178 14 L178 18 M178 26 L178 30 M170 22 L174 22 M182 22 L186 22" stroke="#F2C08A" stroke-width="1.4" stroke-linecap="round"/>
+</svg>

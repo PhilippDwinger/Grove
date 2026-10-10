@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <!-- Grove · Mondplatte: Schallplatte als Mond über dem Waldrand -->
+<circle cx="91" cy="17" r="1.2" fill="#F2C08A" opacity="0.49"/><circle cx="53" cy="11" r="1.6" fill="#F2C08A" opacity="0.67"/><circle cx="238" cy="64" r="1" fill="#F2C08A" opacity="0.51"/><circle cx="124" cy="65" r="1" fill="#F2C08A" opacity="0.40"/><circle cx="275" cy="12" r="1.6" fill="#F2C08A" opacity="0.62"/><circle cx="238" cy="24" r="1.2" fill="#F2C08A" opacity="0.42"/><circle cx="256" cy="77" r="1.2" fill="#F2C08A" opacity="0.33"/><circle cx="188" cy="57" r="1.6" fill="#F2C08A" opacity="0.40"/><circle cx="94" cy="30" r="1.6" fill="#F2C08A" opacity="0.64"/><circle cx="32" cy="30" r="1.6" fill="#F2C08A" opacity="0.65"/><circle cx="250" cy="46" r="1.2" fill="#F2C08A" opacity="0.47"/><circle cx="105" cy="42" r="1" fill="#F2C08A" opacity="0.42"/><circle cx="241" cy="13" r="1" fill="#F2C08A" opacity="0.49"/><circle cx="289" cy="46" r="1.6" fill="#F2C08A" opacity="0.49"/>
+  <circle cx="160" cy="70" r="52" fill="#E3A15A" opacity=".06"/>
+  <circle cx="160" cy="70" r="40" fill="none" stroke="#E3A15A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+  <circle cx="160" cy="70" r="31" fill="none" stroke="#E3A15A" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" opacity=".6"/>
+  <circle cx="160" cy="70" r="23" fill="none" stroke="#E3A15A" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" opacity=".45"/>
+  <circle cx="160" cy="70" r="12" fill="#E3A15A"/><circle cx="160" cy="70" r="2.4" fill="#1C1420"/>
+  <path d="M206 34 L184 52" stroke="#F2C08A" stroke-width="2.4" stroke-linecap="round"/><circle cx="209" cy="31" r="4" fill="#F2C08A"/>
+  <path d="M60 104 L73 150 L47 150 Z" fill="#3A2C3D" opacity="0.9"/><path d="M84 88 L101 150 L67 150 Z" fill="#3A2C3D" opacity="1"/><path d="M108 110 L119 150 L97 150 Z" fill="#3A2C3D" opacity="0.8"/><path d="M220 98 L235 150 L205 150 Z" fill="#3A2C3D" opacity="0.9"/><path d="M246 80 L266 150 L226 150 Z" fill="#3A2C3D" opacity="1"/><path d="M270 106 L282 150 L258 150 Z" fill="#3A2C3D" opacity="0.85"/><path d="M130 120 L138 150 L122 150 Z" fill="#3A2C3D" opacity="0.7"/><path d="M196 116 L206 150 L186 150 Z" fill="#3A2C3D" opacity="0.7"/>
+  <path d="M30 150 Q160 140 290 150" fill="none" stroke="#3A2C3D" stroke-width="3" stroke-linecap="round"/>
+</svg>

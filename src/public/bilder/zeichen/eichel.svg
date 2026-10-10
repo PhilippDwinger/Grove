@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Eichel -->
+  <path d="M14 20 C14 32 18 41 24 43 C30 41 34 32 34 20 Z" fill="#E3A15A"/>
+  <path d="M11 20 C11 13 17 10 24 10 C31 10 37 13 37 20 Z" fill="#F2C08A"/>
+  <path d="M15 15 L33 15 M14 18 L34 18" stroke="#1C1420" stroke-width="1.2" opacity=".45"/>
+  <path d="M24 10 C24 7 26 5 29 4" fill="none" stroke="#E3A15A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M20 26 C20 31 21 35 23 38" fill="none" stroke="#F2C08A" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+</svg>

@@ -1,6 +1,7 @@
 // ==========================================================
 // Myzel · Seite (src/dienste/myzel/index.html)
 // ==========================================================
+import "../kern/thema.js"                        // zuerst: Gestaltung aus Laub (Farben, Schriften, Bewegung)
 import "../kern/schutz.js"
 import "../glocke.js"
 import { ladeNutzer } from "../nutzermenue.js"
@@ -9,6 +10,12 @@ import * as daten from "../myzel/daten.js"
 import { zuHtml, auszug, linkTitel, benenneUm } from "../myzel/markdown.js"
 import { verbindeVorschlaege } from "../myzel/vorschlaege.js"
 import { erstelleNetz } from "../myzel/netz.js"
+import "../kern/alle-dienste.js"
+import { sucheEinrichten } from "../kern/suche.js"
+import { verbindungsBereich } from "../kern/verknuepfen.js"
+import { alleVerbindungenLoeschen } from "../kern/verbindungen.js"
+
+sucheEinrichten()
 
 const $ = (s) => document.querySelector(s)
 
@@ -41,6 +48,13 @@ if (start === "netz") zeigeAnsicht("netz")
 else if (nachId(start)) oeffne(start)
 
 if (nutzer) daten.beobachte(nutzer.user.id, beiLiveAenderung)
+
+// Suche (Strg+K) oder "Verbunden mit" springt auf /dienste/myzel/#<id> – auch, wenn Myzel schon offen ist
+window.addEventListener("hashchange", () => {
+    const ziel = location.hash.slice(1)
+    if (ziel === "netz") zeigeAnsicht("netz")
+    else if (nachId(ziel) && ziel !== aktiv?.id) oeffne(ziel)
+})
 
 // ---------- Liste ----------
 function sichtbareNotizen() {
@@ -127,6 +141,9 @@ async function oeffne(id, { schreiben = false } = {}) {
     $("#inhalt").value = n.inhalt
     setzeModus(schreiben || !n.inhalt.trim() ? "schreiben" : "lesen")
     zeichneSeite()
+    // Verbunden mit (Grove-weit: Mails, Passwörter, …) – getrennt von den [[Links]]
+    $("#grove-verbindungen").replaceChildren()
+    verbindungsBereich($("#grove-verbindungen"), { typ: "myzel", id })
     document.querySelectorAll(".notiz-eintrag").forEach((el) => el.toggleAttribute("aria-current", el.dataset.id === id))
     status("")
 }
@@ -311,6 +328,7 @@ $("#loeschen").addEventListener("click", async (e) => {
     try {
         ungespeichert = false
         await daten.loesche(id)
+        alleVerbindungenLoeschen({ typ: "myzel", id }).catch(console.error)
         notizen = notizen.filter((n) => n.id !== id)
         links = links.filter((l) => l.von_id !== id && l.nach_id !== id)
         $("#blatt-zurueck").click()

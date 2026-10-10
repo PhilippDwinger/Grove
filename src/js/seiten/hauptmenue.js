@@ -1,10 +1,16 @@
 // ==========================================================
 // Grove · Hauptmenü (index.html)
 // ==========================================================
+import "../kern/thema.js"                        // zuerst: Gestaltung aus Laub (Farben, Schriften, Bewegung)
 import "../kern/schutz.js"                       // zuerst: nur Eingeloggte
 import "../glocke.js"
 import { ladeNutzer } from "../nutzermenue.js"
 import { dienste, statusText } from "../dienste.js"
+import { begruessungSetzen, karteFuer } from "../kern/thema.js"
+import "../kern/alle-dienste.js"                 // Suche kennt alle Dienste
+import { sucheEinrichten } from "../kern/suche.js"
+
+sucheEinrichten()                                // Strg+K + Lupe in der Kopfzeile
 
 // ---------- Begrüßung nach Tageszeit ----------
 const stunde = new Date().getHours()
@@ -16,7 +22,9 @@ const gruss =
 
 const nutzer = await ladeNutzer()
 const vorname = nutzer ? nutzer.name.split("@")[0] : ""
-document.querySelector("#begruessung").textContent = `${gruss}, ${vorname}.`
+const begruessung = document.querySelector("#begruessung")
+begruessungSetzen(begruessung, `${gruss}, ${vorname}.`)   // Effekt wählt man in Laub
+window.addEventListener("grove-thema", () => begruessungSetzen(begruessung, `${gruss}, ${vorname}.`))
 document.querySelector("#datum").textContent = new Date().toLocaleDateString("de-DE", {
     weekday: "long", day: "numeric", month: "long",
 })
@@ -30,8 +38,9 @@ dienste.forEach((dienst, i) => {
     const karte = vorlage.content.firstElementChild.cloneNode(true)
     karte.style.setProperty("--i", i)
     karte.dataset.status = dienst.status
+    karte.dataset.themaDienst = dienst.id          // Farben + Bild dieses Dienstes (Laub)
 
-    karte.querySelector(".dienst__bild").src = dienst.bild
+    karte.querySelector(".dienst__bild").src = karteFuer(dienst.id, dienst.bild)
     karte.querySelector(".dienst__name").textContent = dienst.name
     karte.querySelector(".dienst__art").textContent = dienst.art
     karte.querySelector(".dienst__text").textContent = dienst.beschreibung

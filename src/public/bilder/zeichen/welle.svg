@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Klangwelle -->
+  <path d="M4 24 L9 24 L12 16 L16 34 L20 10 L24 38 L28 14 L32 31 L36 19 L39 24 L44 24" fill="none" stroke="#E3A15A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="24" cy="24" r="20" fill="none" stroke="#F2C08A" stroke-width="1.2" opacity=".35"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Laub – drei Blätter wie eine Farbpalette -->
+  <path d="M24 42 C24 34 24 28 24 22" fill="none" stroke="#E3A15A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 26 C14 27 7 20 8 9 C19 9 25 16 24 26 Z" fill="#E3A15A"/>
+  <path d="M24 30 C33 31 41 25 40 14 C30 14 23 20 24 30 Z" fill="#F2C08A"/>
+  <path d="M24 22 C20 16 21 9 26 4 C30 10 29 17 24 22 Z" fill="#E3A15A" opacity=".7"/>
+  <path d="M10 11 C15 15 19 19 23 24" fill="none" stroke="#1C1420" stroke-width="1.3" stroke-linecap="round" opacity=".7"/>
+  <path d="M38 16 C34 20 30 24 25 28" fill="none" stroke="#1C1420" stroke-width="1.3" stroke-linecap="round" opacity=".7"/>
+</svg>

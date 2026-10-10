@@ -8,7 +8,7 @@
 
 /* ---------- Karten ---------- */
 .karte {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 22px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: calc(22px * var(--ecken));
   padding: 26px clamp(20px, 4vw, 32px);
   display: flex; flex-direction: column; gap: 22px;
   animation: hoch .5s cubic-bezier(.2,.8,.2,1) both;
@@ -20,8 +20,8 @@
 .karte__titel h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.45rem; display: flex; align-items: center; gap: 10px; }
 .karte__titel h2 svg { width: 22px; height: 22px; }
 .karte__titel p { color: var(--muted); font-size: .93rem; margin-top: 4px; }
-.karte--gefahr { border-color: rgba(214,106,84,.35); }
-.karte--gefahr h2 { color: #F2B3A3; }
+.karte--gefahr { border-color: color-mix(in srgb, var(--fehler-tief) 35%, transparent); }
+.karte--gefahr h2 { color: var(--fehler-hell); }
 
 .trenner { border: 0; border-top: 1px solid var(--border); }
 
@@ -29,7 +29,7 @@
 .profil { display: grid; grid-template-columns: 180px 1fr; gap: 28px; align-items: start; }
 @media (max-width: 640px) { .profil { grid-template-columns: 1fr; } }
 .profil__bild { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.avatar--gross { width: 112px; height: 112px; font-size: 2.6rem; box-shadow: 0 0 0 4px var(--surface), 0 0 0 5px rgba(227,161,90,.35); }
+.avatar--gross { width: 112px; height: 112px; font-size: 2.6rem; box-shadow: 0 0 0 4px var(--surface), 0 0 0 5px color-mix(in srgb, var(--amber) 35%, transparent); }
 .profil__hochladen { padding: 0 16px; height: 40px; font-size: .88rem; cursor: pointer; }
 .profil__hochladen:focus-within { outline: 2px solid var(--amber-light); outline-offset: 3px; }
 
@@ -40,13 +40,13 @@
 .feld input {
   height: 48px; padding: 0 16px;
   font: inherit; font-size: .98rem; color: var(--text);
-  background: var(--ground); border: 1px solid var(--border-hi); border-radius: 14px;
+  background: var(--ground); border: 1px solid var(--border-hi); border-radius: calc(14px * var(--ecken));
   transition: border-color .2s, box-shadow .2s;
 }
-.feld input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 4px rgba(227,161,90,.14); }
+.feld input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 4px color-mix(in srgb, var(--amber) 14%, transparent); }
 .feld__hilfe { font-size: .82rem; color: var(--muted); }
 .feld__fest {
-  min-height: 48px; padding: 10px 16px; border-radius: 14px;
+  min-height: 48px; padding: 10px 16px; border-radius: calc(14px * var(--ecken));
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
   background: transparent; border: 1px dashed var(--border-hi);
 }
@@ -55,19 +55,19 @@
 .feld-reihe { display: flex; gap: 14px; }
 @media (max-width: 560px) { .feld-reihe { flex-direction: column; } }
 
-.form-meldung { font-size: .9rem; color: #CFE8C6; }
+.form-meldung { font-size: .9rem; color: var(--gut-hell); }
 .form-meldung:empty { display: none; }
-.form-meldung[data-art="fehler"] { color: #F2B3A3; }
+.form-meldung[data-art="fehler"] { color: var(--fehler-hell); }
 
 .knopf-voll, .knopf-gefahr {
-  align-self: flex-start; height: 46px; padding: 0 22px; border: 0; border-radius: 23px; cursor: pointer;
+  align-self: flex-start; height: 46px; padding: 0 22px; border: 0; border-radius: calc(23px * var(--ecken)); cursor: pointer;
   font: inherit; font-weight: 600; font-size: .95rem;
   transition: background .2s, opacity .2s;
 }
-.knopf-voll { color: var(--ground); background: var(--amber); }
+.knopf-voll { color: var(--auf-akzent); background: var(--amber); }
 .knopf-voll:hover { background: var(--amber-light); }
-.knopf-gefahr { color: #fff; background: #B4523F; }
-.knopf-gefahr:hover:not(:disabled) { background: #C9604B; }
+.knopf-gefahr { color: #fff; background: var(--fehler-tief); }
+.knopf-gefahr:hover:not(:disabled) { background: color-mix(in srgb, var(--fehler-tief) 85%, white); }
 .knopf-voll:disabled, .knopf-gefahr:disabled { opacity: .45; cursor: not-allowed; }
 .knopf-voll:focus-visible, .knopf-gefahr:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
 

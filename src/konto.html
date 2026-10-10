@@ -13,7 +13,6 @@
 
   <!-- Design -->
   <link rel="stylesheet" href="/css/basis.css">
-  <link rel="stylesheet" href="/css/animationen.css">
   <link rel="stylesheet" href="/css/app.css">
   <link rel="stylesheet" href="/css/seiten/konto.css">
 </head>
@@ -23,7 +22,7 @@
     <div class="wrap kopf__inner">
       <div style="display:flex;align-items:center;gap:6px">
         <a class="zurueck" href="/" aria-label="Zurück zur Lichtung">←</a>
-        <a class="marke" href="/"><img src="/bilder/marke/grove-logo-klein.svg" alt=""> Grove <span class="marke__zusatz">Konto</span></a>
+        <a class="marke" href="/"><img src="/bilder/marke/grove-logo-klein.svg" alt="" data-logo> Grove <span class="marke__zusatz">Konto</span></a>
       </div>
       <div class="kopf__rechts">
         <!-- Benachrichtigungen (js/glocke.js) -->
@@ -51,6 +50,7 @@
               <strong data-nutzer-name>…</strong>
               <span data-nutzer-email>…</span>
             </div>
+            <a class="knopf-leise" href="/dienste/laub/" data-laub-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c-4.5 0-8-3.5-8-8 0-5 4-9 9-9 4.4 0 7 2.6 7 5.6 0 2.3-1.8 3.9-4 3.9h-1.6a1.6 1.6 0 0 0-1.1 2.8c.4.4.6.9.6 1.4 0 1.8-.9 3.3-1.9 3.3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/></svg> Gestaltung</a>
             <a class="knopf-leise" href="/konto.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Mein Konto</a>
             <button class="knopf-leise" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg> Ausloggen</button>
           </div>

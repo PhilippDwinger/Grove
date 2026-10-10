@@ -1,3 +1,4 @@
+import "../kern/thema.js"                        // zuerst: Gestaltung aus Laub (Farben, Schriften, Bewegung)
 import { signIn } from "../kern/auth.js"
 import { deutscheMeldung } from "../kern/meldungen.js"
 

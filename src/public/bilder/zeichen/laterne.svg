@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Laterne -->
+  <path d="M24 3 L24 7" fill="none" stroke="#E3A15A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 7 L29 7 L32 12 L16 12 Z" fill="#E3A15A"/>
+  <rect x="16" y="12" width="16" height="22" rx="3" fill="none" stroke="#E3A15A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 18 C21 22 21 26 24 29 C27 26 27 22 24 18 Z" fill="#F2C08A"/>
+  <path d="M14 34 L34 34 L31 40 L17 40 Z" fill="#E3A15A"/>
+  <circle cx="24" cy="24" r="9" fill="#F2C08A" opacity=".12"/>
+</svg>

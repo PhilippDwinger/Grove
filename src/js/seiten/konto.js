@@ -1,6 +1,7 @@
 // ==========================================================
 // Grove · Mein Konto (konto.html)
 // ==========================================================
+import "../kern/thema.js"                        // zuerst: Gestaltung aus Laub (Farben, Schriften, Bewegung)
 import "../kern/schutz.js"
 import "../glocke.js"
 import { supabase } from "../kern/supabase.js"

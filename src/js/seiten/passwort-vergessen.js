@@ -1,4 +1,5 @@
 // Grove · Passwort vergessen → Supabase schickt einen Link zu passwort-neu.html
+import "../kern/thema.js"                        // zuerst: Gestaltung aus Laub (Farben, Schriften, Bewegung)
 import { supabase } from "../kern/supabase.js"
 import { deutscheMeldung } from "../kern/meldungen.js"
 

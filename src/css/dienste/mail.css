@@ -8,7 +8,7 @@
 .mail-hinweis {
   display: flex; align-items: center; justify-content: center; gap: 10px;
   padding: 9px 16px;
-  background: rgba(227,161,90,.08); border-bottom: 1px solid rgba(227,161,90,.22);
+  background: color-mix(in srgb, var(--amber) 8%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--amber) 22%, transparent);
   color: var(--amber-light); font-size: .88rem; text-align: center;
 }
 .mail-hinweis[hidden] { display: none; }
@@ -23,8 +23,8 @@
   background: var(--ground-deep); overflow-y: auto;
 }
 .mail-neu {
-  height: 46px; margin-bottom: 12px; border: 0; border-radius: 14px; cursor: pointer;
-  font: inherit; font-weight: 600; color: var(--ground); background: var(--amber);
+  height: 46px; margin-bottom: 12px; border: 0; border-radius: calc(14px * var(--ecken)); cursor: pointer;
+  font: inherit; font-weight: 600; color: var(--auf-akzent); background: var(--amber);
   display: flex; align-items: center; justify-content: center; gap: 8px;
   transition: background .2s;
 }
@@ -36,7 +36,7 @@
 .mail-adresse__zeile { display: flex; align-items: center; gap: 6px; }
 .mail-adresse__zeile span { font-size: .86rem; color: var(--text-soft); overflow-wrap: break-word; min-width: 0; }
 .mail-adresse__kopieren {
-  flex: none; width: 28px; height: 28px; border-radius: 8px; cursor: pointer;
+  flex: none; width: 28px; height: 28px; border-radius: calc(8px * var(--ecken)); cursor: pointer;
   display: grid; place-items: center;
   background: transparent; border: 1px solid transparent; color: var(--muted);
   transition: color .2s, border-color .2s;
@@ -46,14 +46,14 @@
 
 .mail-ordner a {
   display: flex; align-items: center; gap: 12px;
-  padding: 10px 12px; border-radius: 10px;
+  padding: 10px 12px; border-radius: calc(10px * var(--ecken));
   color: var(--text-soft); font-size: .94rem;
   transition: background .2s, color .2s;
 }
 .mail-ordner a svg { width: 18px; height: 18px; flex: none; opacity: .85; }
 .mail-ordner a:hover { background: var(--surface); color: var(--text); }
 .mail-ordner a[aria-current="page"] { background: var(--surface-hi); color: var(--amber-light); font-weight: 600; }
-.mail-ordner .zahl { margin-left: auto; font-size: .78rem; font-weight: 600; color: var(--ground); background: var(--amber); border-radius: 999px; padding: 1px 8px; }
+.mail-ordner .zahl { margin-left: auto; font-size: .78rem; font-weight: 600; color: var(--auf-akzent); background: var(--amber); border-radius: 999px; padding: 1px 8px; }
 .mail-ordner .zahl[hidden] { display: none; }
 
 /* ---------- Liste ---------- */
@@ -61,7 +61,7 @@
 .mail-liste__kopf { padding: 18px 18px 12px; display: flex; flex-direction: column; gap: 12px; position: sticky; top: 0; background: var(--ground); z-index: 1; }
 .mail-liste__kopf h1 { font-family: var(--font-display); font-weight: 400; font-size: 1.6rem; }
 .mail-suche {
-  height: 42px; padding: 0 14px; border-radius: 12px;
+  height: 42px; padding: 0 14px; border-radius: calc(12px * var(--ecken));
   font: inherit; font-size: .93rem; color: var(--text);
   background: var(--surface); border: 1px solid var(--border-hi);
 }
@@ -111,7 +111,7 @@
 .brief[hidden] { display: none; }
 .brief__zurueck {
   display: none; align-self: flex-start; align-items: center; gap: 4px;
-  padding: 6px 10px 6px 4px; border-radius: 10px; cursor: pointer;
+  padding: 6px 10px 6px 4px; border-radius: calc(10px * var(--ecken)); cursor: pointer;
   font: inherit; font-size: .9rem; color: var(--text-soft); background: transparent; border: 0;
 }
 .brief__zurueck svg { width: 18px; height: 18px; }
@@ -124,11 +124,11 @@
 .brief__aktionen { display: flex; gap: 8px; flex-wrap: wrap; }
 .brief__aktionen .knopf-leise { padding: 0 14px; height: 38px; font-size: .88rem; }
 .brief__aktionen [hidden] { display: none; }
-.knopf-leise--warn:hover { border-color: #D66A54; color: #F2B3A3; background: rgba(214,106,84,.08); }
+.knopf-leise--warn:hover { border-color: var(--fehler-tief); color: var(--fehler-hell); background: color-mix(in srgb, var(--fehler-tief) 8%, transparent); }
 
 .bilder-hinweis {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  padding: 10px 14px; border-radius: 12px;
+  padding: 10px 14px; border-radius: calc(12px * var(--ecken));
   background: var(--surface); border: 1px solid var(--border-hi);
   color: var(--text-soft); font-size: .86rem;
 }
@@ -143,13 +143,13 @@
 
 .brief__text { color: var(--text-soft); line-height: 1.75; display: flex; flex-direction: column; gap: 14px; overflow-wrap: anywhere; }
 .brief__text a { color: var(--amber-light); text-decoration: underline; text-underline-offset: 3px; }
-.brief__html { width: 100%; min-height: 120px; border: 0; border-radius: 14px; background: #fff; display: block; }
+.brief__html { width: 100%; min-height: 120px; border: 0; border-radius: calc(14px * var(--ecken)); background: #fff; display: block; }
 
 .brief__anhaenge { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 6px; }
 .brief__anhaenge[hidden] { display: none; }
 .anhang {
   display: inline-flex; align-items: center; gap: 8px; max-width: 100%;
-  padding: 8px 12px; border-radius: 12px; cursor: pointer;
+  padding: 8px 12px; border-radius: calc(12px * var(--ecken)); cursor: pointer;
   font: inherit; font-size: .88rem; color: var(--text);
   background: var(--surface); border: 1px solid var(--border-hi);
   transition: border-color .2s;
@@ -164,7 +164,7 @@
 .hinweis-blase {
   position: fixed; left: 50%; bottom: 24px; z-index: 100;
   translate: -50% 20px; opacity: 0; pointer-events: none;
-  padding: 12px 18px; border-radius: 14px;
+  padding: 12px 18px; border-radius: calc(14px * var(--ecken));
   background: var(--surface-hi); border: 1px solid var(--border-hi); color: var(--text);
   box-shadow: 0 16px 40px rgba(0,0,0,.45); font-size: .92rem;
   transition: opacity .25s, translate .25s;

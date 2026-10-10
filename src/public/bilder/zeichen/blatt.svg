@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Blatt -->
+  <path d="M10 40 C6 26 14 10 40 8 C42 30 28 42 10 40 Z" fill="#E3A15A" opacity=".9"/>
+  <path d="M10 40 C18 30 26 22 36 12" fill="none" stroke="#1C1420" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M19 30 L18 22 M25 24 L30 25 M23 26 L22 18" fill="none" stroke="#1C1420" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+  <path d="M6 44 L11 39" fill="none" stroke="#E3A15A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

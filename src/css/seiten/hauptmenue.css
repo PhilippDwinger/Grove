@@ -8,7 +8,7 @@
   position: relative; overflow: hidden;
   min-height: 380px;
   display: flex; align-items: flex-start;
-  background: linear-gradient(180deg, #140E17 0%, var(--ground) 100%);
+  background: linear-gradient(180deg, var(--himmel) 0%, var(--ground) 100%);
   border-bottom: 1px solid var(--border);
 }
 .lichtung__szene {
@@ -16,8 +16,11 @@
   object-fit: cover; object-position: center bottom;
   pointer-events: none;
 }
-.lichtung .a11 { position: absolute; inset: 0 0 30% 0; }
-.lichtung .a11 span { opacity: .5; }
+/* Hintergrund-Animation im Hero (setzt js/kern/thema.js, Standard: 11 Glühwürmchen) */
+.lichtung__atmo { position: absolute; inset: 0; pointer-events: none; }
+.lichtung__atmo .a11 { inset: 0 0 30% 0; }
+.lichtung__atmo .a11 span { opacity: .5; }
+.lichtung__szene[hidden] { display: none; }
 .lichtung__text { position: relative; padding: 64px 0 120px; display: flex; flex-direction: column; gap: 10px; }
 .lichtung__datum { font-size: .82rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .lichtung__gruss {
@@ -49,19 +52,19 @@
   display: flex; flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 22px;
+  border-radius: calc(22px * var(--ecken));
   overflow: hidden;
   animation: hoch .6s cubic-bezier(.2,.8,.2,1) both;
   animation-delay: calc(.12s + var(--i, 0) * .07s);
   transition: translate .3s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .3s;
 }
-a.dienst:hover { translate: 0 -4px; border-color: rgba(227,161,90,.45); box-shadow: 0 18px 44px rgba(0,0,0,.35); }
+a.dienst:hover { translate: 0 -4px; border-color: color-mix(in srgb, var(--amber) 45%, transparent); box-shadow: 0 18px 44px rgba(0,0,0,.35); }
 a.dienst:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
 
 .dienst__buehne {
   height: 168px;
   display: grid; place-items: center;
-  background: radial-gradient(ellipse at 50% 120%, rgba(227,161,90,.14), transparent 60%), var(--ground);
+  background: radial-gradient(ellipse at 50% 120%, color-mix(in srgb, var(--amber) 14%, transparent), transparent 60%), var(--ground);
   border-bottom: 1px solid var(--border);
 }
 .dienst__bild { width: 78%; max-height: 150px; transition: scale .5s cubic-bezier(.2,.8,.2,1); }
@@ -82,8 +85,8 @@ a.dienst:hover .dienst__los::after { translate: 4px 0; }
   font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
   border: 1px solid var(--border-hi); color: var(--muted);
 }
-.dienst[data-status="aktiv"] .dienst__status    { color: #BFE3B4; border-color: rgba(191,227,180,.35); }
-.dienst[data-status="vorschau"] .dienst__status { color: var(--amber-light); border-color: rgba(227,161,90,.4); }
+.dienst[data-status="aktiv"] .dienst__status    { color: var(--gut); border-color: color-mix(in srgb, var(--gut) 35%, transparent); }
+.dienst[data-status="vorschau"] .dienst__status { color: var(--amber-light); border-color: color-mix(in srgb, var(--amber) 40%, transparent); }
 
 /* "bald" = noch nicht klickbar */
 .dienst[aria-disabled="true"] .dienst__bild { opacity: .55; filter: saturate(.6); }

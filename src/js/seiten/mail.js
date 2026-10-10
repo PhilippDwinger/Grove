@@ -2,12 +2,19 @@
 // Grove Mail · Seite (src/dienste/mail/index.html)
 // Steuert Ordner, Liste, Lesebereich und Live-Updates.
 // ==========================================================
+import "../kern/thema.js"                        // zuerst: Gestaltung aus Laub (Farben, Schriften, Bewegung)
 import "../kern/schutz.js"
 import "../glocke.js"
 import { ladeNutzer } from "../nutzermenue.js"
 import { MAIL_DOMAIN, DOMAIN_AKTIV, ORDNER } from "../mail/konfig.js"
 import * as daten from "../mail/daten.js"
 import * as zeige from "../mail/darstellung.js"
+import "../kern/alle-dienste.js"
+import { sucheEinrichten } from "../kern/suche.js"
+import { verbindungsBereich } from "../kern/verknuepfen.js"
+import { alleVerbindungenLoeschen } from "../kern/verbindungen.js"
+
+sucheEinrichten()
 
 const $ = (s) => document.querySelector(s)
 
@@ -36,7 +43,17 @@ if (nutzer) {
     daten.beobachte(nutzer.user.id, beiLiveAenderung)
 }
 
-waehleOrdner(zustand.ordner)
+// Aus der Suche oder "Verbunden mit": /dienste/mail/?mail=<id> öffnet genau diese Mail
+const startMail = new URLSearchParams(location.search).get("mail")
+if (startMail) {
+    history.replaceState(null, "", location.pathname)
+    try {
+        const m = await daten.ladeMail(startMail)
+        if (ORDNER[m.ordner]) zustand.ordner = m.ordner
+    } catch { /* Mail gibt es nicht mehr – dann einfach den Eingang zeigen */ }
+}
+await waehleOrdner(zustand.ordner)
+if (startMail) oeffneMail(startMail)
 aktualisiereZaehler()
 
 // ---------- Ordner ----------
@@ -168,6 +185,11 @@ async function zeichneMail() {
     $("[data-aktion=loeschen]").textContent = imPapierkorb ? "Endgültig löschen" : "Löschen"
     $("[data-aktion=loeschen]").dataset.bestaetigen = ""
 
+    // Verbunden mit (Grove-weit: Notizen, Passwörter, …)
+    const verbunden = $("#brief-verbindungen")
+    verbunden.replaceChildren()
+    verbindungsBereich(verbunden, { typ: "mail", id: mail.id })
+
     // Inhalt
     const inhalt = $("#brief-inhalt")
     inhalt.replaceChildren()
@@ -276,6 +298,7 @@ async function fuehreAus(aktion, knopf) {
                 return
             }
             await daten.loescheEndgueltig(mail.id, mail.roh_pfad)
+            alleVerbindungenLoeschen({ typ: "mail", id: mail.id }).catch(console.error)
             entferneAusListe(mail.id)
             schliesseMail()
             hinweis("Endgültig gelöscht")

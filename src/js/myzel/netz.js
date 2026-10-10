@@ -6,14 +6,33 @@
 // ==========================================================
 import { forceSimulation, forceLink, forceManyBody, forceCenter, forceCollide, forceX, forceY } from "d3-force"
 
-const FARBEN = {
-    faden: "rgba(227,161,90,0.22)",
-    fadenHell: "rgba(242,192,138,0.75)",
-    knoten: "#E3A15A",
-    knotenLeise: "rgba(227,161,90,0.45)",
-    schrift: "rgba(239,230,214,0.85)",
-    schriftLeise: "rgba(205,191,174,0.55)",
+// Farben kommen aus dem aktuellen Grove-Thema (CSS-Variablen, siehe Laub).
+// Eine Leinwand (canvas) kennt keine CSS-Variablen – darum lesen wir sie hier
+// aus und bauen daraus normale Farbwerte. Ändert sich das Thema, neu lesen.
+const FARBEN = {}
+function farbenLesen() {
+    const css = getComputedStyle(document.documentElement)
+    const wert = (name, a = 1) => mitDeckkraft(css.getPropertyValue(name).trim(), a)
+    Object.assign(FARBEN, {
+        faden: wert("--amber", .22),
+        fadenHell: wert("--amber-light", .75),
+        knoten: wert("--amber"),
+        knotenLeise: wert("--amber", .45),
+        schrift: wert("--text", .85),
+        schriftLeise: wert("--text-soft", .55),
+        glow: wert("--amber", .35),
+        glowAus: wert("--amber", 0),
+        rand: wert("--amber-light"),
+    })
 }
+function mitDeckkraft(hex, a) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(hex)
+    if (!m) return hex || "#E3A15A"
+    const n = parseInt(m[1], 16)
+    return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, ${a})`
+}
+farbenLesen()
+window.addEventListener("grove-thema", farbenLesen)
 
 export function erstelleNetz(leinwand, { beiKlick }) {
     const ctx = leinwand.getContext("2d")
@@ -22,6 +41,7 @@ export function erstelleNetz(leinwand, { beiKlick }) {
     let schwebe = null, gezogen = null, verschoben = false
     let pfeil = null
     const zeiger = new Map()
+    window.addEventListener("grove-thema", () => zeichne())   // neues Thema → neu malen
 
     function groesse() {
         const r = leinwand.getBoundingClientRect()
@@ -102,15 +122,15 @@ export function erstelleNetz(leinwand, { beiKlick }) {
             const rad = radius(k)
             if (!leise) {
                 const glow = ctx.createRadialGradient(k.x, k.y, 0, k.x, k.y, rad * 3)
-                glow.addColorStop(0, "rgba(227,161,90,0.35)")
-                glow.addColorStop(1, "rgba(227,161,90,0)")
+                glow.addColorStop(0, FARBEN.glow)
+                glow.addColorStop(1, FARBEN.glowAus)
                 ctx.fillStyle = glow
                 ctx.beginPath(); ctx.arc(k.x, k.y, rad * 3, 0, Math.PI * 2); ctx.fill()
             }
             ctx.fillStyle = leise ? FARBEN.knotenLeise : FARBEN.knoten
             ctx.beginPath(); ctx.arc(k.x, k.y, rad, 0, Math.PI * 2); ctx.fill()
             if (k.id === pfeil) {
-                ctx.strokeStyle = "#F2C08A"; ctx.lineWidth = 2 / sicht.k
+                ctx.strokeStyle = FARBEN.rand; ctx.lineWidth = 2 / sicht.k
                 ctx.beginPath(); ctx.arc(k.x, k.y, rad + 4, 0, Math.PI * 2); ctx.stroke()
             }
         }

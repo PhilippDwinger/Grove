@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Tanne -->
+  <path d="M24 4 L33 16 L28 16 L37 27 L31 27 L40 38 L8 38 L17 27 L11 27 L20 16 L15 16 Z" fill="#E3A15A" stroke="#E3A15A" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M24 38 L24 44" stroke="#F2C08A" stroke-width="3.4" stroke-linecap="round"/>
+  <circle cx="24" cy="4" r="2.2" fill="#F2C08A"/>
+  <path d="M19 22 L24 19 L29 22 M17 33 L24 29 L31 33" fill="none" stroke="#1C1420" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+</svg>

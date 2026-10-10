@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <!-- Grove · Bergsee: Gipfel, Mond und Spiegelung -->
+  <circle cx="234" cy="40" r="13" fill="#F2C08A" opacity=".85"/><circle cx="234" cy="40" r="22" fill="#F2C08A" opacity=".08"/>
+  <path d="M40 112 L98 50 L128 82 L162 36 L214 96 L236 78 L284 112" fill="none" stroke="#E3A15A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+  <path d="M98 50 L88 62 L96 60 L102 66 L110 58 M162 36 L150 52 L160 48 L166 56 L176 50" fill="none" stroke="#F2C08A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 116 L290 116" stroke="#3A2C3D" stroke-width="3" stroke-linecap="round"/>
+  <path d="M40 120 L98 150 L128 136 L162 160 L214 132 L236 140 L284 120" fill="none" stroke="#E3A15A" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" opacity=".25"/>
+  <path d="M214 128 L254 128 M220 136 L248 136 M226 144 L242 144" stroke="#F2C08A" stroke-width="1.6" stroke-linecap="round" opacity=".5"/>
+</svg>
