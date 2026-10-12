@@ -1,0 +1,121 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Fortschritt & Status“ – P01–P12 (Präfix .gp)
+   ========================================================== */
+
+.gp-regler { width: 100%; margin-top: 10px; accent-color: var(--amber); }
+
+/* P01 Ast wächst */
+.gp01 { width: 100%; }
+.gp01__ast { position: relative; height: 22px; }
+.gp01__ast::before { content: ""; position: absolute; left: 0; right: 0; top: 10px; height: 2px; border-radius: 2px; background: var(--border-hi); }
+.gp01__holz { position: absolute; left: 0; top: 9px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, color-mix(in srgb, var(--amber) 60%, var(--ground)), var(--amber)); transition: width .3s ease; }
+.gp01__ast b { position: absolute; top: -2px; width: 12px; height: 10px; margin-left: -2px; border-radius: 0 100% 0 100%; background: var(--gut); transform-origin: 0 100%; scale: 0; rotate: -20deg; transition: scale .4s cubic-bezier(.3, 1.6, .5, 1); }
+.gp01__ast b:nth-of-type(2) { top: 13px; rotate: 200deg; transform-origin: 0 0; }
+.gp01__ast b.ist-da { scale: 1; }
+
+/* P02 Jahresring */
+.gp02 { position: relative; display: grid; justify-items: center; width: 100%; }
+.gp02 svg { width: 84px; height: 84px; rotate: -90deg; }
+.gp02 circle { fill: none; }
+.gp02 .spur { stroke: var(--border-hi); stroke-width: 4; }
+.gp02 .innen { stroke: color-mix(in srgb, var(--amber) 18%, transparent); stroke-width: 1; }
+.gp02 .bogen { stroke: var(--amber); stroke-width: 4; stroke-linecap: round; transition: stroke-dasharray .3s ease; }
+.gp02 strong { position: absolute; top: 30px; color: var(--text); font: 600 .9rem var(--font-body); font-variant-numeric: tabular-nums; }
+
+/* P03 Schritte als Wurzel */
+.gp03 { position: relative; display: flex; justify-content: space-between; width: 100%; }
+.gp03::before { content: ""; position: absolute; left: 14%; right: 14%; top: 14px; height: 2px; background: var(--border-hi); }
+.gp03::after { content: ""; position: absolute; left: 14%; top: 14px; height: 2px; width: calc((var(--s, 1) - 1) / 3 * 72%); background: var(--amber); transition: width .45s ease; }
+.gp03[data-schritt="1"] { --s: 1; } .gp03[data-schritt="2"] { --s: 2; } .gp03[data-schritt="3"] { --s: 3; } .gp03[data-schritt="4"] { --s: 4; }
+.gp03 button { position: relative; z-index: 1; display: grid; justify-items: center; gap: 6px; width: 25%; padding: 0; border: 0; background: none; color: var(--muted); font: 500 .74rem var(--font-body); cursor: pointer; }
+.gp03 i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border-hi); background: var(--ground-deep); font: normal 600 .8rem var(--font-body); transition: background .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease; }
+.gp03[data-schritt="2"] [data-n="1"], .gp03[data-schritt="3"] :is([data-n="1"], [data-n="2"]), .gp03[data-schritt="4"] :is([data-n="1"], [data-n="2"], [data-n="3"]) { color: var(--text-soft); }
+.gp03[data-schritt="2"] [data-n="1"] i, .gp03[data-schritt="3"] :is([data-n="1"], [data-n="2"]) i, .gp03[data-schritt="4"] :is([data-n="1"], [data-n="2"], [data-n="3"]) i { background: var(--amber); border-color: var(--amber); color: var(--auf-akzent); }
+.gp03[data-schritt="1"] [data-n="1"], .gp03[data-schritt="2"] [data-n="2"], .gp03[data-schritt="3"] [data-n="3"], .gp03[data-schritt="4"] [data-n="4"] { color: var(--text); }
+.gp03[data-schritt="1"] [data-n="1"] i, .gp03[data-schritt="2"] [data-n="2"] i, .gp03[data-schritt="3"] [data-n="3"] i, .gp03[data-schritt="4"] [data-n="4"] i { border-color: var(--amber); color: var(--amber-light); box-shadow: 0 0 0 4px color-mix(in srgb, var(--amber) 18%, transparent); }
+
+/* P04 Speicheranzeige */
+.gp04 { width: 100%; }
+.gp04 p { margin: 0 0 8px !important; color: var(--muted) !important; font-size: .82rem !important; }
+.gp04 p strong { color: var(--text); font: 400 1.4rem var(--font-display); }
+.gp04__balken { display: flex; gap: 2px; height: 10px; padding: 2px; border-radius: 6px; background: var(--surface-hi); }
+.gp04__balken i { width: max(var(--w), 6px); border-radius: 3px; background: var(--f); }
+.gp04 ul { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 10px 0 0; padding: 0; list-style: none; color: var(--text-soft); font-size: .74rem; }
+.gp04 li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 5px; border-radius: 2px; background: var(--f); }
+
+/* P05 Status-Punkte */
+.gp05 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
+.gp05 span { display: inline-flex; align-items: center; gap: 8px; color: var(--text-soft); font-size: .86rem; }
+.gp05 span::before { content: ""; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
+.gp05 .an::before { background: var(--gut); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gut) 18%, transparent); }
+.gp05 .arbeit::before { background: var(--amber); animation: gp05 2.2s ease-in-out infinite; }
+@keyframes gp05 { 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--amber) 22%, transparent); } }
+.gp05 .aus::before { border: 2px solid var(--muted); }
+.gp05 .fehler::before { background: conic-gradient(var(--ground-deep) 0 12%, var(--fehler) 12%); }
+
+/* P06 VU-Meter */
+.gp06 { display: grid; justify-items: center; width: 100%; gap: 6px; }
+.gp06__pegel { display: flex; gap: 3px; }
+.gp06__pegel i { width: 10px; height: 24px; border-radius: 2px; background: color-mix(in srgb, var(--gut) 14%, transparent); transition: background .12s ease, box-shadow .12s ease; }
+.gp06__pegel i:nth-child(n+8) { background: color-mix(in srgb, var(--amber) 14%, transparent); }
+.gp06__pegel i:nth-child(n+11) { background: color-mix(in srgb, var(--fehler) 14%, transparent); }
+.gp06__pegel i.an { background: var(--gut); }
+.gp06__pegel i.an:nth-child(n+8) { background: var(--amber); }
+.gp06__pegel i.an:nth-child(n+11) { background: var(--fehler); box-shadow: 0 0 8px color-mix(in srgb, var(--fehler) 50%, transparent); }
+.gp06 span { color: var(--muted); font-size: .78rem; }
+.gp06 b { color: var(--text); }
+
+/* P07 Upload-Liste */
+.gp07 { display: grid; gap: 10px; width: 100%; }
+.gp07 div { display: grid; grid-template-columns: 1fr auto; gap: 4px; font-size: .84rem; color: var(--text); }
+.gp07 em { color: var(--muted); font-style: normal; font-size: .76rem; font-variant-numeric: tabular-nums; }
+.gp07 i { grid-column: 1 / -1; height: 3px; border-radius: 2px; background: linear-gradient(var(--amber), var(--amber)) 0 0 / var(--p) 100% no-repeat, var(--border-hi); }
+.gp07 .ist-fertig em { color: var(--gut); }
+.gp07 .ist-fertig i { background: var(--gut); opacity: .5; }
+
+/* P08 Countdown-Ring */
+.gp08 { display: flex; align-items: center; gap: 12px; }
+.gp08 svg { width: 48px; height: 48px; rotate: -90deg; flex: none; }
+.gp08 circle { fill: none; stroke-width: 3.5; }
+.gp08 .spur { stroke: var(--border-hi); }
+.gp08 .rest { stroke: var(--amber); stroke-linecap: round; transition: stroke-dasharray 1s linear, stroke .3s ease; }
+.gp08.ist-knapp .rest { stroke: var(--fehler-hell); }
+.gp08 div { display: grid; }
+.gp08 strong { color: var(--text); font: 600 1.2rem var(--font-body); font-variant-numeric: tabular-nums; }
+.gp08 span { max-width: 18ch; color: var(--muted); font-size: .74rem; }
+
+/* P09 Tagesziel in Knospen */
+.gp09 { display: flex; align-items: center; gap: 4px; }
+.gp09 button { width: 34px; height: 40px; padding: 0; border: 0; background: none; cursor: pointer; }
+.gp09 svg { width: 100%; height: 100%; fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; }
+.gp09 .zu { fill: var(--surface-hi); transition: opacity .3s ease, scale .3s ease; transform-box: fill-box; transform-origin: 50% 100%; }
+.gp09 .auf { opacity: 0; scale: .3; transform-box: fill-box; transform-origin: 50% 70%; transition: opacity .3s ease, scale .45s cubic-bezier(.3, 1.6, .5, 1); }
+.gp09 .auf circle { fill: color-mix(in srgb, var(--amber) 30%, transparent); stroke: var(--amber); }
+.gp09 .auf .m { fill: var(--amber-light); stroke: none; }
+.gp09 .ist-offen .zu { opacity: 0; scale: .5; }
+.gp09 .ist-offen .auf { opacity: 1; scale: 1; }
+.gp09 .ist-offen .stiel { stroke: var(--gut); }
+.gp09 span { margin-left: 10px; white-space: nowrap; color: var(--muted); font-size: .8rem; }
+.gp09 b { color: var(--text); }
+
+/* P10 Bernstein füllt sich */
+.gp10 { display: grid; justify-items: center; gap: 4px; width: 100%; }
+.gp10 svg { width: 54px; height: 72px; }
+.gp10 .grund { fill: var(--surface-hi); }
+.gp10 .harz { fill: color-mix(in srgb, var(--amber) 75%, transparent); animation: gp10 3s linear infinite; }
+@keyframes gp10 { from { transform: translateX(0); } to { transform: translateX(30px); } }
+.gp10 .rand { fill: none; stroke: var(--amber); stroke-width: 1.5; }
+.gp10 span { color: var(--muted); font-size: .78rem; }
+.gp10 b { color: var(--text); }
+
+/* P11 Wellenform-Spur */
+.gp11 { display: flex; align-items: center; gap: 2px; width: 100%; height: 56px; cursor: pointer; }
+.gp11 i { flex: 1; height: var(--h); border-radius: 2px; background: var(--border-hi); transition: background .15s ease; }
+.gp11 i.an { background: var(--amber); }
+.gp11:hover i:not(.an) { background: color-mix(in srgb, var(--amber) 30%, var(--border-hi)); }
+
+/* P12 Unbestimmt laden */
+.gp12 { display: grid; gap: 8px; width: 100%; color: var(--text-soft); font-size: .84rem; }
+.gp12__bahn { position: relative; height: 3px; border-radius: 2px; background: var(--border-hi); overflow: hidden; }
+.gp12__bahn i { position: absolute; top: 0; bottom: 0; width: 30%; border-radius: 2px; background: linear-gradient(90deg, transparent, var(--amber), transparent); animation: gp12 1.8s cubic-bezier(.5, 0, .5, 1) infinite alternate; }
+@keyframes gp12 { from { left: -10%; } to { left: 80%; } }

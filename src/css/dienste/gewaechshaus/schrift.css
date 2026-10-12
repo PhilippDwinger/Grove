@@ -1,0 +1,93 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Schrift“ – T01–T14 (Präfix .gt)
+   ========================================================== */
+
+.gh-buehne :is(.gt01, .gt04, .gt09, .gt10 p, .gt14 p) { margin: 0; color: var(--text-soft); font-size: .9rem; line-height: 1.55; }
+
+/* T01 Initial */
+.gt01::first-letter { float: left; margin: 4px 8px 0 0; color: var(--amber); font: 400 3.4rem/.8 var(--font-display); }
+
+/* T02 Kicker + Titel */
+.gt02 span { color: var(--amber-light); font: 600 .7rem var(--font-body); letter-spacing: .14em; text-transform: uppercase; }
+.gt02 h3 { margin: 4px 0 2px; color: var(--text); font: 400 1.8rem/1.1 var(--font-display); }
+.gt02 p { margin: 0; color: var(--muted); font-size: .8rem; }
+
+/* T03 Zitat */
+.gt03 { position: relative; margin: 0; padding: 6px 4px 0 18px; }
+.gt03::before { content: "“"; position: absolute; left: -6px; top: -22px; color: color-mix(in srgb, var(--amber) 22%, transparent); font: 400 7rem/1 var(--font-display); }
+.gt03 p { position: relative; margin: 0; color: var(--text); font: italic 400 1.05rem/1.45 var(--font-display); }
+.gt03 cite { display: block; margin-top: 8px; color: var(--muted); font: normal .78rem var(--font-body); }
+.gt03 cite::before { content: "— "; }
+
+/* T04 Marker */
+.gt04 mark {
+  padding: 0 2px; color: var(--text);
+  background: linear-gradient(transparent 52%, color-mix(in srgb, var(--amber) 30%, transparent) 52% 96%, transparent 96%) 0 0 / 100% 100% no-repeat;
+  border-radius: 2px;
+}
+.gh-kachel:hover .gt04 mark { animation: gt04 .7s ease both; }
+.gh-kachel:hover .gt04 mark + mark, .gt04 mark:nth-of-type(2) { animation-delay: .25s; }
+@keyframes gt04 { from { background-size: 0 100%; } }
+
+/* T05 Handschrift-Strich */
+.gt05 { margin: 0; color: var(--text); font: 400 1.7rem var(--font-display); }
+.gt05 span { position: relative; color: var(--amber-light); font-style: italic; }
+.gt05 svg { position: absolute; left: -2px; right: -2px; bottom: -8px; width: calc(100% + 4px); height: 12px; overflow: visible; }
+.gt05 path { fill: none; stroke: var(--amber); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.gh-kachel:hover .gt05 path { animation: gt05 .8s ease both; }
+@keyframes gt05 { from { stroke-dashoffset: 1; } }
+
+/* T06 Trenner mit Ringen */
+.gt06 { display: flex; align-items: center; gap: 12px; width: 100%; }
+.gt06 span { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border-hi)); }
+.gt06 span:last-child { background: linear-gradient(90deg, var(--border-hi), transparent); }
+.gt06 svg { width: 44px; height: 20px; }
+.gt06 circle { fill: none; stroke: var(--amber); stroke-width: 1; }
+.gt06 circle:last-child { fill: var(--amber); }
+
+/* T07 Große Zahl */
+.gt07 { display: grid; }
+.gt07 strong { color: var(--text); font: 400 3.6rem/1 var(--font-display); }
+.gt07 sup { margin-left: 4px; color: var(--amber-light); font: 600 .9rem var(--font-body); vertical-align: 2.2em; }
+.gt07 span { color: var(--muted); font-size: .82rem; }
+
+/* T08 Kursiver Akzent */
+.gt08 { margin: 0; color: var(--text); font: 400 2rem var(--font-display); }
+.gt08 em { color: var(--amber); }
+
+/* T09 Tasten */
+.gt09 kbd {
+  display: inline-block; min-width: 24px; padding: 2px 7px; margin: 0 1px;
+  border: 1px solid var(--border-hi); border-bottom-width: 3px; border-radius: 6px;
+  background: var(--surface-hi); color: var(--text); font: 600 .76rem var(--font-body); text-align: center;
+}
+
+/* T10 Randnotiz */
+.gt10 { display: grid; grid-template-columns: 1fr 120px; gap: 14px; align-items: center; }
+.gt10__wort { position: relative; color: var(--text); border-bottom: 1px dashed var(--amber); }
+.gt10__wort::after { content: ""; position: absolute; left: 100%; top: 50%; width: 400px; height: 1px; background: linear-gradient(90deg, color-mix(in srgb, var(--amber) 50%, transparent), transparent 40%); pointer-events: none; }
+.gt10 aside { padding-left: 10px; border-left: 2px solid var(--amber); color: var(--muted); font: italic .78rem/1.4 var(--font-display); }
+.gt10 { overflow: hidden; }
+
+/* T11 Ring-Aufzählung */
+.gt11, .gt11 ul { margin: 0; padding-left: 20px; list-style: none; color: var(--text-soft); font-size: .9rem; line-height: 1.7; }
+.gt11 > li { position: relative; }
+.gt11 > li::before { content: ""; position: absolute; left: -18px; top: .5em; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--amber); box-shadow: inset 0 0 0 1.5px var(--ground-deep), inset 0 0 0 3px color-mix(in srgb, var(--amber) 50%, transparent); }
+.gt11 ul li { position: relative; color: var(--muted); }
+.gt11 ul li::before { content: ""; position: absolute; left: -14px; top: .75em; width: 4px; height: 4px; border-radius: 50%; background: var(--muted); }
+
+/* T12 Verlaufs-Schrift */
+.gt12 { font: 600 3.4rem/1 var(--font-display); background: linear-gradient(100deg, var(--amber-light), var(--amber) 40%, var(--flieder)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* T13 Zeit-Chips */
+.gt13 { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.gt13 span { padding: 3px 10px; border-radius: 999px; background: var(--surface-hi); color: var(--text-soft); font: 500 .76rem var(--font-body); }
+.gt13 .bald { background: color-mix(in srgb, var(--amber) 18%, transparent); color: var(--amber-light); }
+.gt13 .drueber { background: color-mix(in srgb, var(--fehler) 16%, transparent); color: var(--fehler-hell); }
+
+/* T14 Code */
+.gt14 { width: 100%; }
+.gt14 p code { padding: 1px 6px; border-radius: 5px; background: color-mix(in srgb, var(--amber) 14%, transparent); color: var(--amber-light); font: .82rem ui-monospace, Consolas, monospace; }
+.gt14 pre { margin: 10px 0 0; padding: 10px 0; border-left: 3px solid var(--amber); border-radius: 4px 10px 10px 4px; background: var(--surface); counter-reset: zeile; }
+.gt14 pre code { display: grid; color: var(--text-soft); font: .82rem/1.7 ui-monospace, Consolas, monospace; }
+.gt14 pre span::before { counter-increment: zeile; content: counter(zeile); display: inline-block; width: 28px; margin-right: 8px; color: var(--muted); text-align: right; opacity: .6; }

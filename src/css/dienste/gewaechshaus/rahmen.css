@@ -1,0 +1,56 @@
+/* ==========================================================
+   Gewächshaus · Rahmen für die neuen Abteile (NUR ZUM TESTEN)
+   Ergänzt css/dienste/gewaechshaus.css: breite/schmale Kacheln,
+   Bühnen-Varianten, „Nochmal“-Knopf. Wird von js/gewaechshaus/kacheln.js importiert.
+   ========================================================== */
+
+.gh-kacheln--breit { grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); }
+.gh-kacheln--schmal { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.gh-kacheln--schmal .gh-buehne { height: 96px; }
+.gh-kacheln--schmal .gh-kachel__kopf strong { font-size: 1rem; }
+.gh-kacheln--schmal .gh-kachel p { font-size: .82rem; }
+
+.gh-buehne { position: relative; overflow: hidden; padding: 12px; }
+.gh-buehne *, .gh-buehne *::before, .gh-buehne *::after { box-sizing: border-box; }
+.gh-buehne--hoch { height: 230px; }
+.gh-buehne--flach { height: 110px; }
+.gh-buehne--frei { padding: 0; }
+.gh-buehne--links { place-items: center start; }
+.gh-buehne--hell { background: var(--surface-hi); }
+.gh-kacheln--breit .gh-buehne { height: 210px; }
+.gh-kacheln--breit .gh-buehne--hoch { height: 280px; }
+.gh-kacheln--voll { grid-template-columns: 1fr; }
+.gh-kacheln--voll .gh-buehne--hoch { height: clamp(200px, 24vw, 300px); }
+
+.gh-nochmal {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 5px 12px;
+  border: 1px solid var(--border-hi);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-soft);
+  font: 500 .82rem var(--font-body);
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+}
+.gh-nochmal:hover { border-color: var(--amber); color: var(--text); }
+
+/* gemeinsamer Demo-Knopf in Bühnen (ruhig, wie .g-knopf) */
+.gh-demo-knopf {
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--amber);
+  color: var(--auf-akzent);
+  font: 600 .88rem var(--font-body);
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.gh-demo-knopf:hover { background: var(--amber-light); }
+.gh-demo-knopf--leise { background: transparent; border: 1px solid var(--border-hi); color: var(--text-soft); }
+.gh-demo-knopf--leise:hover { background: transparent; border-color: var(--amber); color: var(--text); }
+
+/* Vorschau-Bildchen der Abteile in der Übersicht */
+.gh-vs { display: inline-flex; align-items: center; gap: 10px; color: var(--amber); }
+.gh-vs svg { width: 44px; height: 44px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }

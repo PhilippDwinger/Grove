@@ -1,0 +1,114 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Hintergründe“ – H01–H14 (Präfix .gx)
+   Muster aus Verläufen; SVG nur als Maske (schwarz) → Farbe bleibt Variable.
+   ========================================================== */
+
+.gx { position: absolute; inset: 0; overflow: hidden; background-color: var(--ground); }
+.gx-probe { position: relative; display: grid; gap: 2px; padding: 12px 16px; border: 1px solid var(--border-hi); border-radius: 14px; background: color-mix(in srgb, var(--surface) 80%, transparent); backdrop-filter: blur(6px); }
+.gx-probe strong { font: 400 1.2rem var(--font-display); color: var(--text); }
+.gx-probe span { color: var(--text-soft); font-size: .82rem; }
+
+/* H01 Holzmaserung */
+.gx01 {
+  background:
+    repeating-radial-gradient(ellipse 160% 46% at 10% 125%, transparent 0 9px, color-mix(in srgb, var(--amber) 11%, transparent) 9px 10px, transparent 10px 15px),
+    repeating-radial-gradient(ellipse 120% 30% at 95% -20%, transparent 0 13px, color-mix(in srgb, var(--amber) 7%, transparent) 13px 14px),
+    color-mix(in srgb, var(--amber) 5%, var(--ground));
+}
+
+/* H02 Jahresringe-Muster */
+.gx02::before, .gx02::after {
+  content: ""; position: absolute; width: 220px; height: 220px; border-radius: 50%;
+  background: repeating-radial-gradient(circle, color-mix(in srgb, var(--amber) 18%, transparent) 0 1px, transparent 1px 8px);
+  -webkit-mask: radial-gradient(circle, #000 30%, transparent 70%); mask: radial-gradient(circle, #000 30%, transparent 70%);
+}
+.gx02::before { left: -40px; top: -50px; }
+.gx02::after { right: -60px; bottom: -80px; width: 280px; height: 280px; }
+
+/* H03 Plattenrillen */
+.gx03 { background: repeating-radial-gradient(circle at 100% 0, transparent 0 3px, color-mix(in srgb, var(--text) 6%, transparent) 3px 4px), radial-gradient(circle at 100% 0, color-mix(in srgb, var(--amber) 12%, transparent), transparent 60%), var(--ground); }
+
+/* H04 Sporen */
+.gx04::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle, color-mix(in srgb, var(--amber) 45%, transparent) 1px, transparent 1.6px) 0 0 / 14px 14px;
+  -webkit-mask: radial-gradient(ellipse at 50% 55%, #000, transparent 75%); mask: radial-gradient(ellipse at 50% 55%, #000, transparent 75%);
+}
+
+/* H05 Höhenlinien */
+.gx-topo { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gx-topo path { fill: none; stroke: color-mix(in srgb, var(--amber) 22%, transparent); stroke-width: 1; }
+.gx-topo path:nth-child(4n) { stroke: color-mix(in srgb, var(--amber) 38%, transparent); }
+
+/* H06 Notenlinien */
+.gx06 {
+  --nl: color-mix(in srgb, var(--text-soft) 12%, transparent);
+  background:
+    linear-gradient(var(--nl) 0 1px, transparent 1px) 0 20px / 100% 76px,
+    linear-gradient(var(--nl) 0 1px, transparent 1px) 0 27px / 100% 76px,
+    linear-gradient(var(--nl) 0 1px, transparent 1px) 0 34px / 100% 76px,
+    linear-gradient(var(--nl) 0 1px, transparent 1px) 0 41px / 100% 76px,
+    linear-gradient(var(--nl) 0 1px, transparent 1px) 0 48px / 100% 76px,
+    var(--ground);
+}
+
+/* H07 Jazzclub-Parkett */
+.gx07 {
+  --p1: color-mix(in srgb, var(--amber) 6%, var(--ground));
+  --p2: color-mix(in srgb, var(--amber) 11%, var(--ground));
+  background:
+    linear-gradient(45deg, var(--p2) 25%, transparent 25% 75%, var(--p2) 75%) 0 0 / 36px 36px,
+    linear-gradient(-45deg, var(--p2) 25%, transparent 25% 75%, var(--p2) 75%) 18px 18px / 36px 36px,
+    repeating-linear-gradient(45deg, transparent 0 8px, color-mix(in srgb, var(--ground-deep) 50%, transparent) 8px 9px),
+    var(--p1);
+}
+
+/* H08 Laubschatten */
+.gx08 { background: color-mix(in srgb, var(--amber) 4%, var(--ground)); }
+.gx08 i { position: absolute; width: 140px; height: 110px; border-radius: 50% 40% 55% 45%; background: color-mix(in srgb, var(--amber-light) 16%, transparent); filter: blur(26px); animation: gx08 18s ease-in-out infinite alternate; }
+.gx08 i:nth-child(1) { left: 5%; top: 10%; }
+.gx08 i:nth-child(2) { left: 55%; top: 5%; width: 90px; animation-duration: 23s; }
+.gx08 i:nth-child(3) { left: 30%; top: 55%; width: 170px; animation-duration: 27s; animation-direction: alternate-reverse; }
+.gx08 i:nth-child(4) { right: 0; bottom: 0; animation-duration: 21s; }
+@keyframes gx08 { to { translate: 24px 12px; scale: 1.1 .9; } }
+
+/* H09 Sternenhimmel */
+.gx09 { background: linear-gradient(var(--ground-deep), var(--ground)); }
+.gx09 i { position: absolute; width: var(--g); height: var(--g); border-radius: 50%; background: var(--text); opacity: .25; animation: gx09 5s ease-in-out var(--v) infinite; }
+@keyframes gx09 { 50% { opacity: .85; } }
+
+/* H10 Abendrot */
+.gx10 { background: linear-gradient(180deg, var(--ground-deep) 0%, var(--ground) 40%, color-mix(in srgb, var(--fehler) 22%, var(--ground)) 72%, color-mix(in srgb, var(--amber) 45%, var(--ground)) 100%); }
+
+/* H11 Korn & Vignette */
+.gx11 { background: radial-gradient(ellipse at 50% 45%, var(--surface-hi), var(--ground) 55%, var(--ground-deep)); }
+.gx11::after {
+  content: ""; position: absolute; inset: 0; opacity: .22; mix-blend-mode: overlay;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23k)'/%3E%3C/svg%3E");
+}
+
+/* H12 Bauplan-Raster */
+.gx12 {
+  --r1: color-mix(in srgb, var(--amber) 7%, transparent);
+  --r2: color-mix(in srgb, var(--amber) 16%, transparent);
+  background:
+    linear-gradient(var(--r2) 1px, transparent 1px) 0 0 / 80px 80px,
+    linear-gradient(90deg, var(--r2) 1px, transparent 1px) 0 0 / 80px 80px,
+    linear-gradient(var(--r1) 1px, transparent 1px) 0 0 / 16px 16px,
+    linear-gradient(90deg, var(--r1) 1px, transparent 1px) 0 0 / 16px 16px,
+    var(--ground-deep);
+}
+
+/* H13 Flieder-Schleier */
+.gx13 i { position: absolute; width: 70%; height: 70%; border-radius: 50%; filter: blur(40px); opacity: .5; animation: gx13 20s ease-in-out infinite alternate; }
+.gx13 i:first-child { left: -15%; top: -20%; background: color-mix(in srgb, var(--flieder) 50%, transparent); }
+.gx13 i:last-child { right: -15%; bottom: -25%; background: color-mix(in srgb, var(--amber) 45%, transparent); animation-duration: 26s; animation-direction: alternate-reverse; }
+@keyframes gx13 { to { translate: 18% 12%; } }
+
+/* H14 Wellenlinien */
+.gx14::before {
+  content: ""; position: absolute; inset: 0;
+  background: color-mix(in srgb, var(--amber) 22%, transparent);
+  --w: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='36'%3E%3Cpath d='M0 18 Q15 4 30 18 T60 18 T90 18 T120 18' fill='none' stroke='black' stroke-width='1'/%3E%3C/svg%3E");
+  -webkit-mask: var(--w) 0 0 / 120px 36px; mask: var(--w) 0 0 / 120px 36px;
+}

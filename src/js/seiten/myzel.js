@@ -119,6 +119,7 @@ async function neueNotiz(titel = "") {
     try {
         const n = await daten.neu({ titel, tags: tagFilter ? [tagFilter] : [] })
         notizen.unshift(n)
+        if (titel) await verweiseNachholen(n).catch(console.error)
         zeichneListe()
         oeffne(n.id, { schreiben: true })
         ;(titel ? $("#inhalt") : $("#titel")).focus()
@@ -222,29 +223,39 @@ async function speichereJetzt() {
     ungespeichert = false
     const n = aktiv
     const altTitel = n.titel
-    const titel = $("#titel").value.trim()
+    let titel = $("#titel").value.trim()
     const inhalt = textfeld.value
 
-    if (titel && notizen.some((x) => x.id !== n.id && x.titel.trim().toLowerCase() === titel.toLowerCase())) {
-        status("Diesen Titel gibt es schon", "fehler")
-        ungespeichert = true
-        return
-    }
+    // Titel schon vergeben? Dann wenigstens den Text sichern – der alte Titel bleibt
+    // (sonst ginge der Text verloren, sobald man eine andere Notiz öffnet).
+    let doppelt = !!titel && notizen.some((x) => x.id !== n.id && x.titel.trim().toLowerCase() === titel.toLowerCase())
+    if (doppelt) titel = altTitel
     status("Speichert …")
     try {
-        const gespeichert = await daten.speichere(n.id, { titel, inhalt })
+        let gespeichert
+        try {
+            gespeichert = await daten.speichere(n.id, { titel, inhalt })
+        } catch (fehler) {
+            // 23505 = Titel gibt es schon (z. B. bei einer archivierten Notiz) → Text trotzdem sichern
+            if (fehler.code !== "23505" || titel === altTitel) throw fehler
+            doppelt = true
+            titel = altTitel
+            gespeichert = await daten.speichere(n.id, { titel, inhalt })
+        }
         Object.assign(n, gespeichert)
         await aktualisiereLinks(n)
         if (n === aktiv) verbunden?.neuLaden()            // [[ dazu/weg → „Verbunden mit“ aktualisieren
         if (altTitel && titel && altTitel !== titel) await benenneVerweiseUm(n.id, altTitel, titel)
+        if (titel && titel !== altTitel) await verweiseNachholen(n)
         zeichneListe()
         zeichneSeite()
         if (netz) netz.setzeDaten(notizen, netzLinks(), aktiv?.id)
-        status("Gespeichert", "ok")
+        if (doppelt) status("Diesen Titel gibt es schon – der Text ist gespeichert", "fehler")
+        else status("Gespeichert", "ok")
     } catch (fehler) {
         console.error(fehler)
         ungespeichert = true
-        status(fehler.code === "23505" ? "Diesen Titel gibt es schon" : deutscheMeldung(fehler), "fehler")
+        status(deutscheMeldung(fehler), "fehler")
     }
 }
 
@@ -287,6 +298,18 @@ async function manuelleNeuLaden() {
 async function aktualisiereLinks(n) {
     const ziele = [...new Set(linkTitel(n.inhalt).map((t) => nachTitel(t)?.id).filter((id) => id && id !== n.id))]
     links = await daten.setzeLinks(n.id, ziele, links)
+}
+
+// Stand ein [[Titel]] schon in anderen Notizen, bevor es die Notiz gab (z. B. Klick auf einen
+// gestrichelten Link → neue Notiz)? Dann diese Verknüpfungen jetzt eintragen –
+// sonst fehlen sie in Rückverweisen und Netz, bis die andere Notiz neu gespeichert wird.
+async function verweiseNachholen(n) {
+    const t = n.titel.trim().toLowerCase()
+    if (!t) return
+    for (const q of notizen) {
+        if (q.id === n.id || links.some((l) => l.von_id === q.id && l.nach_id === n.id)) continue
+        if (linkTitel(q.inhalt).some((x) => x.toLowerCase() === t)) await aktualisiereLinks(q)
+    }
 }
 
 // Wird eine Notiz umbenannt, ziehen die [[Verweise]] in anderen Notizen mit
@@ -353,6 +376,12 @@ async function setzeTags(tags) {
 }
 
 // ---------- Aktionen ----------
+// Herunterladen als PDF, Word, HTML … → Mühle öffnet sich mit dieser Notiz
+$("#umwandeln").addEventListener("click", async () => {
+    if (!aktiv) return
+    await speichereJetzt()          // ungespeicherte Änderungen zuerst sichern
+    location.href = `/dienste/muehle/?notiz=${encodeURIComponent(aktiv.id)}`
+})
 $("#per-mail").addEventListener("click", () =>
     status("Kommt mit dem Senden in Grove Mail – dann hängt die Notiz als Verknüpfung an.", "info"))
 
@@ -394,6 +423,8 @@ async function zeigeAnsicht(ansicht) {
         $("#arbeit").classList.add("offen")
     } else {
         netz?.stop()
+        // Adresse nicht auf #netz stehen lassen – sonst landet man nach dem Neuladen wieder im Netz
+        if (location.hash === "#netz") history.replaceState(null, "", aktiv ? `#${aktiv.id}` : location.pathname)
         if (!aktiv) $("#arbeit").classList.remove("offen")
     }
 }

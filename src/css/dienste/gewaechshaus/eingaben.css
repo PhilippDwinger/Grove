@@ -1,0 +1,174 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Eingaben“ – E01–E14 (Präfix .ge)
+   ========================================================== */
+
+.ge-spalte { display: grid; gap: 10px; }
+.gh-buehne :is(input, textarea) { font: 400 .95rem var(--font-body); color: var(--text); }
+.gh-buehne :is(input, textarea)::placeholder { color: var(--muted); }
+
+/* E01 Schwebendes Label */
+.ge01 { position: relative; display: block; width: min(240px, 100%); }
+.ge01 input {
+  width: 100%; padding: 20px 14px 8px;
+  border: 1px solid var(--border-hi); border-radius: calc(12px * var(--ecken));
+  background: var(--surface); outline: none;
+  transition: border-color .2s ease;
+}
+.ge01 input::placeholder { color: transparent; }
+.ge01 span {
+  position: absolute; left: 14px; top: 50%; translate: 0 -50%;
+  color: var(--muted); font-size: .95rem; pointer-events: none;
+  transition: top .2s ease, font-size .2s ease, color .2s ease;
+}
+.ge01 input:focus { border-color: var(--amber); }
+.ge01 input:focus + span, .ge01 input:not(:placeholder-shown) + span { top: 14px; font-size: .72rem; color: var(--amber-light); }
+
+/* E02 Wachsende Linie */
+.ge02 {
+  width: min(240px, 100%); padding: 8px 2px;
+  border: 0; outline: none;
+  background:
+    linear-gradient(var(--amber), var(--amber)) 0 100% / 0 2px no-repeat,
+    linear-gradient(var(--border-hi), var(--border-hi)) 0 100% / 100% 1px no-repeat;
+  font: 400 1.25rem var(--font-display) !important;
+  transition: background-size .4s cubic-bezier(.3, .7, .2, 1);
+}
+.ge02:focus { background-size: 100% 2px, 100% 1px; }
+
+/* E03 Glühwürmchen-Schalter */
+.ge03 { display: inline-flex; align-items: center; gap: 12px; color: var(--text-soft); font-size: .95rem; cursor: pointer; }
+.ge03 input { position: absolute; opacity: 0; pointer-events: none; }
+.ge03__bahn { position: relative; width: 46px; height: 26px; border-radius: 999px; background: var(--border-hi); transition: background .25s ease; }
+.ge03__bahn i {
+  position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--muted);
+  transition: translate .3s cubic-bezier(.3, .7, .2, 1), background .3s ease, box-shadow .4s ease;
+}
+.ge03 input:checked + .ge03__bahn { background: color-mix(in srgb, var(--amber) 30%, var(--surface-hi)); }
+.ge03 input:checked + .ge03__bahn i { translate: 20px 0; background: var(--amber-light); box-shadow: 0 0 10px 2px color-mix(in srgb, var(--amber) 55%, transparent); }
+.ge03 input:focus-visible + .ge03__bahn { outline: 2px solid var(--amber-light); outline-offset: 2px; }
+
+/* E04 Blatt-Häkchen */
+.ge04 { display: inline-flex; align-items: center; gap: 10px; color: var(--text); cursor: pointer; }
+.ge04 input { position: absolute; opacity: 0; }
+.ge04 span { display: grid; place-items: center; width: 22px; height: 22px; border: 1.5px solid var(--border-hi); border-radius: 7px 2px 7px 2px; transition: border-color .2s ease, background .2s ease; }
+.ge04 svg { width: 16px; height: 16px; fill: none; stroke: var(--auf-akzent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .35s ease; }
+.ge04 input:checked + span { background: var(--amber); border-color: var(--amber); }
+.ge04 input:checked + span svg { stroke-dashoffset: 0; }
+.ge04:has(input:checked) { color: var(--muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent); }
+.ge04 input:focus-visible + span { outline: 2px solid var(--amber-light); outline-offset: 2px; }
+
+/* E05 Schallplatten-Auswahl */
+.ge05 { display: inline-flex; align-items: center; gap: 10px; color: var(--text-soft); cursor: pointer; }
+.ge05 input { position: absolute; opacity: 0; }
+.ge05 span {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--border-hi);
+  transition: background .3s ease, border-color .2s ease, rotate .6s ease;
+}
+.ge05 input:checked + span {
+  border-color: var(--amber);
+  background:
+    radial-gradient(circle, var(--amber) 0 3.5px, transparent 4px),
+    repeating-radial-gradient(circle, var(--ground-deep) 0 1.5px, color-mix(in srgb, var(--amber) 35%, var(--ground-deep)) 1.5px 2.2px);
+  rotate: 200deg;
+}
+.ge05:has(input:checked) { color: var(--text); }
+.ge05 input:focus-visible + span { outline: 2px solid var(--amber-light); outline-offset: 2px; }
+
+/* E06 Mischpult-Fader */
+.ge06 { display: grid; grid-template-columns: auto 1fr 32px; align-items: center; gap: 12px; width: 100%; color: var(--text-soft); font-size: .88rem; }
+.ge06 input {
+  --wert: 60%;
+  appearance: none; height: 22px; background:
+    repeating-linear-gradient(90deg, var(--border-hi) 0 1px, transparent 1px 10%) 0 100% / 100% 6px no-repeat,
+    linear-gradient(var(--amber), var(--amber)) 0 50% / var(--wert) 3px no-repeat,
+    linear-gradient(var(--border-hi), var(--border-hi)) 0 50% / 100% 3px no-repeat;
+  cursor: pointer;
+}
+.ge06 input::-webkit-slider-thumb { appearance: none; width: 12px; height: 22px; border-radius: 3px; background: linear-gradient(var(--text) 0 0) 50% 50% / 100% 2px no-repeat, var(--surface-hi); border: 1px solid var(--amber); }
+.ge06 input::-moz-range-thumb { width: 12px; height: 22px; border-radius: 3px; background: var(--surface-hi); border: 1px solid var(--amber); }
+.ge06 output { color: var(--amber-light); font: 500 .85rem ui-monospace, Consolas, monospace; text-align: right; }
+
+/* E07 Gleitende Pille */
+.ge07 { position: relative; display: inline-flex; padding: 4px; border: 1px solid var(--border-hi); border-radius: 999px; }
+.ge07 button { position: relative; z-index: 1; padding: 7px 14px; border: 0; background: none; color: var(--text-soft); font: 500 .86rem var(--font-body); cursor: pointer; transition: color .25s ease; }
+.ge07 button[aria-pressed="true"] { color: var(--auf-akzent); }
+.ge07__pille { position: absolute; top: 4px; bottom: 4px; left: 0; border-radius: 999px; background: var(--amber); transition: translate .4s cubic-bezier(.3, .7, .2, 1), width .4s cubic-bezier(.3, .7, .2, 1); }
+
+/* E08 Suchfeld mit Taste */
+.ge08 { display: inline-flex; align-items: center; gap: 8px; width: 210px; padding: 8px 12px; border: 1px solid var(--border-hi); border-radius: 999px; background: var(--surface); transition: width .35s cubic-bezier(.3, .7, .2, 1), border-color .2s ease; }
+.ge08 svg { width: 18px; flex: none; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linecap: round; }
+.ge08 input { flex: 1; min-width: 0; border: 0; background: none; outline: none; }
+.ge08 input::-webkit-search-cancel-button { display: none; }
+.ge08 kbd { padding: 2px 6px; border: 1px solid var(--border-hi); border-radius: 6px; color: var(--muted); font: 500 .72rem var(--font-body); transition: opacity .2s ease; }
+.ge08:focus-within { width: 100%; border-color: var(--amber); }
+.ge08:focus-within kbd { opacity: 0; }
+
+/* E09 Passwort-Ringe */
+.ge09 { display: grid; grid-template-columns: 1fr 40px; grid-template-rows: auto auto; gap: 6px 12px; align-items: center; width: 100%; }
+.ge09 input { padding: 10px 12px; border: 1px solid var(--border-hi); border-radius: calc(10px * var(--ecken)); background: var(--surface); outline: none; }
+.ge09 input:focus { border-color: var(--amber); }
+.ge09 svg { width: 40px; height: 40px; grid-row: span 2; }
+.ge09 circle { fill: none; stroke: var(--border-hi); stroke-width: 2; transition: stroke .3s ease, opacity .3s ease; }
+.ge09__text { color: var(--muted); font-size: .8rem; }
+.ge09[data-staerke="1"] circle[data-r="1"],
+.ge09[data-staerke="2"] circle:is([data-r="1"], [data-r="2"]),
+.ge09[data-staerke="3"] circle:is([data-r="1"], [data-r="2"], [data-r="3"]),
+.ge09[data-staerke="4"] circle { stroke: var(--amber); }
+.ge09[data-staerke="0"] .ge09__text, .ge09[data-staerke="1"] .ge09__text { color: var(--fehler-hell); }
+.ge09[data-staerke="4"] .ge09__text { color: var(--gut); }
+
+/* E10 Fehler im Grove-Stil */
+.ge10 { display: grid; gap: 6px; width: 100%; }
+.ge10 label { display: grid; gap: 4px; color: var(--text-soft); font-size: .8rem; }
+.ge10 input { padding: 9px 12px; border: 1px solid var(--border-hi); border-radius: calc(10px * var(--ecken)); background: var(--surface); outline: none; transition: border-color .25s ease, box-shadow .25s ease; }
+.ge10 input:focus { border-color: var(--amber); }
+.ge10__hinweis { min-height: 1.2em; margin: 0; color: var(--muted); font-size: .78rem !important; }
+.ge10.hat-fehler input { border-color: var(--fehler); box-shadow: 0 0 0 3px color-mix(in srgb, var(--fehler) 15%, transparent); }
+.ge10.hat-fehler .ge10__hinweis { color: var(--fehler-hell); }
+.ge10.ist-ok input { border-color: var(--gut); }
+.ge10.ist-ok .ge10__hinweis { color: var(--gut); }
+.ge10 .gh-demo-knopf { justify-self: start; }
+
+/* E11 Tag-Eingabe */
+.ge11 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; width: 100%; padding: 8px; border: 1px solid var(--border-hi); border-radius: calc(12px * var(--ecken)); background: var(--surface); cursor: text; }
+.ge11:focus-within { border-color: var(--amber); }
+.ge11__tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 4px 3px 10px; border-radius: 999px 4px 999px 999px; background: color-mix(in srgb, var(--amber) 16%, transparent); color: var(--amber-light); font-size: .82rem; animation: ge11 .25s ease; }
+.ge11__tag::before { content: "#"; opacity: .6; }
+.ge11__tag button { width: 18px; height: 18px; padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; line-height: 1; }
+.ge11__tag button:hover { background: color-mix(in srgb, var(--amber) 25%, transparent); }
+.ge11 input { flex: 1; min-width: 80px; border: 0; background: none; outline: none; font-size: .85rem !important; }
+@keyframes ge11 { from { scale: .7; opacity: 0; } }
+
+/* E12 Ablage-Fläche */
+.ge12 {
+  display: grid; justify-items: center; gap: 2px; width: 100%; height: 100%; place-content: center;
+  border: 1.5px dashed var(--border-hi); border-radius: calc(12px * var(--ecken));
+  color: var(--muted); font-size: .8rem; cursor: pointer;
+  transition: border-color .2s ease, background .25s ease;
+}
+.ge12 strong { color: var(--text); font-weight: 500; font-size: .92rem; }
+.ge12 svg { width: 40px; height: 40px; margin-bottom: 4px; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: translate .35s cubic-bezier(.3, 1.4, .5, 1); }
+.ge12:hover, .ge12.ist-drueber { border-color: var(--amber); background: color-mix(in srgb, var(--amber) 8%, transparent); }
+.ge12.ist-drueber svg { translate: 0 -6px; }
+
+/* E13 Zahl-Stepper */
+.ge13 { display: inline-flex; align-items: center; border: 1px solid var(--border-hi); border-radius: 999px; }
+.ge13 button { width: 38px; height: 38px; border: 0; border-radius: 50%; background: none; color: var(--text-soft); font-size: 1.2rem; cursor: pointer; }
+.ge13 button:hover { color: var(--amber-light); background: var(--surface-hi); }
+.ge13__zahl { display: grid; place-items: center; width: 40px; height: 38px; overflow: hidden; }
+.ge13__zahl b { font: 600 1.1rem var(--font-body); color: var(--text); font-variant-numeric: tabular-nums; }
+.ge13__zahl .von-unten { animation: ge13u .25s ease; }
+.ge13__zahl .von-oben { animation: ge13o .25s ease; }
+@keyframes ge13u { from { translate: 0 100%; opacity: 0; } }
+@keyframes ge13o { from { translate: 0 -100%; opacity: 0; } }
+
+/* E14 Zeichen-Ring */
+.ge14 { position: relative; width: 100%; }
+.ge14 textarea { width: 100%; height: 88px; padding: 10px 12px 26px; border: 1px solid var(--border-hi); border-radius: calc(12px * var(--ecken)); background: var(--surface); outline: none; resize: none; }
+.ge14 textarea:focus { border-color: var(--amber); }
+.ge14 svg { position: absolute; right: 10px; bottom: 10px; width: 20px; height: 20px; rotate: -90deg; }
+.ge14 circle { fill: none; stroke: var(--border-hi); stroke-width: 2.5; }
+.ge14 .voll { stroke: var(--amber); stroke-linecap: round; transition: stroke-dasharray .2s ease, stroke .2s ease; }
+.ge14.ist-knapp .voll { stroke: var(--fehler-hell); }

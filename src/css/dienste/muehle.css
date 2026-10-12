@@ -1,0 +1,146 @@
+/* ==========================================================
+   Grove · Mühle (Umwandeln) – nur für src/dienste/muehle/
+   Farben NUR über Variablen (Laub überschreibt sie).
+   ========================================================== */
+
+.mu-inhalt { width: min(980px, 100% - 32px); margin: 0 auto; padding: clamp(20px, 4vw, 40px) 0 110px; }
+
+.mu-kopf h1 { margin: 0; font: 400 clamp(2.6rem, 6vw, 3.8rem)/1 var(--font-display); }
+.mu-kopf p { margin: 10px 0 28px; max-width: 60ch; color: var(--text-soft); line-height: 1.55; }
+
+/* Schritte */
+.mu-schritt { margin-bottom: 26px; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.mu-schritt[hidden] { display: none; }
+.mu-schritt h2 { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font: 400 1.45rem var(--font-display); }
+.mu-nr { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--amber); color: var(--auf-akzent); font: 600 .95rem var(--font-body); }
+.mu-leer { margin: 0; color: var(--muted); }
+
+/* 1 · Eingang */
+.mu-eingang {
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 22px; border: 1.5px dashed var(--border-hi); border-radius: calc(14px * var(--ecken));
+  transition: border-color .2s ease, background .2s ease;
+}
+.mu-eingang.is-ziehen { border-color: var(--amber); background: color-mix(in srgb, var(--amber) 8%, transparent); }
+.mu-eingang__bild { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: color-mix(in srgb, var(--amber) 14%, transparent); color: var(--amber-light); }
+.mu-eingang__bild svg { width: 26px; height: 26px; }
+.mu-eingang p { flex: 1 1 220px; margin: 0; display: flex; flex-direction: column; gap: 3px; }
+.mu-eingang p span { color: var(--muted); font-size: .9rem; }
+.mu-eingang__knoepfe { display: flex; gap: 8px; flex-wrap: wrap; }
+.mu-knopf { display: inline-flex; align-items: center; cursor: pointer; }
+.mu-knopf:focus-within { outline: 2px solid var(--amber-light); outline-offset: 3px; }
+
+.mu-dateien, .mu-ergebnisse { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.mu-datei, .mu-ergebnis {
+  display: grid; grid-template-columns: 36px minmax(0, 1fr) auto auto auto; align-items: center; gap: 12px;
+  padding: 8px 10px; border-radius: calc(12px * var(--ecken)); background: var(--surface-hi);
+}
+.mu-ergebnis { grid-template-columns: 44px minmax(0, 1fr) auto auto; }
+.mu-datei__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mu-datei__name small { margin-left: 8px; color: var(--muted); font-size: .78rem; }
+.mu-datei__groesse { color: var(--muted); font-size: .85rem; white-space: nowrap; }
+.mu-datei__ordnen { display: inline-flex; gap: 2px; }
+.mu-datei__ordnen button, .mu-weg {
+  width: 30px; height: 30px; border: 1px solid var(--border-hi); border-radius: 50%;
+  background: transparent; color: var(--text-soft); cursor: pointer; font-size: 15px; line-height: 1;
+}
+.mu-datei__ordnen button:disabled { opacity: .3; cursor: default; }
+.mu-weg:hover, .mu-datei__ordnen button:not(:disabled):hover { border-color: var(--amber); color: var(--text); }
+.mu-vorschau { width: 44px; height: 44px; object-fit: cover; border-radius: calc(8px * var(--ecken)); background: var(--ground-deep); }
+.mu-ergebnis__knoepfe { display: flex; gap: 6px; }
+.mu-fehler { padding: 10px 12px; border-radius: calc(12px * var(--ecken)); background: color-mix(in srgb, var(--fehler) 14%, transparent); color: var(--fehler-hell); font-size: .9rem; }
+
+/* Symbole (wie in Harz) */
+.hz-symbol { display: grid; place-items: center; width: 36px; height: 36px; border-radius: calc(10px * var(--ecken)); background: color-mix(in srgb, var(--amber) 12%, transparent); color: var(--amber-light); }
+.hz-symbol svg { width: 20px; height: 20px; }
+.hz-symbol[data-art="bild"] { background: color-mix(in srgb, var(--gut) 14%, transparent); color: var(--gut); }
+.hz-symbol[data-art="video"], .hz-symbol[data-art="audio"] { background: color-mix(in srgb, var(--flieder) 16%, transparent); color: var(--flieder); }
+.hz-symbol[data-art="pdf"] { background: color-mix(in srgb, var(--fehler) 14%, transparent); color: var(--fehler-hell); }
+
+/* 2 · Ziele */
+.mu-gruppe + .mu-gruppe { margin-top: 18px; }
+.mu-gruppe h3 { margin: 0 0 8px; color: var(--muted); font: 600 .8rem var(--font-body); text-transform: uppercase; letter-spacing: .06em; }
+.mu-gruppe h3 small { text-transform: none; letter-spacing: 0; font-weight: 400; }
+.mu-ziele { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; }
+.mu-ziel {
+  display: flex; flex-direction: column; gap: 4px; align-items: flex-start; text-align: left;
+  padding: 12px 14px; border: 1px solid var(--border-hi); border-radius: calc(12px * var(--ecken));
+  background: transparent; color: var(--text); font: 15px var(--font-body); cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+.mu-ziel strong { font: 400 1.15rem var(--font-display); }
+.mu-ziel span { color: var(--muted); font-size: .84rem; line-height: 1.35; }
+.mu-ziel:hover { border-color: var(--amber); }
+.mu-ziel[aria-pressed="true"] { border-color: var(--amber); background: color-mix(in srgb, var(--amber) 10%, transparent); }
+
+/* 3 · Optionen */
+.mu-optionen { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px 24px; margin-bottom: 18px; }
+.mu-feld { display: flex; flex-direction: column; gap: 6px; }
+.mu-feld[hidden] { display: none; }
+.mu-feld > label { display: flex; flex-direction: column; gap: 6px; }
+.mu-feld__name { color: var(--text-soft); font-size: .9rem; }
+.mu-feld small { color: var(--muted); font-size: .8rem; line-height: 1.4; }
+.mu-feld select, .mu-feld input[type="text"], .mu-zahl input {
+  height: 40px; padding: 0 12px; box-sizing: border-box;
+  border: 1px solid var(--border-hi); border-radius: calc(10px * var(--ecken));
+  background: var(--ground-deep); color: var(--text); font: 15px var(--font-body);
+}
+.mu-feld select:focus, .mu-feld input:focus { outline: none; border-color: var(--amber); }
+.mu-zahl { display: flex; align-items: center; gap: 8px; }
+.mu-zahl input { width: 120px; }
+.mu-zahl em { color: var(--muted); font-style: normal; }
+.mu-regler { display: flex; align-items: center; gap: 12px; }
+.mu-regler input { flex: 1; accent-color: var(--amber); }
+.mu-regler output { min-width: 52px; color: var(--text-soft); font-variant-numeric: tabular-nums; }
+.mu-segment { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 3px; border: 1px solid var(--border-hi); border-radius: calc(20px * var(--ecken)); align-self: flex-start; }
+.mu-segment button { padding: 6px 12px; border: 0; border-radius: calc(16px * var(--ecken)); background: transparent; color: var(--text-soft); font: 500 .86rem var(--font-body); cursor: pointer; }
+.mu-segment button[aria-pressed="true"] { background: var(--surface-hi); color: var(--text); box-shadow: inset 0 0 0 1px var(--border-hi); }
+
+.mu-schalter { flex-direction: row !important; align-items: center; gap: 10px !important; cursor: pointer; }
+.mu-schalter input { position: absolute; opacity: 0; pointer-events: none; }
+.mu-schalter__knopf { position: relative; flex: none; width: 38px; height: 22px; border-radius: 11px; background: var(--border-hi); transition: background .2s ease; }
+.mu-schalter__knopf::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--text-soft); transition: translate .2s ease, background .2s ease; }
+.mu-schalter input:checked + .mu-schalter__knopf { background: var(--amber); }
+.mu-schalter input:checked + .mu-schalter__knopf::after { translate: 16px 0; background: var(--auf-akzent); }
+.mu-schalter input:focus-visible + .mu-schalter__knopf { outline: 2px solid var(--amber-light); outline-offset: 2px; }
+
+.mu-los { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.mu-fortschritt { flex: 1 1 260px; display: flex; flex-direction: column; gap: 6px; }
+.mu-fortschritt[hidden] { display: none; }
+.mu-balken { height: 6px; border-radius: 3px; background: var(--border-hi); overflow: hidden; }
+.mu-balken span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--amber); transition: width .3s ease; }
+.mu-fortschritt small { color: var(--muted); }
+
+/* 4 · Ergebnis */
+.mu-sammel { display: flex; gap: 8px; flex-wrap: wrap; }
+.mu-sammel:empty { display: none; }
+
+/* Auswahl-Dialog */
+.mu-auswahl { width: min(480px, calc(100% - 32px)); }
+.mu-auswahl__liste { list-style: none; margin: 0 0 16px; padding: 0; max-height: 50vh; overflow: auto; display: grid; gap: 4px; }
+.mu-auswahl__liste button {
+  display: flex; justify-content: space-between; gap: 12px; width: 100%; padding: 10px 12px;
+  border: 1px solid transparent; border-radius: calc(10px * var(--ecken)); background: var(--surface-hi);
+  color: var(--text); font: 15px var(--font-body); text-align: left; cursor: pointer;
+}
+.mu-auswahl__liste button:hover { border-color: var(--amber); }
+.mu-auswahl__liste button small { color: var(--muted); white-space: nowrap; }
+.mu-auswahl__liste button.is-drin { border-color: var(--gut); }
+.mu-auswahl__liste button.is-drin::after { content: "✓"; color: var(--gut); }
+.mu-auswahl__liste .mu-leer { padding: 10px 2px; }
+
+.mu-meldung {
+  position: fixed; left: 50%; bottom: 24px; z-index: 60; translate: -50% 0;
+  padding: 10px 18px; border: 1px solid var(--border-hi); border-radius: 999px;
+  background: var(--surface-hi); color: var(--text); font-size: .92rem;
+}
+.mu-meldung[hidden] { display: none; }
+
+@media (max-width: 640px) {
+  .mu-ziele { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mu-datei { grid-template-columns: 36px minmax(0, 1fr) auto; }
+  .mu-datei__groesse, .mu-datei__ordnen { display: none; }
+  .mu-ergebnis { grid-template-columns: 44px minmax(0, 1fr); }
+  .mu-ergebnis__knoepfe { grid-column: 1 / -1; justify-content: flex-end; }
+  .mu-ergebnis .mu-datei__groesse { display: none; }
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <!-- Grove · Harz: ein Ast, an dem Harz herabläuft; im großen Tropfen sind Dateien eingeschlossen -->
+  <path d="M40 150 Q160 142 280 150" fill="none" stroke="#3A2C3D" stroke-width="3" stroke-linecap="round"/>
+  <g fill="none" stroke="#E3A15A" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 34 C90 28 150 30 290 40" stroke-width="5"/>
+    <path d="M220 37 C232 30 246 22 258 22" stroke-width="3" opacity=".7"/>
+    <path d="M160 31 C160 31 128 72 128 98 C128 118 142 132 160 132 C178 132 192 118 192 98 C192 72 160 31 160 31 Z" stroke-width="2.6"/>
+    <path d="M100 31 C100 31 92 44 92 51 C92 56 96 59 100 59 C104 59 108 56 108 51 C108 44 100 31 100 31 Z" stroke-width="1.8" opacity=".7"/>
+    <path d="M232 38 C232 38 227 46 227 50 C227 53 229 55 232 55 C235 55 237 53 237 50 C237 46 232 38 232 38 Z" stroke-width="1.6" opacity=".55"/>
+  </g>
+  <g stroke="#F2C08A" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" fill="none">
+    <path d="M146 84 h14 l6 6 v22 a2 2 0 0 1 -2 2 h-18 a2 2 0 0 1 -2 -2 v-26 a2 2 0 0 1 2 -2 z"/>
+    <path d="M160 84 v6 h6"/>
+    <path d="M150 98 h11 M150 103 h11 M150 108 h7" opacity=".7"/>
+  </g>
+  <rect x="164" y="102" width="16" height="13" rx="2" fill="none" stroke="#E3A15A" stroke-width="1.6" transform="rotate(-10 172 108)"/>
+  <circle cx="168.5" cy="106" r="1.6" fill="#E3A15A" transform="rotate(-10 172 108)"/>
+  <path d="M141 116 C141 122 146 126 152 127" fill="none" stroke="#F2C08A" stroke-width="1.6" stroke-linecap="round" opacity=".5"/>
+</svg>

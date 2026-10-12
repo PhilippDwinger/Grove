@@ -1,0 +1,166 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Knöpfe“ – K01–K16 (Präfix .gk)
+   Bewegung nur bei Hover/Klick. Farben nur über Variablen.
+   ========================================================== */
+
+.gk {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--amber);
+  color: var(--auf-akzent);
+  font: 600 .92rem var(--font-body);
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, translate .2s ease, box-shadow .25s ease;
+}
+.gk svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.gk:focus-visible { outline: 2px solid var(--amber-light); outline-offset: 3px; }
+
+/* K01 Harz steigt */
+.gk01 { background: transparent; border-color: var(--amber); color: var(--amber-light); }
+.gk01::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--amber);
+  translate: 0 101%;
+  border-radius: 40% 40% 0 0 / 18% 18% 0 0;
+  transition: translate .45s cubic-bezier(.3, .7, .2, 1), border-radius .45s ease;
+}
+.gk01:hover { color: var(--auf-akzent); }
+.gk01:hover::before { translate: 0 0; border-radius: 0; }
+
+/* K02 Rille */
+.gk02 { background: transparent; color: var(--text); padding-inline: 6px; border-radius: 4px; }
+.gk02::after {
+  content: ""; position: absolute; left: 6px; right: 6px; bottom: 5px; height: 1.5px;
+  background: var(--amber);
+  scale: 0 1; transition: scale .35s cubic-bezier(.3, .7, .2, 1);
+}
+.gk02:hover { color: var(--amber-light); }
+.gk02:hover::after { scale: 1 1; }
+
+/* K03 Eindrücken */
+.gk03 { box-shadow: 0 3px 0 color-mix(in srgb, var(--amber) 45%, var(--ground-deep)); }
+.gk03:hover { translate: 0 -1px; box-shadow: 0 4px 0 color-mix(in srgb, var(--amber) 45%, var(--ground-deep)); background: var(--amber-light); }
+.gk03:active { translate: 0 3px; box-shadow: 0 0 0 color-mix(in srgb, var(--amber) 45%, var(--ground-deep)); transition-duration: .06s; }
+
+/* K04 Pfeil-Schritt */
+.gk04 svg { transition: translate .3s cubic-bezier(.3, .7, .2, 1); }
+.gk04:hover { background: var(--amber-light); }
+.gk04:hover svg { translate: 4px 0; }
+
+/* K05 Klick-Welle */
+.gk05 { padding: 16px 30px; background: var(--surface-hi); color: var(--text); border-color: var(--border-hi); border-radius: calc(14px * var(--ecken)); }
+.gk05:hover { border-color: var(--amber); }
+.gk05 i {
+  position: absolute; z-index: -1; width: 12px; height: 12px; margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--amber) 35%, transparent);
+  animation: gk05 .7s ease-out forwards; pointer-events: none;
+}
+@keyframes gk05 { to { scale: 30; opacity: 0; } }
+
+/* K06 Speichern-Ablauf */
+.gk06 { min-width: 150px; }
+.gk06 > span { transition: opacity .25s ease, translate .25s ease; }
+.gk06__laden, .gk06__fertig { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6px; opacity: 0; translate: 0 6px; }
+.gk06__laden i { width: 6px; height: 6px; border-radius: 50%; background: var(--auf-akzent); animation: gk06 .9s ease-in-out infinite; }
+.gk06__laden i:nth-child(2) { animation-delay: .15s; }
+.gk06__laden i:nth-child(3) { animation-delay: .3s; }
+@keyframes gk06 { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+.gk06__fertig path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.gk06[data-zustand="laedt"] .gk06__text,
+.gk06[data-zustand="fertig"] .gk06__text { opacity: 0; translate: 0 -6px; }
+.gk06[data-zustand="laedt"] .gk06__laden { opacity: 1; translate: 0 0; }
+.gk06[data-zustand="fertig"] { background: var(--gut); }
+.gk06[data-zustand="fertig"] .gk06__fertig { opacity: 1; translate: 0 0; }
+.gk06[data-zustand="fertig"] .gk06__fertig path { transition: stroke-dashoffset .4s .1s ease; stroke-dashoffset: 0; }
+
+/* K07 Zwei-Teiler */
+.gk07 { display: inline-flex; gap: 1px; border-radius: 999px; overflow: hidden; background: color-mix(in srgb, var(--auf-akzent) 35%, var(--amber)); }
+.gk07 .gk { border-radius: 0; }
+.gk07 .gk:first-child { padding-right: 16px; }
+.gk07__mehr { padding-inline: 12px; }
+.gk07 .gk:hover { background: var(--amber-light); }
+.gk07__mehr svg { transition: translate .25s ease; }
+.gk07__mehr:hover svg { translate: 0 2px; }
+
+/* K08 Plus dreht */
+.gk08 svg { transition: rotate .4s cubic-bezier(.3, .7, .2, 1); }
+.gk08:hover { background: var(--amber-light); }
+.gk08:hover svg { rotate: 90deg; }
+
+/* K09 Warmer Schein */
+.gk09 { padding: 12px 26px; }
+.gk09:hover { background: var(--amber-light); box-shadow: 0 0 0 6px color-mix(in srgb, var(--amber) 14%, transparent), 0 8px 28px color-mix(in srgb, var(--amber) 35%, transparent); }
+
+/* K10 Halten zum Löschen */
+.gk10 { background: transparent; border-color: color-mix(in srgb, var(--fehler) 60%, transparent); color: var(--fehler-hell); min-width: 190px; user-select: none; touch-action: none; }
+.gk10__fuell { position: absolute; inset: 0; z-index: -1; background: var(--fehler); transform-origin: left; scale: 0 1; transition: scale .25s ease; }
+.gk10.haelt .gk10__fuell { scale: 1 1; transition: scale 1.2s linear; }
+.gk10.haelt { color: var(--auf-akzent); }
+.gk10.ist-fertig { border-color: var(--fehler); }
+
+/* K11 Merken-Schalter */
+.gk11 { background: transparent; border-color: var(--border-hi); color: var(--text-soft); }
+.gk11:hover { border-color: var(--amber); color: var(--text); }
+.gk11 svg { transition: fill .25s ease, scale .3s cubic-bezier(.3, 1.6, .5, 1); }
+.gk11[aria-pressed="true"] { border-color: var(--amber); color: var(--amber-light); }
+.gk11[aria-pressed="true"] svg { fill: var(--amber); stroke: var(--amber); scale: 1.12; }
+
+/* K12 Runde Symbol-Knöpfe + Grove-Tooltip */
+.gk12 { display: inline-flex; gap: 6px; padding: 6px; border-radius: 999px; background: var(--surface-hi); }
+.gk12__k { width: 38px; height: 38px; padding: 0; background: transparent; color: var(--text-soft); overflow: visible; }
+.gk12__k b { font: 700 1rem var(--font-display); }
+.gk12__k:hover { background: var(--surface); color: var(--amber-light); }
+.gk12__k::after {
+  content: attr(data-tipp);
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  padding: 4px 10px; border-radius: 8px;
+  background: var(--text); color: var(--ground);
+  font: 500 .76rem var(--font-body); white-space: nowrap;
+  translate: -50% 4px; opacity: 0; pointer-events: none;
+  transition: opacity .18s ease, translate .18s ease;
+}
+.gk12__k:hover::after { opacity: 1; translate: -50% 0; transition-delay: .35s; }
+.gh-buehne:has(.gk12) { overflow: visible; }
+
+/* K13 Plattenteller */
+.gk13 { position: relative; width: 64px; height: 64px; padding: 0; border: 0; border-radius: 50%; background: var(--surface-hi); color: var(--amber); cursor: pointer; transition: background .2s ease; }
+.gk13:hover { background: color-mix(in srgb, var(--amber) 14%, var(--surface-hi)); }
+.gk13 svg { position: absolute; inset: 0; margin: auto; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.gk13__platte { width: 64px; height: 64px; stroke-width: 1; opacity: .55; animation: gk13 2.4s linear infinite paused; }
+.gk13__zeichen { width: 26px; height: 26px; stroke-width: 2.2; }
+.gk13__zeichen .play { fill: currentColor; }
+.gk13__zeichen .pause, .gk13[aria-pressed="true"] .play { display: none; }
+.gk13[aria-pressed="true"] .pause { display: inline; }
+.gk13[aria-pressed="true"] .gk13__platte { animation-play-state: running; opacity: .9; }
+@keyframes gk13 { to { rotate: 360deg; } }
+
+/* K14 Wellen-Link */
+.gk14-text { margin: 0; color: var(--text-soft); font-size: 1.02rem; }
+.gk14 { position: relative; color: var(--amber-light); text-decoration: none; }
+.gk14::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -5px; height: 6px;
+  background: currentColor;
+  -webkit-mask: linear-gradient(#000, #000) 0 100% / 100% 1.2px no-repeat;
+          mask: linear-gradient(#000, #000) 0 100% / 100% 1.2px no-repeat;
+}
+.gk14:hover::after {
+  --welle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='6'%3E%3Cpath d='M0 3 Q3 0 6 3 T12 3' fill='none' stroke='black' stroke-width='1.3'/%3E%3C/svg%3E");
+  -webkit-mask: var(--welle) 0 0 / 12px 6px repeat-x;
+          mask: var(--welle) 0 0 / 12px 6px repeat-x;
+  animation: gk14 .9s ease-out;
+}
+@keyframes gk14 { from { -webkit-mask-position: 0 0; mask-position: 0 0; } to { -webkit-mask-position: 24px 0; mask-position: 24px 0; } }
+
+/* K15 Pille mit Zahl */
+.gk15 span { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--auf-akzent); color: var(--amber-light); font-size: .78rem; }
+.gk15:hover { background: var(--amber-light); }
+
+/* K16 Gefahr leise */
+.gk16 { background: transparent; border-color: var(--border-hi); color: var(--text-soft); }
+.gk16:hover { border-color: var(--fehler); color: var(--fehler-hell); background: color-mix(in srgb, var(--fehler) 10%, transparent); }

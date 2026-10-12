@@ -37,7 +37,16 @@ async function starte() {
             el.querySelector(".meldung__text").textContent = b.text
             el.querySelector(".meldung__zeit").textContent = wannGewesen(b.erstellt_am)
             if (b.link) el.href = b.link; else el.removeAttribute("href")
-            el.addEventListener("click", () => markiere([b.id]))
+            el.addEventListener("click", async (e) => {
+                // Mit Link: erst „gelesen“ speichern, dann weiter – sonst bricht der Seitenwechsel
+                // die Anfrage ab und die Meldung bleibt ungelesen.
+                const neuerTab = e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0
+                if (b.link && !b.gelesen && !neuerTab) {
+                    e.preventDefault()
+                    await markiere([b.id])
+                    location.href = b.link
+                } else markiere([b.id])
+            })
             liste.append(el)
         }
         const ungelesen = eintraege.filter((b) => !b.gelesen).length

@@ -156,3 +156,20 @@ a.knopf-leise { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+
+/* ---------- App (PWA) – js/kern/app.js ---------- */
+.app-hinweis {
+  margin: auto;
+  max-width: 360px;
+  padding: 24px;
+  border: 1px solid var(--border-hi);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+}
+.app-hinweis::backdrop { background: color-mix(in srgb, var(--ground-deep) 70%, transparent); }
+.app-hinweis h2 { margin: 0 0 12px; font: 400 1.5rem var(--font-display); }
+.app-hinweis ol { margin: 0 0 12px; padding-left: 20px; color: var(--text-soft); line-height: 1.6; }
+.app-hinweis p { margin: 0 0 16px; color: var(--muted); font-size: .92rem; }
+.app-hinweis strong { color: var(--text); }

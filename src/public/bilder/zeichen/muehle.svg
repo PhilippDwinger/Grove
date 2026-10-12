@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Grove · Zeichen: Mühle – ein Mühlrad (aus etwas wird etwas anderes) -->
+  <circle cx="24" cy="24" r="15" fill="none" stroke="#E3A15A" stroke-width="2"/>
+  <circle cx="24" cy="24" r="4" fill="none" stroke="#F2C08A" stroke-width="2"/>
+  <path d="M24 9v11M24 28v11M9 24h11M28 24h11M13.4 13.4l7.8 7.8M26.8 26.8l7.8 7.8M34.6 13.4l-7.8 7.8M21.2 26.8l-7.8 7.8" fill="none" stroke="#E3A15A" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+  <path d="M24 3.5v4M44.5 24h-4M24 44.5v-4M3.5 24h4" fill="none" stroke="#F2C08A" stroke-width="2.4" stroke-linecap="round"/>
+</svg>

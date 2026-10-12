@@ -290,7 +290,7 @@ async function fuehreAus(aktion, knopf) {
             aktualisiereZaehler()
         }
         if (aktion === "loeschen") {
-            if (mail.ordner !== "papierkorb") return verschiebe(mail, "papierkorb", "In den Papierkorb gelegt")
+            if (mail.ordner !== "papierkorb") return await verschiebe(mail, "papierkorb", "In den Papierkorb gelegt")
             // Endgültig: zweiter Klick bestätigt
             if (!knopf.dataset.bestaetigen) {
                 knopf.dataset.bestaetigen = "1"

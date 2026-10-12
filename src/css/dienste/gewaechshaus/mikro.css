@@ -1,0 +1,141 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Kleine Momente“ – Z01–Z14 (Präfix .gz)
+   ========================================================== */
+
+.gz-tipp { position: absolute; bottom: 10px; color: var(--muted); font-size: .72rem; }
+:is(.gz01, .gz02, .gz03, .gz06, .gz11, .gz13) {
+  position: relative; display: grid; place-items: center; width: 52px; height: 52px; padding: 0;
+  border: 1px solid var(--border-hi); border-radius: 50%; background: var(--surface-hi); color: var(--text-soft); cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+}
+:is(.gz01, .gz02, .gz03, .gz06, .gz11, .gz13):hover { border-color: var(--amber); color: var(--text); }
+:is(.gz01, .gz02, .gz03, .gz06, .gz11) svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Z01 Kopieren → Haken */
+.gz01 svg { grid-area: 1 / 1; transition: opacity .25s ease, rotate .35s ease, scale .35s ease; }
+.gz01 .haken { opacity: 0; stroke: var(--gut); stroke-width: 2.4; }
+.gz01 .haken path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .35s ease .1s; }
+.gz01.ist-ok { border-color: var(--gut); }
+.gz01.ist-ok .kopie { opacity: 0; rotate: -60deg; scale: .5; }
+.gz01.ist-ok .haken { opacity: 1; }
+.gz01.ist-ok .haken path { stroke-dashoffset: 0; }
+
+/* Z02 Stern mit Funken */
+.gz02 svg { transition: fill .2s ease, scale .35s cubic-bezier(.3, 1.8, .5, 1); }
+.gz02[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); }
+.gz02[aria-pressed="true"] svg { fill: var(--amber); scale: 1.08; }
+.gz02 i { position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px; border-radius: 50%; background: var(--amber-light); opacity: 0; }
+.gz02.funkt i { animation: gz02 .55s ease-out; }
+@keyframes gz02 { 0% { opacity: 1; transform: rotate(var(--w)) translateY(0); } 100% { opacity: 0; transform: rotate(var(--w)) translateY(-30px); } }
+
+/* Z03 Glocke schwingt */
+.gz03 svg { transform-origin: 50% 8%; }
+.gz03.klingelt svg { animation: gz03 .9s ease; }
+@keyframes gz03 { 15% { rotate: 16deg; } 35% { rotate: -12deg; } 55% { rotate: 7deg; } 75% { rotate: -3deg; } }
+.gz03 i { position: absolute; top: 10px; right: 11px; width: 9px; height: 9px; border-radius: 50%; background: var(--amber); scale: 0; transition: scale .35s cubic-bezier(.3, 1.8, .5, 1) .25s; }
+.gz03.hat-punkt i { scale: 1; }
+
+/* Z04 Zeile welkt weg */
+.gz04 { display: grid; gap: 4px; width: 100%; }
+.gz04__zeile { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 10px; background: var(--surface); color: var(--text-soft); font-size: .86rem; overflow: hidden; }
+.gz04__zeile button { width: 24px; height: 24px; border: 0; border-radius: 50%; background: none; color: var(--muted); cursor: pointer; }
+.gz04__zeile button:hover { background: color-mix(in srgb, var(--fehler) 14%, transparent); color: var(--fehler-hell); }
+.gz04__zeile.welkt { animation: gz04 .7s ease forwards; transform-origin: 0 100%; }
+@keyframes gz04 {
+  0% { max-height: 40px; }
+  40% { opacity: .4; rotate: 3deg; translate: 6px 6px; filter: saturate(0); max-height: 40px; padding-block: 8px; }
+  100% { opacity: 0; rotate: 6deg; translate: 14px 14px; max-height: 0; padding-block: 0; margin-top: -4px; }
+}
+
+/* Z05 Zahl rollt */
+.gz05 { display: grid; justify-items: center; gap: 14px; }
+.gz05__zahl { display: flex; font: 400 2.6rem/1 var(--font-display); color: var(--text); }
+.gz05__rad { display: block; height: 1em; overflow: hidden; }
+.gz05__rad > span { display: grid; transition: translate .9s cubic-bezier(.3, .8, .2, 1); }
+.gz05__rad:nth-child(2) > span { transition-delay: .06s; } .gz05__rad:nth-child(3) > span { transition-delay: .12s; } .gz05__rad:nth-child(4) > span { transition-delay: .18s; }
+.gz05__rad b { height: 1em; font-weight: 400; font-variant-numeric: tabular-nums; }
+
+/* Z06 Herz wird Blüte */
+.gz06 svg .zu { transition: opacity .25s ease, scale .3s ease; transform-box: fill-box; transform-origin: 50% 100%; }
+.gz06 svg .auf { opacity: 0; scale: .2; transform-box: fill-box; transform-origin: center; transition: opacity .3s ease, scale .5s cubic-bezier(.3, 1.6, .5, 1); }
+.gz06 svg .auf ellipse { fill: color-mix(in srgb, var(--amber) 30%, transparent); stroke: var(--amber); }
+.gz06 svg .auf circle { fill: var(--amber-light); stroke: none; }
+.gz06[aria-pressed="true"] { border-color: var(--amber); }
+.gz06[aria-pressed="true"] .zu { opacity: 0; scale: .4; }
+.gz06[aria-pressed="true"] .auf { opacity: 1; scale: 1; }
+
+/* Z07 Umsortieren */
+.gz07 { display: grid; gap: 4px; width: 100%; margin: 0; padding: 0; list-style: none; }
+.gz07 li { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid transparent; border-radius: 10px; background: var(--surface); color: var(--text-soft); font-size: .86rem; cursor: grab; user-select: none; }
+.gz07 i { color: var(--muted); font-style: normal; letter-spacing: -2px; }
+.gz07 li:hover { border-color: var(--border-hi); }
+.gz07 li.zieht { opacity: .5; border-color: var(--amber); border-style: dashed; }
+
+/* Z08 Abhaken mit Strich */
+.gz08 { display: grid; gap: 4px; width: 100%; margin: 0; padding: 0; list-style: none; }
+.gz08 li { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; background: var(--surface); color: var(--text); font-size: .86rem; transition: opacity .4s ease .5s; }
+.gz08 button { width: 18px; height: 18px; flex: none; padding: 0; border: 1.5px solid var(--border-hi); border-radius: 50%; background: none; cursor: pointer; transition: background .2s ease, border-color .2s ease; }
+.gz08 button:hover { border-color: var(--amber); }
+.gz08 span { background: linear-gradient(var(--muted), var(--muted)) 0 55% / 0 1.5px no-repeat; transition: background-size .45s ease, color .3s ease; }
+.gz08 .fertig { opacity: .55; }
+.gz08 .fertig button { background: var(--amber); border-color: var(--amber); box-shadow: inset 0 0 0 3px var(--surface); }
+.gz08 .fertig span { background-size: 100% 1.5px; color: var(--muted); }
+
+/* Z09 Kopfschütteln */
+.gz09 { display: flex; gap: 8px; }
+.gz09 input { width: 140px; padding: 8px 12px; border: 1px solid var(--border-hi); border-radius: 999px; background: var(--surface); color: var(--text); outline: none; }
+.gz09 input.schuettelt { animation: gz09 .45s ease; border-color: color-mix(in srgb, var(--fehler) 70%, var(--border-hi)); }
+@keyframes gz09 { 20% { translate: -6px 0; } 40% { translate: 5px 0; } 60% { translate: -3px 0; } 80% { translate: 2px 0; } }
+
+/* Z10 Grove-Tooltip */
+.gh-buehne:has(.gz10) { overflow: visible; }
+.gz10 { position: relative; color: var(--text); border-bottom: 1px dotted var(--amber); cursor: help; outline: none; }
+.gz10 [role="tooltip"] {
+  position: absolute; bottom: calc(100% + 10px); left: 50%; translate: -50% 4px;
+  padding: 6px 10px; border-radius: 8px; background: var(--text); color: var(--ground);
+  font-size: .76rem; white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity .18s ease, translate .18s ease;
+}
+.gz10 [role="tooltip"]::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border: 5px solid transparent; border-top-color: var(--text); }
+.gz10:is(:hover, :focus-visible) [role="tooltip"] { opacity: 1; translate: -50% 0; transition-delay: .3s; }
+
+/* Z11 Aktualisieren */
+.gz11.dreht svg { animation: gz11 .8s cubic-bezier(.4, 0, .2, 1) 2; color: var(--amber); }
+@keyframes gz11 { to { rotate: 360deg; } }
+
+/* Z12 Aufklapp-Menü */
+.gz12 { position: relative; align-self: start; margin-top: 20px; }
+.gz12 summary { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--border-hi); border-radius: 999px; color: var(--text-soft); font-size: .88rem; cursor: pointer; list-style: none; }
+.gz12 summary::-webkit-details-marker { display: none; }
+.gz12 summary svg { width: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; transition: rotate .3s ease; }
+.gz12[open] summary { border-color: var(--amber); color: var(--text); }
+.gz12[open] summary svg { rotate: 180deg; }
+.gz12 div { position: absolute; top: calc(100% + 6px); left: 0; display: grid; min-width: 170px; padding: 6px; border: 1px solid var(--border-hi); border-radius: 12px; background: var(--surface-hi); transform-origin: top left; animation: gz12 .25s cubic-bezier(.3, .8, .2, 1); z-index: 2; }
+.gz12 a { padding: 7px 10px; border-radius: 8px; color: var(--text-soft); font-size: .84rem; text-decoration: none; opacity: 0; animation: gz12a .25s ease calc(.05s + var(--i) * .04s) forwards; }
+.gz12 a:hover { background: var(--surface); color: var(--text); }
+.gz12 a:last-child { color: var(--fehler-hell); }
+@keyframes gz12 { from { scale: .92 .7; opacity: 0; } }
+@keyframes gz12a { from { opacity: 0; translate: 0 -4px; } to { opacity: 1; translate: 0 0; } }
+
+/* Z13 Avatar wechselt */
+.gz13 { width: 60px; height: 60px; border: 0; background: none; }
+.gz13 span { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--amber); color: var(--auf-akzent); font: 600 1.3rem var(--font-display); }
+.gz13::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--amber); opacity: 0; }
+.gz13.neu span { animation: gz13 .55s cubic-bezier(.3, 1.4, .5, 1); }
+.gz13.neu::after { animation: gz13ring .7s ease-out; }
+@keyframes gz13 { 0% { scale: 1; } 30% { scale: .2; opacity: 0; } 100% { scale: 1; opacity: 1; } }
+@keyframes gz13ring { 0%, 30% { opacity: 0; scale: .7; } 50% { opacity: 1; } 100% { opacity: 0; scale: 1.3; } }
+
+/* Z14 Schalter mit Wort */
+.gz14 { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; }
+.gz14 input { position: absolute; opacity: 0; }
+.gz14__bahn { position: relative; width: 46px; height: 26px; border-radius: 999px; background: var(--border-hi); transition: background .25s ease; }
+.gz14__bahn i { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--text-soft); transition: translate .3s cubic-bezier(.3, .7, .2, 1), background .25s ease; }
+.gz14 input:checked + .gz14__bahn { background: var(--amber); }
+.gz14 input:checked + .gz14__bahn i { translate: 20px 0; background: var(--auf-akzent); }
+.gz14 input:focus-visible + .gz14__bahn { outline: 2px solid var(--amber-light); outline-offset: 2px; }
+.gz14__wort { display: grid; color: var(--text-soft); font-size: .9rem; }
+.gz14__wort b { grid-area: 1 / 1; font-weight: 500; transition: opacity .25s ease, translate .25s ease; }
+.gz14__wort b:last-child { opacity: 0; translate: 0 6px; color: var(--amber-light); }
+.gz14 input:checked ~ .gz14__wort b:first-child { opacity: 0; translate: 0 -6px; }
+.gz14 input:checked ~ .gz14__wort b:last-child { opacity: 1; translate: 0 0; }

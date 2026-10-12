@@ -1,0 +1,331 @@
+/* ==========================================================
+   Grove · Bridge – Design-Labor (nur für src/dienste/bridge/)
+   Testseite: Entwürfe für Look & Bewegung von Bridge.
+   Farben NUR über CSS-Variablen (Laub überschreibt sie).
+     Task        → --amber
+     Instruction → --flieder
+     Response    → --gut
+   Entwurfs-Animationen 45–52 stehen unten (Präfix b45…b52).
+   Wenn Paddy sie absegnet, wandern sie nach animationen.css.
+   ========================================================== */
+
+.b-labor {
+  --b-task: var(--amber);
+  --b-instr: var(--flieder);
+  --b-resp: var(--gut);
+  --b-linie: var(--border-hi);
+  --b-knoten: var(--surface-hi);
+  --b-knoten-rand: color-mix(in srgb, var(--amber-light) 55%, transparent);
+  --b-knoten-r: 10px;
+  --b-strich: 2;
+  --b-strich-muster: none;
+
+  width: min(1160px, 100% - 32px);
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 56px) 0 96px;
+}
+
+/* ---------- Gestaltungs-Richtungen ---------- */
+.b-labor[data-richtung="signal"] {
+  --b-knoten-r: 3px;
+  --b-strich: 1.4;
+  --b-strich-muster: 2 6;
+  --b-knoten-rand: color-mix(in srgb, var(--text) 35%, transparent);
+}
+.b-labor[data-richtung="bogen"] {
+  --b-knoten-r: 18px;
+  --b-strich: 3;
+  --b-linie: color-mix(in srgb, var(--amber) 30%, var(--border-hi));
+}
+
+/* ---------- Kopfbereich ---------- */
+.b-held {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  min-height: min(70vh, 560px);
+}
+.b-entwurf {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px dashed color-mix(in srgb, var(--amber) 50%, transparent);
+  border-radius: 999px;
+  color: var(--amber-light);
+  font-size: .82rem;
+  margin-bottom: 18px;
+}
+.b-held h1 {
+  font: 400 clamp(3.4rem, 9vw, 6.4rem)/.92 var(--font-display);
+  letter-spacing: -.02em;
+  margin-bottom: 22px;
+}
+.b-held__lede { color: var(--text-soft); font-size: 1.12rem; max-width: 38ch; line-height: 1.6; }
+.b-held__lede + .b-held__lede { margin-top: 10px; color: var(--muted); font-size: 1rem; }
+.b-buehne {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  border-radius: calc(var(--radius) * 1.3);
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--amber) 9%, transparent), transparent 60%),
+    color-mix(in srgb, var(--ground-deep) 60%, transparent);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.b-buehne svg { width: 100%; height: 100%; display: block; }
+
+/* Richtungs-Schalter */
+.b-richtung { margin-top: 28px; }
+.b-richtung__titel { color: var(--muted); font-size: .88rem; margin-bottom: 8px; }
+.b-segment {
+  display: inline-flex; padding: 4px; gap: 2px;
+  border: 1px solid var(--border-hi);
+  border-radius: calc(14px * var(--ecken));
+  background: var(--ground-deep);
+}
+.b-segment button {
+  border: 0; background: transparent; color: var(--text-soft);
+  font: 500 .92rem/1 var(--font-body);
+  padding: 9px 14px; border-radius: calc(10px * var(--ecken)); cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.b-segment button:hover { color: var(--text); }
+.b-segment button[aria-pressed="true"] { background: var(--surface-hi); color: var(--amber-light); }
+.b-richtung__info { color: var(--muted); font-size: .9rem; margin-top: 10px; max-width: 46ch; min-height: 3em; }
+
+/* ---------- Abschnitte ---------- */
+.b-abschnitt { margin-top: clamp(72px, 10vw, 128px); }
+.b-abschnitt__kopf { max-width: 62ch; margin-bottom: 28px; }
+.b-abschnitt h2 { font: 400 clamp(1.9rem, 4vw, 2.7rem)/1.1 var(--font-display); margin-bottom: 12px; }
+.b-abschnitt__kopf p { color: var(--text-soft); }
+.b-abschnitt__kopf code, .b-code-inline {
+  font: .88em ui-monospace, "Cascadia Code", Consolas, monospace;
+  color: var(--amber-light);
+  background: color-mix(in srgb, var(--amber) 8%, transparent);
+  padding: 1px 6px; border-radius: 6px;
+}
+
+.b-flaeche {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(16px, 3vw, 28px);
+}
+
+/* ---------- Ablauf eines Aufrufs ---------- */
+.b-ablauf { display: grid; grid-template-columns: minmax(0, 8fr) minmax(260px, 4fr); gap: 20px; }
+.b-ablauf__bild svg { width: 100%; height: auto; display: block; }
+.b-ablauf__text { display: flex; flex-direction: column; gap: 14px; }
+.b-schritte { display: flex; gap: 6px; }
+.b-schritte span {
+  flex: 1; height: 4px; border-radius: 2px; background: var(--border-hi);
+  transition: background .3s;
+}
+.b-schritte span.an { background: var(--amber); }
+.b-ablauf__nr { color: var(--muted); font-size: .88rem; }
+.b-ablauf__titel { font: 400 1.6rem/1.2 var(--font-display); }
+.b-ablauf__erkl { color: var(--text-soft); flex: 1; }
+.b-endpunkt { align-self: flex-start; }
+.b-steuerung { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- SVG-Bausteine ---------- */
+.b-linie { fill: none; stroke: var(--b-linie); stroke-width: var(--b-strich); stroke-dasharray: var(--b-strich-muster); stroke-linecap: round; stroke-linejoin: round; }
+.b-linie--aktiv { stroke: color-mix(in srgb, var(--amber) 55%, var(--b-linie)); }
+.b-knoten { fill: var(--b-knoten); stroke: var(--b-knoten-rand); stroke-width: 1.6; rx: var(--b-knoten-r); transition: fill .6s ease, stroke .6s ease; }
+.b-knoten--arbeitet { fill: color-mix(in srgb, var(--amber) 14%, var(--b-knoten)); stroke: var(--amber); }
+.b-knoten--arbeitet + .b-knoten-schirm { fill: color-mix(in srgb, var(--amber) 32%, transparent); }
+.b-knoten--ziel { stroke: var(--amber); stroke-width: 2.4; }
+.b-knoten-schirm { fill: color-mix(in srgb, var(--amber) 14%, transparent); rx: calc(var(--b-knoten-r) * .5); transition: fill .6s ease; }
+.b-text { fill: var(--text-soft); font: 500 13px var(--font-body); }
+.b-text--klein { fill: var(--muted); font-size: 11px; }
+.b-text--gross { fill: var(--text); font: 400 18px var(--font-display); }
+.b-text--mono { font-family: ui-monospace, Consolas, monospace; font-size: 11px; fill: var(--amber-light); }
+.b-ring { fill: none; stroke: color-mix(in srgb, var(--amber) 40%, transparent); stroke-width: 1.2; }
+.b-ring--innen { stroke: color-mix(in srgb, var(--amber) 70%, transparent); stroke-width: 1.6; }
+.b-realm-kern { fill: var(--ground-deep); stroke: var(--amber); stroke-width: 2; }
+.b-keim { fill: none; stroke: var(--gut); stroke-width: 2; stroke-linecap: round; }
+.b-blatt { fill: var(--gut); }
+
+.b-pool { fill: color-mix(in srgb, var(--ground-deep) 70%, transparent); stroke: var(--border-hi); stroke-width: 1.4; }
+.b-chip { rx: 4px; }
+.b-chip--task { fill: var(--b-task); }
+.b-chip--instr { fill: var(--b-instr); }
+.b-chip--resp { fill: var(--b-resp); }
+
+/* Signal: die Leitung glimmt mit, solange ein Signal darauf läuft */
+.b-signal { pointer-events: none; }
+.b-signal__licht { fill: none; stroke-width: calc(var(--b-strich) * 1px + 2px); stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .5s ease; }
+.b-signal__licht.an { opacity: .22; }
+
+/* ---------- Mailbox ---------- */
+.b-mailbox { display: grid; grid-template-columns: minmax(0, 7fr) minmax(240px, 3fr); gap: 20px; }
+.b-pools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.b-poolbox {
+  border: 1px solid var(--border-hi);
+  border-radius: calc(var(--radius) * .8);
+  background: color-mix(in srgb, var(--ground-deep) 55%, transparent);
+  padding: 14px;
+  display: flex; flex-direction: column; gap: 10px;
+  min-height: 300px;
+}
+.b-poolbox__kopf { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.b-poolbox__kopf strong { font-weight: 600; }
+.b-poolbox__kopf span { color: var(--muted); font-size: .85rem; }
+.b-poolbox__wofuer { color: var(--muted); font-size: .86rem; line-height: 1.45; }
+.b-poolbox__inhalt { flex: 1; display: flex; flex-direction: column-reverse; justify-content: flex-start; gap: 6px; border-top: 1px dashed var(--border-hi); padding-top: 10px; }
+.b-poolbox__farbe { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 6px; }
+.b-nachricht {
+  font: 12px/1.3 ui-monospace, Consolas, monospace;
+  padding: 7px 9px;
+  border-radius: calc(8px * var(--ecken));
+  color: var(--auf-akzent);
+  display: flex; justify-content: space-between; gap: 8px;
+}
+.b-nachricht--task { background: var(--b-task); }
+.b-nachricht--instr { background: var(--b-instr); }
+.b-nachricht--resp { background: var(--b-resp); }
+.b-nachricht--neu { animation: b49 .55s cubic-bezier(.3,1.5,.5,1) both; }
+.b-nachricht--weg { animation: b49-weg .35s ease-in forwards; }
+
+.b-busy { display: flex; flex-direction: column; gap: 14px; }
+.b-busy__zahl { font: 400 4rem/1 var(--font-display); color: var(--amber-light); }
+.b-busy__formel { color: var(--muted); font-size: .9rem; }
+.b-busy__formel b { color: var(--text-soft); font-weight: 600; }
+.b-knopfreihe { display: flex; flex-wrap: wrap; gap: 8px; }
+.b-poll {
+  margin-top: 4px;
+  font: 12px/1.5 ui-monospace, Consolas, monospace;
+  background: var(--ground-deep);
+  border: 1px solid var(--border);
+  border-radius: calc(10px * var(--ecken));
+  padding: 12px;
+  max-height: 220px; overflow: auto;
+  color: var(--text-soft);
+  white-space: pre;
+}
+
+/* ---------- Lastverteilung ---------- */
+.b-hosts { display: flex; flex-direction: column; gap: 10px; }
+.b-host {
+  display: grid; grid-template-columns: 130px minmax(0, 1fr) 70px; gap: 14px; align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--border-hi);
+  border-radius: calc(12px * var(--ecken));
+  transition: border-color .3s, background .3s;
+}
+.b-host--gewaehlt { border-color: var(--amber); background: color-mix(in srgb, var(--amber) 7%, transparent); }
+.b-host__name { font-weight: 600; }
+.b-host__balken { height: 10px; border-radius: 5px; background: var(--ground-deep); overflow: hidden; }
+.b-host__balken > span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--amber), var(--flieder)); border-radius: 5px; transition: width .6s cubic-bezier(.2,.8,.2,1); }
+.b-host__punkte { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; font-size: .9rem; }
+.b-last__fuss { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-top: 16px; }
+.b-last__meldung { color: var(--muted); font-size: .9rem; }
+
+/* ---------- Realm-Arten ---------- */
+.b-realms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.b-realm { display: flex; flex-direction: column; gap: 12px; }
+.b-realm svg { width: 100%; height: auto; display: block; border-radius: calc(12px * var(--ecken)); background: color-mix(in srgb, var(--ground-deep) 55%, transparent); }
+.b-realm h3 { font: 400 1.5rem/1.2 var(--font-display); }
+.b-realm p { color: var(--text-soft); font-size: .95rem; flex: 1; }
+.b-realm__fakten { color: var(--muted); font-size: .86rem; display: flex; flex-direction: column; gap: 4px; }
+
+/* ---------- Animations-Katalog ---------- */
+.b-katalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.b-kachel { display: flex; flex-direction: column; gap: 10px; }
+.b-kachel svg { width: 100%; height: auto; display: block; border-radius: calc(12px * var(--ecken)); background: color-mix(in srgb, var(--ground-deep) 55%, transparent); }
+.b-kachel__kopf { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.b-kachel__kopf strong { font: 400 1.15rem var(--font-display); }
+.b-kachel__nr { color: var(--muted); font-variant-numeric: tabular-nums; font-size: .88rem; }
+.b-kachel p { color: var(--muted); font-size: .88rem; flex: 1; }
+.b-kachel .g-knopf-leise { align-self: flex-start; height: 34px; font-size: 13px; }
+
+/* ---------- Extensions ---------- */
+.b-ext { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 20px; align-items: start; }
+.b-sprachen { display: flex; flex-wrap: wrap; gap: 8px; }
+.b-sprache {
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--border-hi); background: transparent; color: var(--text-soft);
+  font: 500 .92rem var(--font-body); cursor: pointer; transition: border-color .2s, color .2s;
+}
+.b-sprache[aria-pressed="true"] { border-color: var(--amber); color: var(--amber-light); }
+.b-code {
+  font: 13px/1.6 ui-monospace, "Cascadia Code", Consolas, monospace;
+  background: var(--ground-deep); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px; overflow-x: auto; color: var(--text-soft);
+  white-space: pre;
+}
+.b-code .k { color: var(--flieder); }
+.b-code .s { color: var(--gut); }
+.b-code .c { color: var(--muted); font-style: italic; }
+.b-code .f { color: var(--amber-light); }
+.b-hinweis { color: var(--muted); font-size: .88rem; margin-top: 12px; }
+
+.b-fuss { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
+
+/* ==========================================================
+   Entwürfe 45–52 (Bridge-Bewegung)
+   Alle laufen einmal ab (kein Dauer-Loop) und werden per
+   Klick neu gestartet. data-bewegung="aus" stoppt alles
+   (thema.css), prefers-reduced-motion ebenso.
+   ========================================================== */
+
+/* 45 · Andocken – Client gleitet heran, Linie zieht sich */
+.b45-knoten { animation: b45 .9s cubic-bezier(.2,.9,.25,1.15) both; }
+.b45-linie { stroke-dasharray: 400; animation: b45-linie .9s .35s ease-out both; }
+@keyframes b45 { from { translate: -60px 0; opacity: 0; } to { translate: 0 0; opacity: 1; } }
+@keyframes b45-linie { from { stroke-dashoffset: 400; } to { stroke-dashoffset: 0; } }
+
+/* 46 · Funktion keimt – Keimling wächst aus dem Client */
+.b46-stiel { stroke-dasharray: 40; animation: b46-stiel .7s ease-out both; }
+.b46-blatt { transform-box: fill-box; transform-origin: 0% 100%; animation: b46-blatt .6s .55s cubic-bezier(.3,1.6,.5,1) both; }
+@keyframes b46-stiel { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }
+@keyframes b46-blatt { from { scale: 0; } to { scale: 1; } }
+
+/* 47 / 48 · Aufruf / Antwort – Pulse laufen per JS (getPointAtLength) */
+
+/* 49 · In den Pool – Nachricht fällt mit Federn hinein */
+@keyframes b49 { 0% { translate: 0 -26px; opacity: 0; } 60% { opacity: 1; } 100% { translate: 0 0; opacity: 1; } }
+@keyframes b49-weg { to { translate: 0 -20px; opacity: 0; } }
+.b49 { transform-box: fill-box; animation: b49 .55s cubic-bezier(.3,1.5,.5,1) both; }
+
+/* 50 · Waage – Balken gleichen sich aus (Transition, siehe .b-host__balken) */
+
+/* 51 · Realm atmet – Ringe weiten sich dreimal und kommen zur Ruhe */
+.b51 { transform-box: fill-box; transform-origin: center; animation: b51 2.4s ease-in-out 3 both; }
+@keyframes b51 { 0%, 100% { scale: 1; opacity: .9; } 50% { scale: 1.08; opacity: .45; } }
+
+/* 52 · Schlüssel öffnet – läuft per JS (torSzene in bridge.js):
+   Schlüssel gleitet zum Tor → Tor öffnet sich zur Client-Seite → Signal tritt ein → Tor schließt */
+.b-tor { fill: none; stroke: var(--amber); stroke-width: 2; stroke-linecap: round; }
+.b-schluessel { fill: none; stroke: var(--amber-light); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.b-schluessel__marke { stroke: none; }
+.b-zugang { fill: none; stroke: var(--border-hi); stroke-width: 1.4; stroke-dasharray: 2 6; stroke-linecap: round; }
+.b-zugang--fest { opacity: 0; transition: opacity .8s ease; }
+.b-zugang--fest.an { opacity: 1; }
+.b-mitglied { fill: var(--text-soft); }
+.b-mitglied--neu { fill: var(--amber-light); transform-box: fill-box; transform-origin: center; animation: b-mitglied .7s cubic-bezier(.3,1.35,.5,1) both; }
+@keyframes b-mitglied { from { scale: 0; opacity: 0; } to { scale: 1; opacity: 1; } }
+
+/* Hilfen */
+.b-welle { transform-box: fill-box; transform-origin: center; animation: b-welle 1.2s cubic-bezier(.2,.7,.25,1) both; }
+@keyframes b-welle { from { scale: .7; opacity: .7; } to { scale: 1.9; opacity: 0; } }
+.b-arbeitet { transform-box: fill-box; transform-origin: center; animation: b-dreh 1.1s linear 3; }
+@keyframes b-dreh { to { rotate: 360deg; } }
+.b-auftauchen { animation: b-auftauchen .5s ease-out both; }
+@keyframes b-auftauchen { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .b-labor *, .b-labor *::before, .b-labor *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Schmal ---------- */
+@media (max-width: 900px) {
+  .b-held, .b-ablauf, .b-mailbox, .b-ext { grid-template-columns: 1fr; }
+  .b-realms { grid-template-columns: 1fr; }
+  .b-held { min-height: 0; }
+}
+@media (max-width: 620px) {
+  .b-pools { grid-template-columns: 1fr; }
+  .b-poolbox { min-height: 0; }
+  .b-host { grid-template-columns: 90px minmax(0, 1fr) 54px; }
+}

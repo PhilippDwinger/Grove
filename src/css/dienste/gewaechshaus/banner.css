@@ -1,0 +1,99 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Banner“ – B01–B10 (Präfix .gb)
+   Alle Flächen über Grove-Variablen. Bewegung langsam (≥ 6 s).
+   ========================================================== */
+
+.gb { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.gb-text {
+  position: absolute; left: 22px; bottom: 18px;
+  display: grid; gap: 2px;
+  text-shadow: 0 2px 16px var(--ground-deep);
+}
+.gb-text--rechts { left: auto; right: 26px; text-align: right; }
+.gb-text span { color: var(--amber-light); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+.gb-text strong { color: var(--text); font: 400 clamp(1.5rem, 3vw, 2.1rem)/1.1 var(--font-display); }
+
+/* gemeinsame Flächen */
+.gb-tief { fill: var(--wald-tief); }
+.gb-l1 { fill: var(--wald); }
+.gb-l2 { fill: var(--wald-mitte); }
+.gb-l3 { fill: var(--wald-tief); }
+.gb-mond { fill: var(--glanz); }
+.gb-mondhof { fill: color-mix(in srgb, var(--amber-light) 14%, transparent); }
+.gb-glueh { fill: var(--amber-light); opacity: .15; animation: gb-glimm var(--d, 7s) ease-in-out var(--v, 0s) infinite, gb-schweb calc(var(--d, 7s) * 1.7) ease-in-out var(--v, 0s) infinite alternate; }
+@keyframes gb-glimm { 0%, 100% { opacity: .1; } 45%, 55% { opacity: .95; } }
+@keyframes gb-schweb { to { translate: 14px -10px; } }
+
+/* B02 Jazzbühne */
+.gb-kegel { fill: color-mix(in srgb, var(--amber-light) 9%, transparent); animation: gb-atmen 8s ease-in-out infinite alternate; }
+@keyframes gb-atmen { to { opacity: .55; } }
+.gb-buehnenlicht { fill: color-mix(in srgb, var(--amber) 22%, transparent); }
+.gb-schatten { fill: var(--ground-deep); stroke: var(--ground-deep); }
+.gb-schatten path[fill="none"] { fill: none; }
+.gb-saitenhalter { stroke: color-mix(in srgb, var(--amber) 35%, var(--ground-deep)); stroke-width: 1.5; }
+.gb-vorhang { fill: color-mix(in srgb, var(--fehler-tief) 30%, var(--ground-deep)); }
+.gb-vorhang--falte { fill: none; stroke: color-mix(in srgb, var(--fehler-tief) 18%, var(--ground-deep)); stroke-width: 10; }
+.gb-volant { fill: color-mix(in srgb, var(--fehler-tief) 36%, var(--ground-deep)); }
+
+/* B03 Plattenhorizont */
+.gb-plattengrund { fill: var(--ground-deep); }
+.gb-rillen circle { fill: none; stroke: color-mix(in srgb, var(--text) 8%, transparent); stroke-width: 1; }
+.gb-etikett { fill: var(--amber); }
+.gb-glanz { fill: none; stroke: color-mix(in srgb, var(--amber-light) 40%, transparent); stroke-width: 26; stroke-linecap: round; filter: blur(6px); transform-origin: 600px 300px; animation: gb-dreh 40s linear infinite; }
+@keyframes gb-dreh { to { rotate: 360deg; } }
+.gb-horizont { stroke: color-mix(in srgb, var(--amber) 40%, transparent); stroke-width: 1.5; }
+
+/* B04 Unter der Erde */
+.gb-erde { fill: color-mix(in srgb, var(--wald-tief) 70%, var(--surface)); }
+.gb-grasnarbe { stroke: var(--wald-mitte); stroke-width: 6; }
+.gb-faeden path { fill: none; stroke: color-mix(in srgb, var(--amber) 25%, transparent); stroke-width: 1; }
+.gb-knoten { fill: var(--amber); opacity: .3; animation: gb-glimm 6s ease-in-out var(--v) infinite; }
+.gb-keim { fill: none; stroke: var(--amber); stroke-width: 2; stroke-linecap: round; }
+.gb-keim path:nth-child(2) { fill: color-mix(in srgb, var(--amber) 30%, transparent); }
+.gb-wurzel { stroke: color-mix(in srgb, var(--amber) 55%, transparent); stroke-width: 1.5; }
+
+/* B05 Jahresringe */
+.gb-holz { fill: color-mix(in srgb, var(--amber) 7%, var(--ground)); }
+.gb-ringe ellipse { fill: none; stroke: var(--amber); stroke-opacity: var(--o); stroke-width: 1.2; }
+.gb-riss { fill: none; stroke: var(--ground-deep); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.gb-mark { fill: var(--amber-light); }
+
+/* B06 Wiese */
+.gb-halme { fill: none; stroke: var(--wald-tief); stroke-width: 2; stroke-linecap: round; }
+
+/* B07 Schallwellen-Hügel */
+.gb-w1 { fill: var(--wald); }
+.gb-w2 { fill: var(--wald-mitte); }
+.gb-w3 { fill: color-mix(in srgb, var(--amber) 14%, var(--wald-mitte)); }
+.gb-w4 { fill: var(--wald-tief); animation: gb-rollen 30s linear infinite; }
+.gb-w2 { animation: gb-rollen 60s linear infinite reverse; }
+@keyframes gb-rollen { from { translate: 0 0; } to { translate: -1200px 0; } }
+
+/* B08 Nebelsee */
+.gb-see { fill: color-mix(in srgb, var(--himmel) 70%, var(--ground)); }
+.gb-spiegel { opacity: .45; }
+.gb-ufer { stroke: color-mix(in srgb, var(--glanz) 25%, transparent); stroke-width: 1; }
+.gb-nebel ellipse { fill: color-mix(in srgb, var(--nebel) 22%, transparent); animation: gb-zieh 26s ease-in-out infinite alternate; }
+.gb-nebel ellipse:nth-child(2) { animation-duration: 34s; animation-direction: alternate-reverse; }
+@keyframes gb-zieh { to { translate: 120px 0; } }
+
+/* B09 Sternbild */
+.gb-stern { fill: var(--text); opacity: .4; animation: gb-funkel var(--d) ease-in-out var(--v) infinite; }
+@keyframes gb-funkel { 50% { opacity: .9; } }
+.gb-hauptstern { fill: var(--amber-light); }
+.gb-bild path { fill: none; stroke: color-mix(in srgb, var(--amber) 55%, transparent); stroke-width: 1.2; stroke-dasharray: 1; stroke-dashoffset: 1; animation: gb-zeichnen 1.4s ease forwards; }
+.gb-bild path:nth-child(2) { animation-delay: .3s; } .gb-bild path:nth-child(3) { animation-delay: .6s; }
+.gb-bild path:nth-child(4) { animation-delay: .9s; } .gb-bild path:nth-child(5) { animation-delay: 1.1s; }
+.gb-bild path:nth-child(6) { animation-delay: 1.3s; } .gb-bild path:nth-child(7) { animation-delay: 1.5s; }
+.gb-bild path:nth-child(8) { animation-delay: 1.7s; } .gb-bild path:nth-child(9) { animation-delay: 1.9s; }
+@keyframes gb-zeichnen { to { stroke-dashoffset: 0; } }
+
+/* B10 Nur Ringe */
+.gb10 { position: absolute; inset: 0; display: flex; align-items: center; padding-left: 36px; background: var(--surface); }
+.gb10 svg { position: absolute; right: 0; top: 0; height: 100%; }
+.gb10 circle { fill: none; stroke: color-mix(in srgb, var(--amber) 35%, transparent); stroke-width: 1; }
+.gb10 path { stroke: var(--surface); stroke-width: 10; }
+.gb10 div { position: relative; display: grid; }
+.gb10 span { color: var(--muted); font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
+.gb10 strong { font: 400 4.2rem/1 var(--font-display); color: var(--text); }
+.gb10 em { color: var(--amber); }

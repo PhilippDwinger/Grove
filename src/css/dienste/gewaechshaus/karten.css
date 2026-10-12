@@ -1,0 +1,162 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Karten & Layout“ – C01–C16 (Präfix .gc)
+   ========================================================== */
+
+/* C01 Karte mit Rillen */
+.gc01 {
+  position: relative; display: grid; gap: 2px; width: 100%; padding: 16px 18px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text-soft); text-decoration: none; overflow: hidden;
+  transition: border-color .25s ease;
+}
+.gc01::after {
+  content: ""; position: absolute; right: -70px; top: -70px; width: 160px; height: 160px; border-radius: 50%;
+  background: repeating-radial-gradient(circle, transparent 0 6px, color-mix(in srgb, var(--amber) 22%, transparent) 6px 7px);
+  opacity: .5; transition: opacity .3s ease;
+}
+.gc01 strong { color: var(--text); font: 400 1.4rem var(--font-display); }
+.gc01 span { font-size: .88rem; }
+.gc01 em { margin-top: 10px; color: var(--amber-light); font: normal 500 .8rem var(--font-body); }
+.gc01:hover { border-color: var(--border-hi); }
+.gc01:hover::after { opacity: 1; }
+
+/* C02 Kennzahl mit Verlauf */
+.gc02 { display: grid; width: 100%; padding: 14px 16px; border-radius: var(--radius); background: var(--surface); }
+.gc02__titel { color: var(--muted); font-size: .8rem; }
+.gc02 strong { color: var(--text); font: 400 2.2rem/1.1 var(--font-display); }
+.gc02 small { margin-left: 8px; color: var(--gut); font: 500 .8rem var(--font-body); }
+.gc-spark { width: 100%; height: 36px; margin-top: 4px; }
+.gc-spark .linie { fill: none; stroke: var(--amber); stroke-width: 1.6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.gc-spark .flaeche { fill: color-mix(in srgb, var(--amber) 12%, transparent); }
+
+/* C03 Jahresringe-Zeitleiste */
+.gc03 { position: relative; display: grid; gap: 14px; width: 100%; margin: 0; padding: 0 0 0 26px; list-style: none; }
+.gc03::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 1px; background: var(--border-hi); }
+.gc03 li { position: relative; display: grid; }
+.gc03 li::before {
+  content: ""; position: absolute; left: -26px; top: 3px; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--ground-deep); border: 1.5px solid var(--border-hi);
+  box-shadow: inset 0 0 0 2px var(--ground-deep), inset 0 0 0 3px var(--border-hi);
+}
+.gc03 li.ist-neu::before { left: -29px; top: 0; width: 19px; height: 19px; border-color: var(--amber); box-shadow: inset 0 0 0 3px var(--ground-deep), inset 0 0 0 4.5px var(--amber), 0 0 12px color-mix(in srgb, var(--amber) 40%, transparent); }
+.gc03 time { color: var(--muted); font-size: .74rem; }
+.gc03 span { color: var(--text-soft); font-size: .86rem; }
+.gc03 .ist-neu span { color: var(--text); }
+
+/* C04 Geräte-Karte */
+.gc04 { display: grid; gap: 4px; width: 100%; }
+.gc04__zeile { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; background: var(--surface); color: var(--text-soft); font-size: .88rem; }
+.gc04__zeile strong { color: var(--text); font-weight: 500; }
+.gc04__zeile em { margin-left: auto; color: var(--muted); font-style: normal; font-size: .8rem; }
+.gc04__punkt { width: 8px; height: 8px; border-radius: 50%; background: var(--border-hi); }
+.ist-online .gc04__punkt { background: var(--gut); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gut) 18%, transparent); }
+.ist-arbeitet .gc04__punkt { background: var(--amber); box-shadow: 0 0 0 3px color-mix(in srgb, var(--amber) 22%, transparent); }
+.ist-arbeitet em { color: var(--amber-light); }
+.gc04__eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.gc04__eq i { width: 3px; height: 100%; border-radius: 1px; background: var(--amber); transform-origin: bottom; animation: gc04 .9s ease-in-out infinite alternate; }
+.gc04__eq i:nth-child(2) { animation-delay: -.3s; } .gc04__eq i:nth-child(3) { animation-delay: -.6s; }
+@keyframes gc04 { from { scale: 1 .25; } to { scale: 1 1; } }
+
+/* C05 Notiz-Karte */
+.gc05 { display: grid; gap: 6px; width: 100%; padding: 14px 16px; border-radius: 4px var(--radius) var(--radius) var(--radius); background: var(--surface); border-left: 2px solid var(--amber); }
+.gc05 strong { font: 400 1.2rem var(--font-display); color: var(--text); }
+.gc05 p { margin: 0 !important; color: var(--text-soft) !important; font-size: .84rem !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.gc05 footer { display: flex; gap: 6px; align-items: center; font-size: .76rem; }
+.gc05 footer span { padding: 2px 8px; border-radius: 999px 4px 999px 999px; background: color-mix(in srgb, var(--amber) 14%, transparent); color: var(--amber-light); }
+.gc05 footer em { margin-left: auto; color: var(--muted); font-style: normal; }
+
+/* C06 Liste mit Tages-Köpfen */
+.gc06 { width: 100%; height: 100%; overflow: auto; padding: 0 12px 12px; }
+.gc06 h4 { position: sticky; top: 0; margin: 0; padding: 12px 0 6px; background: var(--ground-deep); color: var(--muted); font: 600 .7rem var(--font-body); letter-spacing: .12em; text-transform: uppercase; }
+.gc06__zeile { padding: 9px 4px; border-bottom: 1px solid var(--border); color: var(--text-soft); font-size: .88rem; }
+
+/* C07 Reiter mit Strich */
+.gc07 { width: 100%; }
+.gc07 nav { position: relative; display: flex; gap: 4px; border-bottom: 1px solid var(--border-hi); }
+.gc07 button { padding: 10px 10px; border: 0; background: none; color: var(--muted); font: 500 .86rem var(--font-body); cursor: pointer; transition: color .2s ease; }
+.gc07 button:hover { color: var(--text-soft); }
+.gc07 button[aria-selected="true"] { color: var(--text); }
+.gc07 i { position: absolute; left: 0; bottom: -1px; height: 2px; border-radius: 2px; background: var(--amber); transition: translate .4s cubic-bezier(.3, .7, .2, 1), width .4s cubic-bezier(.3, .7, .2, 1); }
+
+/* C08 Wurzelpfad */
+.gc08 { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 0; font-size: .82rem; }
+.gc08 a, .gc08 span { position: relative; display: inline-flex; align-items: center; gap: 8px; color: var(--muted); text-decoration: none; }
+.gc08 a::before, .gc08 span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid currentColor; }
+.gc08 a::after { content: ""; width: 12px; height: 1px; margin: 0 8px; background: var(--border-hi); }
+.gc08 a:hover { color: var(--amber-light); }
+.gc08 span { color: var(--text); }
+.gc08 span::before { border-color: var(--amber); background: var(--amber); box-shadow: 0 0 8px color-mix(in srgb, var(--amber) 50%, transparent); }
+
+/* C09 Aufklapp-Fach */
+.gc09 { width: 100%; }
+.gc09 details { border-bottom: 1px solid var(--border); }
+.gc09 summary { display: flex; justify-content: space-between; align-items: center; padding: 10px 2px; color: var(--text); font-size: .9rem; cursor: pointer; list-style: none; }
+.gc09 summary::-webkit-details-marker { display: none; }
+.gc09 summary svg { width: 16px; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; transition: rotate .3s ease; }
+.gc09 details[open] summary svg { rotate: 180deg; stroke: var(--amber); }
+.gc09 details > div { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+.gc09 details[open] > div { grid-template-rows: 1fr; }
+.gc09 details > div > p { overflow: hidden; margin: 0 !important; padding-bottom: 10px; color: var(--text-soft) !important; font-size: .84rem !important; }
+.gc09 details::details-content { block-size: 0; overflow: hidden; transition: block-size .35s ease, content-visibility .35s allow-discrete; }
+.gc09 details[open]::details-content { block-size: auto; }
+:root { interpolate-size: allow-keywords; }
+
+/* C10 Profil mit Ringen */
+.gc10 { display: flex; align-items: center; gap: 14px; }
+.gc10__avatar { position: relative; display: grid; place-items: center; width: 72px; height: 72px; }
+.gc10__avatar svg { position: absolute; inset: 0; }
+.gc10__avatar circle { fill: none; stroke: var(--amber); stroke-width: 1; opacity: .7; }
+.gc10__avatar circle:nth-child(2) { opacity: .45; } .gc10__avatar circle:nth-child(3) { opacity: .25; }
+.gc10__avatar b { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; background: var(--amber); color: var(--auf-akzent); font: 600 1.3rem var(--font-display); }
+.gc10 div { display: grid; }
+.gc10 strong { color: var(--text); font: 400 1.25rem var(--font-display); }
+.gc10 span { color: var(--text-soft); font-size: .74rem; }
+.gc10 em { color: var(--muted); font-style: normal; font-size: .76rem; }
+
+/* C11 Ruhige Tabelle */
+.gc11 { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.gc11 th { padding: 6px 8px; color: var(--muted); font-weight: 500; font-size: .72rem; text-align: left; text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--border-hi); }
+.gc11 td { padding: 8px; color: var(--text-soft); border-bottom: 1px solid var(--border); transition: background .2s ease, color .2s ease; }
+.gc11 :is(th, td):last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.gc11 td:first-child { color: var(--text); }
+.gc11 tbody tr:hover td { background: color-mix(in srgb, var(--amber) 7%, transparent); color: var(--text); }
+
+/* C12 Kennzahl-Reihe */
+.gc12 { display: flex; }
+.gc12 div { display: grid; padding: 0 12px; text-align: center; }
+.gc12 div + div { border-left: 1px solid var(--border-hi); }
+.gc12 strong { color: var(--text); font: 400 1.6rem/1.1 var(--font-display); }
+.gc12 span { color: var(--muted); font-size: .78rem; }
+
+/* C13 Kartenstapel */
+.gc13 { position: relative; width: 190px; height: 74px; }
+.gc13 span { position: absolute; inset: 0; display: flex; align-items: center; gap: 6px; padding: 0 16px; border: 1px solid var(--border-hi); border-radius: 14px; background: var(--surface); color: var(--text-soft); font-size: .88rem; transition: translate .35s cubic-bezier(.3, .7, .2, 1), rotate .35s cubic-bezier(.3, .7, .2, 1); }
+.gc13 span strong { color: var(--text); font-weight: 600; }
+.gc13 span:nth-child(1) { translate: 10px -10px; background: var(--surface-hi); opacity: .6; }
+.gc13 span:nth-child(2) { translate: 5px -5px; opacity: .85; }
+.gc13:hover span:nth-child(1) { translate: 34px -18px; rotate: 6deg; }
+.gc13:hover span:nth-child(2) { translate: 17px -9px; rotate: 3deg; }
+
+/* C14 Seitenleiste + Inhalt */
+.gc14 { display: grid; grid-template-columns: 110px 1fr; width: 100%; height: 100%; }
+.gc14 aside { display: grid; align-content: start; gap: 2px; padding: 12px 8px; background: var(--ground); border-right: 1px solid var(--border); }
+.gc14 aside a { position: relative; padding: 7px 10px; border-radius: 8px; color: var(--muted); font-size: .82rem; text-decoration: none; }
+.gc14 aside a:hover { color: var(--text-soft); }
+.gc14 aside a[aria-current="page"] { color: var(--text); background: var(--surface); }
+.gc14 aside a[aria-current="page"]::before { content: ""; position: absolute; left: -8px; top: 8px; bottom: 8px; width: 3px; border-radius: 0 3px 3px 0; background: var(--amber); }
+.gc14 main { display: grid; align-content: start; gap: 10px; padding: 16px; }
+.gc14 main strong { font: 400 1.3rem var(--font-display); color: var(--text); }
+.gc14 main span { height: 10px; border-radius: 5px; background: var(--surface-hi); }
+.gc14 main .kurz { width: 60%; }
+
+/* C15 Hervorgehobene Karte */
+.gc15 { position: relative; display: grid; gap: 4px; width: 100%; padding: 16px 18px; border: 1px solid var(--border-hi); border-radius: var(--radius); background: radial-gradient(120% 90% at 0 0, color-mix(in srgb, var(--amber) 14%, transparent), transparent 60%), var(--surface); overflow: hidden; }
+.gc15::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(90deg, var(--amber), transparent); }
+.gc15 span { justify-self: start; padding: 2px 8px; border-radius: 999px; background: var(--amber); color: var(--auf-akzent); font: 600 .7rem var(--font-body); }
+.gc15 strong { color: var(--text); font: 400 1.4rem var(--font-display); }
+.gc15 p { margin: 0 !important; }
+
+/* C16 Raster mit Lücke */
+.gc16 { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; width: 100%; height: 100%; }
+.gc16 div { display: grid; place-items: end start; padding: 12px; border-radius: 12px; background: var(--surface); color: var(--text-soft); font: 400 1rem var(--font-display); }
+.gc16 .gross { grid-row: span 2; background: linear-gradient(160deg, color-mix(in srgb, var(--amber) 16%, var(--surface)), var(--surface)); color: var(--text); font-size: 1.4rem; }

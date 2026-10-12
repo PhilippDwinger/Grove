@@ -16,6 +16,7 @@
 import "../../css/animationen.css"
 import "../../css/thema.css"
 import { supabase } from "./supabase.js"
+import "./app.js"                         // App (PWA): Service Worker, Installieren, Speicher
 import {
     STANDARD, DIENST_STANDARD, SCHRIFTEN, ZEICHEN, KARTEN, SZENEN,
     HINTERGRUENDE, ZEICHEN_EFFEKTE, musterSvg,
@@ -366,14 +367,7 @@ export async function einfaerben(img) {
     const schluessel = orig + JSON.stringify(zuordnung)
     let url = blobs.get(schluessel)
     if (!url) {
-        let text = texte.get(orig)
-        if (text === undefined) {
-            try {
-                text = await (await fetch(orig)).text()
-                text = text.replace(/<metadata>[\s\S]*?<\/metadata>/, "")
-            } catch { text = null }
-            texte.set(orig, text)
-        }
+        const text = await svgText(orig)
         if (!text) { setzeSrc(img, orig); return }
         const neu = text.replace(/#[0-9a-fA-F]{6}\b/g, (h) => zuordnung[h.toUpperCase()] || h)
         url = URL.createObjectURL(new Blob([neu], { type: "image/svg+xml" }))
@@ -384,6 +378,18 @@ export async function einfaerben(img) {
         }
     }
     if (img.dataset.orig === orig) setzeSrc(img, url)   // inzwischen nicht umgestellt?
+}
+// SVG-Datei als Text (einmal laden, dann aus dem Zwischenspeicher)
+async function svgText(pfad) {
+    let text = texte.get(pfad)
+    if (text === undefined) {
+        try {
+            text = await (await fetch(pfad)).text()
+            text = text.replace(/<metadata>[\s\S]*?<\/metadata>/, "")
+        } catch { text = null }
+        texte.set(pfad, text)
+    }
+    return text
 }
 function setzeSrc(img, url) {
     img.dataset.gefaerbt = url
@@ -414,14 +420,40 @@ new MutationObserver((liste) => {
     }
 }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["src"] })
 
+// Tab-Icon (Favicon)
+// Auf Dienst-Seiten: das Zeichen des Dienstes (aus Laub), randlos und ohne Hintergrund,
+// sonst das Grove-Favicon – beides in den Farben des aktuellen Themas.
+// Wichtig: als data:-Adresse. Blob-Adressen (wie bei den Bildern) zeigt Chrome
+// im Tab nicht an – dort erschien dann nur die Weltkugel.
+let faviconStand = ""
 async function faviconFaerben() {
     const link = document.querySelector('link[rel="icon"]')
     if (!link) return
     if (!link.dataset.orig) link.dataset.orig = link.getAttribute("href")
-    const probe = new Image()
-    probe.dataset.orig = link.dataset.orig
-    await einfaerben(probe)
-    if (probe.getAttribute("src")) link.href = probe.getAttribute("src")
+    const w = wirksam(dienstHier)
+    const p = palette(w)
+    const umfaerben = (t) => !w.bilder.einfaerben ? t
+        : t.replace(/#[0-9a-fA-F]{6}\b/g, (h) => p[ORIGINAL[h.toUpperCase()]] || h)
+    const z = DIENST_STANDARD[dienstHier] && dienstHier !== "lichtung"
+        ? ZEICHEN.find((x) => x.id === w.bilder.zeichen) : null
+    let svg
+    if (z && z.id !== "grove") {
+        const text = await svgText(z.datei)
+        if (!text) return
+        const vb = z.tab?.viewBox || text.match(/viewBox="([^"]+)"/)?.[1] || "0 0 48 48"
+        const strich = z.tab?.strich || 1.9
+        const innen = text
+            .replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "")
+            .replace(/<!--[\s\S]*?-->/g, "")
+            .replace(/stroke-width="([\d.]+)"/g, (_, n) => `stroke-width="${(n * strich).toFixed(2)}"`)   // im Tab kräftiger
+        // ohne Kachel: das Zeichen füllt das ganze Icon, Hintergrund durchsichtig
+        svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}">${innen}</svg>`
+    } else {
+        svg = await svgText(link.dataset.orig)
+        if (!svg) return
+    }
+    const url = "data:image/svg+xml," + encodeURIComponent(umfaerben(svg))
+    if (url !== faviconStand) { faviconStand = url; link.href = url }
 }
 
 // ==========================================================

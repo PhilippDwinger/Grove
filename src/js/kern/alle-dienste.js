@@ -5,3 +5,4 @@
 import '../myzel/register.js';
 import '../mail/register.js';
 import '../rinde/register.js';
+import '../harz/register.js';

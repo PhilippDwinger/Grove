@@ -45,6 +45,9 @@ export const DIENST_STANDARD = {
     rinde:    { bilder: { zeichen: "rinde",  karte: "rinde" } },
     laub:     { bilder: { zeichen: "laub",   karte: "laub" } },
     bridge:   { bilder: { zeichen: "bridge", karte: "bridge" } },
+    harz:     { bilder: { zeichen: "harz",   karte: "harz" } },
+    muehle:   { bilder: { zeichen: "muehle", karte: "muehle" } },
+    gewaechshaus: { bilder: { zeichen: "gewaechshaus", karte: "gewaechshaus" } },   // nur zum Testen
 }
 
 // Geltungsbereiche in Laub (Reihenfolge = Anzeige)
@@ -56,6 +59,9 @@ export const BEREICHE = [
     { id: "rinde",    name: "Rinde",      zeichen: "rinde" },
     { id: "laub",     name: "Laub",       zeichen: "laub" },
     { id: "bridge",   name: "Bridge",     zeichen: "bridge" },
+    { id: "harz",     name: "Harz",       zeichen: "harz" },
+    { id: "muehle",   name: "Mühle",      zeichen: "muehle" },
+    { id: "gewaechshaus", name: "Gewächshaus", zeichen: "gewaechshaus" },   // nur zum Testen
 ]
 
 // ---------- Farben: Beschriftung für Laub ----------
@@ -110,11 +116,14 @@ export const SCHRIFTEN = [
 const Z = "/bilder/zeichen/"
 export const ZEICHEN = [
     { id: "grove",    name: "Grove",       datei: "/bilder/marke/grove-logo-klein.svg" },
-    { id: "mail",     name: "Brief",       datei: "/bilder/dienste/mail-zeichen.svg" },
+    { id: "mail",     name: "Brief",       datei: "/bilder/dienste/mail-zeichen.svg", tab: { viewBox: "104 50 112 92", strich: 2.2 } },   // tab: Ausschnitt fürs Tab-Icon
     { id: "myzel",    name: "Myzel",       datei: "/bilder/dienste/myzel-zeichen.svg" },
     { id: "rinde",    name: "Rinde",       datei: "/bilder/dienste/rinde-zeichen.svg" },
     { id: "laub",     name: "Laub",        datei: Z + "laub.svg" },
     { id: "bridge",   name: "Brücke",      datei: Z + "bridge.svg" },
+    { id: "harz",     name: "Harztropfen",  datei: Z + "harz.svg" },
+    { id: "muehle",   name: "Mühlrad",      datei: Z + "muehle.svg" },
+    { id: "gewaechshaus", name: "Gewächshaus", datei: Z + "gewaechshaus.svg" },   // nur zum Testen
     { id: "blatt",    name: "Blatt",       datei: Z + "blatt.svg" },
     { id: "eichel",   name: "Eichel",      datei: Z + "eichel.svg" },
     { id: "pilz",     name: "Pilz",        datei: Z + "pilz.svg" },
@@ -139,6 +148,9 @@ export const KARTEN = [
     { id: "myzel",       name: "Myzel",           datei: D + "myzel.svg" },
     { id: "rinde",       name: "Jahresringe",     datei: D + "rinde.svg" },
     { id: "bridge",      name: "Bridge",          datei: D + "bridge.svg" },
+    { id: "harz",        name: "Harz",            datei: D + "harz.svg" },
+    { id: "muehle",      name: "Mühle",           datei: D + "muehle.svg" },
+    { id: "gewaechshaus", name: "Gewächshaus",    datei: D + "gewaechshaus.svg" },   // nur zum Testen
     { id: "laub",        name: "Laub",            datei: D + "laub.svg" },
     { id: "mehr",        name: "Keimling",        datei: D + "mehr.svg" },
     { id: "mondplatte",  name: "Mondplatte",      datei: D + "mondplatte.svg" },

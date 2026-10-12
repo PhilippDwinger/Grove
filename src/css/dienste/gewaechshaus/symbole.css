@@ -1,0 +1,47 @@
+/* ==========================================================
+   Gewächshaus · Abteil „Symbole“ – S01–S32 (Präfix .gs)
+   Strich über --gs-strich, Enden über --gs-enden (Werkzeugleiste)
+   ========================================================== */
+
+.gs {
+  width: 24px; height: 24px; flex: none;
+  fill: none; stroke: currentColor;
+  stroke-width: var(--gs-strich, 1.8);
+  stroke-linecap: var(--gs-enden, round);
+  stroke-linejoin: round;
+  transition: color .2s ease, translate .3s cubic-bezier(.3, 1.4, .5, 1);
+}
+.gs .gs-licht { fill: var(--amber-light); stroke: none; }
+.gs-werkzeug { flex-wrap: wrap; }
+
+.gs-raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.gs-kachel {
+  display: grid; gap: 6px; margin: 0;
+  padding: 14px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-soft);
+  transition: border-color .2s ease;
+}
+.gs--gross { justify-self: center; width: 56px; height: 56px; margin: 8px 0 4px; color: var(--amber); }
+.gs-kachel:hover { border-color: var(--border-hi); }
+.gs-kachel:hover .gs--gross { color: var(--amber-light); translate: 0 -2px; }
+.gs-klein { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 6px; border-radius: 8px; background: var(--ground-deep); }
+.gs-klein .gs { width: 20px; height: 20px; }
+.gs-klein .gs--mini { width: 16px; height: 16px; }
+.gs-kachel figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.gs-kachel figcaption strong { color: var(--text); font: 400 1rem var(--font-display); }
+.gs-wofuer { color: var(--muted); font-size: .78rem; line-height: 1.35; }
+
+.gs-unterkopf { margin: 32px 0 12px; font: 400 1.3rem var(--font-display); }
+.gs-einsatz { display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: start; }
+.gs-leiste { display: grid; gap: 2px; padding: 10px; border-radius: var(--radius); background: var(--ground-deep); }
+.gs-leiste a { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; color: var(--text-soft); text-decoration: none; font-size: .92rem; transition: background .2s ease, color .2s ease; }
+.gs-leiste a:hover { color: var(--text); background: var(--surface); }
+.gs-leiste a[aria-current="page"] { color: var(--amber-light); background: var(--surface-hi); }
+.gs-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.gs-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--border-hi); border-radius: 999px; background: transparent; color: var(--text-soft); font: 500 .88rem var(--font-body); cursor: pointer; transition: border-color .2s ease, color .2s ease; }
+.gs-chip .gs { width: 18px; height: 18px; }
+.gs-chip:hover { border-color: var(--amber); color: var(--text); }
+.gs-chip:hover .gs { color: var(--amber-light); }
+@media (max-width: 620px) { .gs-einsatz { grid-template-columns: 1fr; } .gs-raster { grid-template-columns: repeat(2, 1fr); } }

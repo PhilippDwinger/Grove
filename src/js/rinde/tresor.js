@@ -51,7 +51,12 @@ export async function entsperren(masterPasswort) {
     return false;
   }
   schluessel = key;
-  await laden();
+  try {
+    await laden();
+  } catch (e) {
+    sperren(); // sonst wäre Rinde halb offen, obwohl die Seite "gesperrt" zeigt
+    throw e;
+  }
   return true;
 }
 

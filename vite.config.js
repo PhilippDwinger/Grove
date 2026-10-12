@@ -5,11 +5,13 @@
 //   .env          → liegt im Hauptordner (envDir)
 //   dist/         → fertiger Build für Render
 // Alle .html-Seiten in src/ werden automatisch gefunden.
+// App (PWA): werkzeug/app-plugin.js – Manifest, Service Worker, Kopf-Tags.
 // ==========================================================
 import { readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { resolve, relative } from 'node:path'
 import { defineConfig } from 'vite'
+import groveApp from './werkzeug/app-plugin.js'
 
 const projekt = fileURLToPath(new URL('.', import.meta.url))
 const src = resolve(projekt, 'src')
@@ -30,9 +32,14 @@ function htmlSeiten(ordner, seiten = {}) {
 export default defineConfig({
   root: src,
   envDir: projekt,
+  plugins: [groveApp({ src })],
+  // Mühle: ffmpeg (Audio/Video) läuft in einem eigenen Worker (ES-Modul) und darf nicht vorab gebündelt werden
+  worker: { format: 'es' },
+  optimizeDeps: { exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'] },
   build: {
     outDir: resolve(projekt, 'dist'),
     emptyOutDir: true,
+    chunkSizeWarningLimit: 1600,   // PDF/Word/Video-Bibliotheken sind groß, laden aber nur bei Bedarf (Mühle)
     rollupOptions: { input: htmlSeiten(src) },
   },
 })
