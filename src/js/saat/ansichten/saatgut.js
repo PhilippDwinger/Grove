@@ -9,6 +9,8 @@ import { herunterladen } from "../paket.js"
 import { BEISPIELE } from "../beispiele.js"
 import { deckSchreiben } from "../format.js"
 import { sitzungsListe } from "../sitzung.js"
+import { kursVon, KURSE } from "../kurse.js"
+import { entfernen as kursEntfernen } from "./kurse.js"
 import { verteilungHtml, leerHtml, BILD, meldung, fehlerMeldung, dateiWaehlen, dialog } from "./ui.js"
 
 const ANNEHMEN = ".saat,.saatpaket,.saatstand,.saatprofil,.json,.zip,.csv,.tsv,.txt"
@@ -61,7 +63,7 @@ export function zeigen(el, app) {
         const id = karte.dataset.deck
         const d = l.decks.get(id)
         karte.querySelector("[data-lernen]")?.addEventListener("click", () => deckLernen(app, id, "karte"))
-        karte.querySelector("[data-auswahl]")?.addEventListener("click", () => deckLernen(app, id, "auswahl"))
+        karte.querySelector("[data-auswahl]")?.addEventListener("click", () => deckLernen(app, id, "wahl"))
         karte.querySelector("[data-teilen]").addEventListener("click", async () => {
             try {
                 const ex = await l.deckExport(id)
@@ -74,6 +76,8 @@ export function zeigen(el, app) {
             meldung(l.deckAktiv(id) ? "Wird wieder abgefragt" : "Pausiert – Karten nur aus dieser Datei werden nicht mehr fällig")
         })
         karte.querySelector("[data-loeschen]").addEventListener("click", async () => {
+            const kurs = kursVon(d.deck)
+            if (kurs) return kursEntfernen(app, KURSE.find((k) => k.id === kurs.id) ?? { id: kurs.id, titel: d.deck.titel })
             const ok = await bestaetigen({
                 titel: `„${d.deck.titel}“ löschen?`,
                 text: "Die Datei wandert in den Papierkorb deines Lernspeichers. Dein Lernstand bleibt erhalten – legst du die Datei wieder hinein, ist alles wieder da.",
@@ -110,6 +114,7 @@ function deckKarte(l, d) {
             <h2><a href="#editor/${encodeURIComponent(id)}">${esc(d.deck.titel)}</a></h2>
             ${!aktiv ? `<span class="sa-marke">pausiert</span>` : ""}
             ${d.nurLesen ? `<span class="sa-marke sa-marke--warm" title="Aus einer neueren Saat-Version">nur lesen</span>` : ""}
+            ${kursVon(d.deck) ? `<a class="sa-marke" href="#kurse" title="Kurs von Grove">${S.kurs} Kurs</a>` : ""}
         </header>
         ${d.deck.beschreibung ? `<p class="sa-deck__text">${esc(d.deck.beschreibung)}</p>` : ""}
         <p class="sa-deck__meta">${n} ${n === 1 ? "Karte" : "Karten"}${d.deck.gebiet ? ` · ${esc(d.deck.gebiet)}` : ""}${spr.length === 2 ? ` · ${esc(spr[0])} → ${esc(spr[1])}` : ""}${d.deck.autor ? ` · ${esc(d.deck.autor)}` : ""}</p>
@@ -117,7 +122,7 @@ function deckKarte(l, d) {
         ${d.warnungen.length ? `<details class="sa-warnliste"><summary>${d.warnungen.length} Hinweis(e) beim Lesen</summary><ul>${d.warnungen.map((w) => `<li>${esc(w)}</li>`).join("")}</ul></details>` : ""}
         <footer>
             ${n ? `<button class="g-knopf" type="button" data-lernen>${S.spielen} ${f.faellig.length + f.neu.length ? `Lernen <b>${f.faellig.length + f.neu.length}</b>` : "Üben"}</button>
-            <button class="sa-symbolknopf" type="button" data-auswahl title="Als Auswahl üben" aria-label="Als Auswahl üben">${S.auswahl}</button>` : `<a class="g-knopf" href="#editor/${encodeURIComponent(id)}">${S.plus} Karten anlegen</a>`}
+            <button class="sa-symbolknopf" type="button" data-auswahl title="Andere Lernart: Auswahl, Schreiben, Zeichnen, Gespräch" aria-label="Andere Lernart wählen">${S.sprechblase}</button>` : `<a class="g-knopf" href="#editor/${encodeURIComponent(id)}">${S.plus} Karten anlegen</a>`}
             <span class="sa-deck__platz"></span>
             <a class="sa-symbolknopf" href="#editor/${encodeURIComponent(id)}" title="Bearbeiten" aria-label="Bearbeiten">${S.stift}</a>
             <button class="sa-symbolknopf" type="button" data-teilen title="Teilen (herunterladen)" aria-label="Teilen">${S.teilen}</button>
@@ -143,5 +148,7 @@ async function deckLernen(app, id, modus) {
         schluessel = [...new Set(d.deck.karten.map((k) => l.index.schluessel(id, k.id)).filter(Boolean))]
     }
     const zuordnung = new Map(d.deck.karten.map((k) => [l.index.schluessel(id, k.id), k.id]))
-    app.lernen({ modus, aufgaben: schluessel.map((s) => ({ schluessel: s, deckId: id, kartenId: zuordnung.get(s) })), titel: d.deck.titel, zurueck: "saatgut" })
+    const aufgaben = schluessel.map((s) => ({ schluessel: s, deckId: id, kartenId: zuordnung.get(s) }))
+    if (modus === "wahl") return app.modusWaehlen(aufgaben, { titel: d.deck.titel, zurueck: "saatgut" })
+    app.lernen({ modus, aufgaben, titel: d.deck.titel, zurueck: "saatgut" })
 }

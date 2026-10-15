@@ -8,8 +8,11 @@ const satz = (text, lesung, uebersetzung) => [
     b("satz", { id: "satz", text, lesung, markierung: "", sprache: "ja" }),
     b("uebersetzung", { text: uebersetzung, bezug: "satz", sprache: "de", notiz: "" }),
 ]
+// Lösungen zum Eintippen: Kana und Romaji aus dem Zusatz („たべる · taberu“) – so kann man im
+// Schreiben-Modus auch in Romaji antworten
 const ja = (id, text, zusatz, antwort, hinten = [], mehr = {}) => ({
-    id, vorne: { text, zusatz }, antwort, hinten: [b("aussprache", { lautschrift: "", text: "", audio: "", sprache: "ja" }), ...hinten], tags: [], ...mehr,
+    id, vorne: { text, zusatz }, antwort, eingaben: zusatz.split("·").map((x) => x.trim()).filter(Boolean),
+    hinten: [b("aussprache", { lautschrift: "", text: "", audio: "", sprache: "ja" }), ...hinten], tags: [], ...mehr,
 })
 
 const jetzt = "2026-10-15T08:00:00.000Z"
@@ -42,12 +45,12 @@ export const BEISPIELE = [
                     b("text", { text: "Wörtlich *gekochter Reis* – steht aber auch ganz allgemein für eine **Mahlzeit**." }),
                     b("beispiele", { titel: "Mahlzeiten", eintraege: [{ text: "朝ご飯 · asagohan", zusatz: "Frühstück" }, { text: "昼ご飯 · hirugohan", zusatz: "Mittagessen" }, { text: "晩ご飯 · bangohan", zusatz: "Abendessen" }] }),
                 ], { alternativen: ["Reis", "Mahlzeit"], tags: ["nomen"] }),
-                ja("jp-mizu", "水", "みず · mizu", "Wasser", satz("水をください。", "Mizu o kudasai.", "Wasser, bitte."), { tags: ["nomen"] }),
+                ja("jp-mizu", "水", "みず · mizu", "Wasser", satz("水をください。", "Mizu o kudasai.", "Wasser, bitte."), { tags: ["nomen"], zeichnen: { aufgabe: "Schreib das Kanji für „Wasser“" } }),
                 ja("jp-ocha", "お茶", "おちゃ · ocha", "grüner Tee", [
                     b("text", { text: "お (o) ist eine höfliche Vorsilbe. Ohne weitere Angabe ist meist grüner Tee gemeint." }),
                 ], { alternativen: ["Tee"], tags: ["nomen"] }),
-                ja("jp-sakana", "魚", "さかな · sakana", "Fisch", [], { tags: ["nomen"] }),
-                ja("jp-niku", "肉", "にく · niku", "Fleisch", [], { tags: ["nomen"] }),
+                ja("jp-sakana", "魚", "さかな · sakana", "Fisch", [], { tags: ["nomen"], zeichnen: { aufgabe: "Schreib das Kanji für „Fisch“" } }),
+                ja("jp-niku", "肉", "にく · niku", "Fleisch", [], { tags: ["nomen"], zeichnen: { aufgabe: "Schreib das Kanji für „Fleisch“" } }),
                 ja("jp-yasai", "野菜", "やさい · yasai", "Gemüse", [], { tags: ["nomen"] }),
                 ja("jp-oishii", "おいしい", "oishii", "lecker", satz("このラーメンはおいしいです。", "Kono rāmen wa oishii desu.", "Diese Ramen sind lecker."), { tags: ["adjektiv"], alternativen: ["köstlich"] }),
                 ja("jp-itadakimasu", "いただきます", "itadakimasu", "Guten Appetit (vor dem Essen)", [

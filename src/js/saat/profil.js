@@ -23,6 +23,7 @@
 // ==========================================================
 import { STANDARD, W_STANDARD, abruf } from "./planer.js"
 import { TAG, begrenzen, neueId, tagSchluessel } from "./hilfen.js"
+import { gueltigeTage } from "./statistik.js"
 
 export const PROFIL_FORMAT = "grove-saat-profil"
 export const PROFIL_VERSION = 1
@@ -62,6 +63,7 @@ export function neuesProfil(jetzt = Date.now()) {
             kurzMax: STANDARD.kurzMax,
         },
         anpassung: { letzte: null, beobachtungen: 0, verlauf: [] },
+        tage: {},                        // Lerntage: { "JJJJ-MM-TT": [abfragen, richtig, neu, sekunden] } (statistik.js)
     }
 }
 
@@ -106,6 +108,7 @@ export function profilLesen(roh) {
             beobachtungen: Math.max(0, Number(a.beobachtungen) || 0),
             verlauf: Array.isArray(a.verlauf) ? a.verlauf.filter((v) => v && typeof v.datum === "string").slice(-400) : [],
         },
+        tage: gueltigeTage(roh.tage),
     }
     if (!Array.isArray(m.w) || m.w.length !== 19) if (roh.modell) warnungen.push("Modellparameter fehlten – Standardwerte eingesetzt.")
     return { profil: out, warnungen }

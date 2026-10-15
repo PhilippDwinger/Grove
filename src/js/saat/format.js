@@ -37,7 +37,7 @@ export function neuesDeck({ titel = "Neue Lerndatei", gebiet = "", vorne = "", h
 }
 
 export function neueKarte(teil = {}) {
-    return { id: neueId("k"), vorne: { text: "", zusatz: "", bloecke: [] }, antwort: "", alternativen: [], ablenker: [], hinten: [], verknuepft: [], tags: [], ...teil }
+    return { id: neueId("k"), vorne: { text: "", zusatz: "", bloecke: [] }, antwort: "", alternativen: [], ablenker: [], eingaben: [], hinten: [], verknuepft: [], tags: [], ...teil }
 }
 
 export function neuerBlock(typ) {
@@ -174,12 +174,20 @@ function karteSaeubern(k, warnungen, i) {
         antwort: text(k.antwort),
         alternativen: liste(k.alternativen).map(text).filter((x) => x.trim()),
         ablenker: liste(k.ablenker).map(text).filter((x) => x.trim()),
+        eingaben: liste(k.eingaben).map(text).filter((x) => x.trim()),
         hinten: bloeckeSaeubern(k.hinten, warnungen, i),
         verknuepft: liste(k.verknuepft).map((v) => typeof v === "string" ? { id: v, art: "verwandt" } : v)
             .filter((v) => istObjekt(v) && typeof v.id === "string").map((v) => ({ ...v, art: text(v.art) || "verwandt" })),
         tags: liste(k.tags).map(text).filter(Boolean),
     }
     if (k.gebiet != null) karte.gebiet = text(k.gebiet)
+    if (k.zeichnen != null) {
+        if (istObjekt(k.zeichnen)) {
+            const z = k.zeichnen
+            karte.zeichnen = { ...z, aufgabe: text(z.aufgabe), text: text(z.text),
+                striche: liste(z.striche).filter((s) => Array.isArray(s) && s.length >= 2 && s.every((x) => Number.isFinite(x))).map((s) => s.map((x) => Math.round(x))) }
+        } else delete karte.zeichnen
+    }
     if (!karte.vorne.text.trim() && !karte.vorne.bloecke.length) warnungen.push(`Karte ${i + 1}: Die Vorderseite ist leer.`)
     return karte
 }
@@ -215,6 +223,12 @@ function karteKompakt(k) {
     for (const [schl, wert] of Object.entries(k)) {
         if (wert === "" || wert == null) continue
         if (Array.isArray(wert) && !wert.length) continue
+        if (schl === "zeichnen" && wert && typeof wert === "object") {
+            const z = {}
+            for (const [a, b] of Object.entries(wert)) if (!(b === "" || b == null || (Array.isArray(b) && !b.length))) z[a] = b
+            out.zeichnen = z
+            continue
+        }
         if (schl === "vorne") {
             const v = {}
             for (const [a, b] of Object.entries(wert)) if (!(b === "" || b == null || (Array.isArray(b) && !b.length))) v[a] = b

@@ -15,6 +15,8 @@ import { vorderseite, rueckseite, aktivieren, medienUrlVergessen } from "../dars
 import { herunterladen } from "../paket.js"
 import { dialog, meldung, fehlerMeldung, dateiWaehlen, stufeMarke, leerHtml, BILD } from "./ui.js"
 import { ctxFuer } from "./kontext.js"
+import { zeichenflaeche, schablonenHtml } from "./zeichenflaeche.js"
+import { stricheKompakt } from "../zeichnen-kern.js"
 
 export const ruhig = true
 
@@ -90,6 +92,7 @@ export function zeigen(el, app, [deckId, kartenId] = []) {
             </div>
         </header>
         ${st.nurLesen ? `<p class="sa-hinweis sa-hinweis--warm">${S.warnung}<span>Diese Datei stammt aus einer neueren Saat-Version. Du kannst sie ansehen und damit lernen, aber nicht ändern – sonst gingen Inhalte verloren.</span></p>` : ""}
+        ${d.deck.kurs ? `<p class="sa-hinweis">${S.kurs}<span>Diese Lerndatei ist ein Kurs von Grove. Du kannst sie ändern – beim Aktualisieren des Kurses wird sie aber ersetzt (die alte Fassung landet in der Sicherung).</span></p>` : ""}
         ${d.ergaenzt && !st.nurLesen ? `<p class="sa-hinweis">${S.info}<span>Beim Öffnen wurde die Datei ergänzt (z. B. fehlende IDs oder ältere Formatversion). Mit der nächsten Änderung wird das in der Datei festgehalten.</span><button class="g-knopf-leise" type="button" data-jetzt-speichern>Jetzt speichern</button></p>` : ""}
         <div class="sa-editor__haupt">
             <aside class="sa-editor__seite">
@@ -225,6 +228,7 @@ async function vorhandeneUebernehmen() {
 // ---------- Karte bearbeiten ----------
 function karteZeichnen() {
     const box = st.el.querySelector("[data-karte-editor]")
+    st.zeichnenEigen = false
     const k = aktuelleKarte()
     if (!k) {
         box.innerHTML = leerHtml({ bild: BILD.beet, titel: st.deck.karten.length ? "Wähle links eine Karte" : "Leere Lerndatei", text: st.deck.karten.length ? "" : "Jede Karte hat eine Vorderseite (Begriff oder Frage), eine kurze Antwort und eine Rückseite, die du aus Blöcken zusammenstellst." })
@@ -256,6 +260,7 @@ function karteZeichnen() {
             <label class="sa-feld"><span>Antwort <small>kurz und knapp – sie erscheint auch im Auswahl-Modus</small></span><input class="sa-feld--gross" data-k="antwort" value="${esc(k.antwort)}" ${ro}></label>
             ${chipsFeld("alternativen", "Gilt auch als richtig", "Enter oder Komma fügt hinzu", k.alternativen)}
             ${chipsFeld("ablenker", "Falsche Antworten für den Auswahl-Modus", "optional – sonst wählt Saat passende aus anderen Karten", k.ablenker)}
+            ${chipsFeld("eingaben", "Weitere Lösungen zum Eintippen", "gelten im Schreiben-Modus als richtig – z. B. Romaji oder Kana zu einem Kanji", k.eingaben)}
         </section>
 
         <section class="sa-ke__teil">
@@ -263,6 +268,11 @@ function karteZeichnen() {
             <div class="sa-bloecke" data-bloecke="hinten">${bloeckeHtml(k.hinten || [], k)}</div>
             ${st.nurLesen ? "" : `<button class="g-knopf-leise sa-block-neu" type="button" data-block-neu="hinten">${S.plus} Block hinzufügen</button>`}
         </section>
+
+        <details class="sa-ke__mehr sa-ke__zeichnen" ${k.zeichnen ? "open" : ""}>
+            <summary>${S.pinsel} Zeichnen-Modus ${k.zeichnen ? `<span class="sa-marke">an</span>` : ""}</summary>
+            <div data-zeichnen-editor></div>
+        </details>
 
         <details class="sa-ke__mehr">
             <summary>Mehr: Bild auf der Vorderseite, Tags, Lerngebiet, ID</summary>
@@ -288,6 +298,7 @@ function karteZeichnen() {
     }))
     chipsAktivieren(box, k)
     box.querySelectorAll("[data-bloecke]").forEach((b) => bloeckeAktivieren(b, k))
+    zeichnenEditor(box.querySelector("[data-zeichnen-editor]"), k)
     box.querySelectorAll("[data-block-neu]").forEach((b) => b.addEventListener("click", () => blockPalette(k, b.dataset.blockNeu)))
 
     box.querySelector("[data-k-hoch]")?.addEventListener("click", () => verschieben(-1))
@@ -660,4 +671,63 @@ export async function karteWaehlen(app, { titel, hinweis = "", ausser = [] }) {
         },
     })
     return gewaehlt
+}
+
+// ---------- Zeichnen-Modus: Schablone vorbereiten ----------
+// Ohne Striche dient ein Text als Schablone (Standard: die Vorderseite, z. B. ein Kanji).
+// Alternativ zeichnest du die Schablone selbst – sie wird kompakt (0…1000) gespeichert.
+function zeichnenEditor(el, k) {
+    if (!el) return
+    const an = !!k.zeichnen
+    const z = k.zeichnen || {}
+    const ro = st.nurLesen ? "disabled" : ""
+    const eigen = !!z.striche?.length
+    el.innerHTML = `
+        <label class="sa-schalter"><input type="checkbox" data-z-an ${an ? "checked" : ""} ${ro}><span>Diese Karte auch im Zeichnen-Modus abfragen</span></label>
+        ${an ? `<div class="sa-felder">
+            <label class="sa-feld"><span>Aufgabe <small>leer = die Antwort der Karte („${esc(k.antwort || "…")}“)</small></span><input data-z="aufgabe" value="${esc(z.aufgabe || "")}" placeholder="z. B. Schreib das Kanji für „Wasser“" ${ro}></label>
+            <div class="sa-segment" role="group" aria-label="Art der Schablone">
+                <button type="button" data-z-art="text" aria-pressed="${!eigen}">Text als Schablone</button>
+                <button type="button" data-z-art="striche" aria-pressed="${eigen}">Selbst zeichnen</button>
+            </div>
+            ${eigen || st.zeichnenEigen ? `
+                <p class="sa-klein">Zeichne die richtige Lösung. Größe und Position sind egal – verglichen wird die Form.</p>
+                <div data-z-feld></div>
+                <div class="sa-knopfreihe"><button class="g-knopf" type="button" data-z-uebernehmen ${ro}>${S.haken} Als Schablone speichern</button>${eigen ? `<span class="sa-klein">Gespeichert: ${z.striche.length} ${z.striche.length === 1 ? "Strich" : "Striche"}</span>` : ""}</div>`
+            : `
+                <label class="sa-feld"><span>Text der Schablone <small>leer = Vorderseite („${esc(k.vorne?.text || "")}“), gezeichnet mit der Schrift deines Geräts</small></span><input data-z="text" value="${esc(z.text || "")}" lang="ja" ${ro}></label>`}
+            <div class="sa-schablone-vorschau"><span class="sa-klein">So wird verglichen:</span>${schablonenHtml(k)}</div>
+        </div>` : ""}`
+    el.querySelector("[data-z-an]")?.addEventListener("change", (e) => {
+        if (e.target.checked) k.zeichnen = { aufgabe: "", text: "" }
+        else delete k.zeichnen
+        aendern()
+        zeichnenEditor(el, k)
+        el.closest("details").querySelector("summary").innerHTML = `${S.pinsel} Zeichnen-Modus ${k.zeichnen ? `<span class="sa-marke">an</span>` : ""}`
+    })
+    el.querySelectorAll("[data-z]").forEach((f) => f.addEventListener("input", () => {
+        k.zeichnen[f.dataset.z] = f.value
+        aendern()
+        if (f.dataset.z === "text") { clearTimeout(f._t); f._t = setTimeout(() => { el.querySelector(".sa-schablone-vorschau").innerHTML = `<span class="sa-klein">So wird verglichen:</span>${schablonenHtml(k)}` }, 300) }
+    }))
+    el.querySelectorAll("[data-z-art]").forEach((b) => b.addEventListener("click", () => {
+        if (st.nurLesen) return
+        if (b.dataset.zArt === "text") { delete k.zeichnen.striche; st.zeichnenEigen = false; aendern() }
+        else st.zeichnenEigen = true
+        zeichnenEditor(el, k)
+    }))
+    const feldEl = el.querySelector("[data-z-feld]")
+    if (feldEl) {
+        const f = zeichenflaeche(feldEl, { hoehe: 240, hinweis: "Schablone zeichnen" })
+        if (z.striche?.length) requestAnimationFrame(() => f.setzen(z.striche))
+        el.querySelector("[data-z-uebernehmen]")?.addEventListener("click", () => {
+            if (f.leer()) { meldung("Zeichne zuerst die Schablone"); return }
+            const { w, h } = f.groesse()
+            k.zeichnen.striche = stricheKompakt(f.striche(), w, h)
+            st.zeichnenEigen = false
+            aendern()
+            zeichnenEditor(el, k)
+            meldung("Schablone gespeichert")
+        })
+    }
 }

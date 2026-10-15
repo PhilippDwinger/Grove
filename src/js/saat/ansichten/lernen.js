@@ -1,7 +1,11 @@
 // ==========================================================
-// Saat · Lernsitzung – zwei Modi
-//   karte   – Karteikarte: Vorderseite → aufdecken → vier ehrliche Bewertungen
-//   auswahl – drei Antworten zur Wahl → richtig/falsch → danach die ganze Karte
+// Saat · Lernsitzung – Modi (siehe modi.js)
+//   karte    – Karteikarte: Vorderseite → aufdecken → vier ehrliche Bewertungen
+//   auswahl  – drei Antworten zur Wahl → richtig/falsch → danach die ganze Karte
+//   tippen   – Antwort eintippen → geprüft (eingabe.js) → richtig = „Gewusst“, falsch = „Nicht gewusst“
+//   zeichnen – Lösung ins Malfeld zeichnen → mit der Schablone verglichen (zeichnen-kern.js)
+//   gespraech – eigene Ansicht (gespraech.js), Professor Uhu mischt alle Arten
+// Bei Schreiben/Zeichnen kannst du das Urteil korrigieren („Doch richtig“ / „Doch falsch“).
 // Tasten: Leertaste/Enter = aufdecken bzw. weiter · 1–4 Bewertung · 1–3 Auswahl
 //         Strg+Z = letzte Antwort zurücknehmen · Esc = beenden
 // ==========================================================
@@ -9,7 +13,11 @@ import { esc } from "../../kern/html.js"
 import { S, STUFEN } from "../symbole.js"
 import { Sitzung } from "../sitzung.js"
 import { vorschau, beherrschung } from "../planer.js"
-import { auswahlBauen } from "../ablenker.js"
+import { eingabePruefen, loesungenVon } from "../eingabe.js"
+import { aehnlichkeit, strichRaster, zaehlt, zeichenAufgabe } from "../zeichnen-kern.js"
+import { auswahlFuer, tauglich, modusName } from "./modi.js"
+import { zeichenflaeche, schablonenRaster, schablonenHtml, vergleichBild } from "./zeichenflaeche.js"
+import * as gespraech from "./gespraech.js"
 import { dauerText, terminText } from "../hilfen.js"
 import { vorderseite, rueckseite, aktivieren } from "../darstellung.js"
 import { meldung, fehlerMeldung, stufeMarke, ringHtml } from "./ui.js"
@@ -24,32 +32,21 @@ export const BEWERTUNGEN = [
     { b: 4, text: "Ganz leicht", titel: "Sofort und ohne Mühe gewusst." },
 ]
 
-// ---------- Auswahl-Hilfen ----------
-let poolCache = { index: null, liste: [] }
-function pool(lager) {
-    if (poolCache.index !== lager.index) {
-        poolCache = { index: lager.index, liste: [...lager.index.eintraege.values()].map((e) => ({ karte: e.karte, deckId: e.deck.id })) }
-    }
-    return poolCache.liste
-}
-function auswahlFuer(lager, a) {
-    const r = aufgabeAufloesen(lager, a)
-    return r ? auswahlBauen({ karte: r.karte, deckId: r.deck.id }, pool(lager)) : null
-}
-export const aufgabeTauglich = (lager, a) => !!auswahlFuer(lager, a)
+export const aufgabeTauglich = (lager, a, modus = "auswahl") => tauglich(lager, a, modus)
 
 // ---------- Ansicht ----------
 let tasten = null
 
 export function zeigen(el, app) {
     const cfg = app.sitzung
+    if (cfg.modus === "gespraech") return gespraech.zeigen(el, app)
     if (!cfg.laufend) cfg.laufend = { sitzung: new Sitzung(cfg.aufgaben, { modus: cfg.modus, titel: cfg.titel }), uebersprungen: cfg.ausgelassen || 0 }
     const s = cfg.laufend.sitzung
     el.innerHTML = `
     <section class="sa-lernen" data-modus="${cfg.modus}">
         <header class="sa-lernen__kopf">
             <button class="sa-symbolknopf" type="button" data-beenden aria-label="Sitzung beenden" title="Beenden (Esc)">${S.zu}</button>
-            <div class="sa-lernen__titel"><strong>${esc(cfg.titel)}</strong><span>${cfg.modus === "auswahl" ? "Auswahl-Modus" : "Karteikarten"}</span></div>
+            <div class="sa-lernen__titel"><strong>${esc(cfg.titel)}</strong><span>${esc(modusName(cfg.modus))}</span></div>
             <div class="sa-lernen__stand" data-stand></div>
             <div class="sa-lernen__balken"><i data-balken></i></div>
         </header>
@@ -63,6 +60,7 @@ export function zeigen(el, app) {
 }
 
 export function verlassen() {
+    gespraech.verlassen()
     if (tasten) document.removeEventListener("keydown", tasten)
     tasten = null
     window.speechSynthesis?.cancel()
@@ -92,6 +90,8 @@ function naechste(lauf) {
         if (lauf.cfg.modus === "auswahl") {
             lauf.auswahl = auswahlFuer(app.lager, s.aktuell)
             if (!lauf.auswahl) { s.offen.shift(); s.gesamt--; lauf.cfg.laufend.uebersprungen++; continue }
+        } else if (lauf.cfg.modus !== "karte" && !tauglich(app.lager, s.aktuell, lauf.cfg.modus)) {
+            s.offen.shift(); s.gesamt--; lauf.cfg.laufend.uebersprungen++; continue
         }
         break
     }
@@ -110,19 +110,30 @@ function naechste(lauf) {
         eintrag.vorkommen.length > 1 ? `<span class="sa-marke" title="${esc(eintrag.vorkommen.map((v) => l.decks.get(v.deckId)?.deck.titel).join(", "))}">in ${eintrag.vorkommen.length} Dateien</span>` : "",
     ].join("")
     lauf.ctx = ctxFuer(app, deck)
+    lauf.flaeche?.abbauen()
+    lauf.flaeche = null
+    const zeichnen = lauf.cfg.modus === "zeichnen"
     buehne.innerHTML = `
         <article class="sa-lernkarte" data-stufe="${stufe}">
             <div class="sa-lernkarte__meta">${marken}<span class="sa-lernkarte__datei">${esc(deck.titel)}</span>
                 <a class="sa-symbolknopf" href="#editor/${encodeURIComponent(deck.id)}/${encodeURIComponent(karte.id)}" title="Karte bearbeiten (beendet die Sitzung)" aria-label="Karte bearbeiten">${S.stift}</a></div>
-            <div class="sa-lernkarte__vorne">${vorderseite(karte, lauf.ctx)}</div>
+            ${zeichnen
+                ? `<div class="sa-lernkarte__vorne"><p class="sa-ueber">Zeichne</p><p class="sk-begriff sk-begriff--aufgabe">${esc(zeichenAufgabe(karte))}</p></div>
+                   <div class="sa-lernkarte__mal" data-mal></div>
+                   <div class="sa-lernkarte__vorne" data-loesung-vorne hidden>${vorderseite(karte, lauf.ctx)}</div>`
+                : `<div class="sa-lernkarte__vorne">${vorderseite(karte, lauf.ctx)}</div>`}
             ${lauf.cfg.modus === "auswahl" ? auswahlHtml(lauf.auswahl) : ""}
+            ${lauf.cfg.modus === "tippen" ? `<form class="sa-tippfeld" data-tippen novalidate><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Deine Antwort …" aria-label="Deine Antwort" lang="${esc(deck.sprachen?.hinten || "")}"><button class="g-knopf" type="submit">Prüfen <kbd>Enter</kbd></button></form><p class="sa-urteil-platz" data-urteil></p>` : ""}
             <div class="sa-lernkarte__hinten" data-hinten hidden></div>
         </article>
         <div class="sa-lernen__fuss" data-fuss></div>`
-    aktivieren(buehne.querySelector(".sa-lernkarte__vorne"), lauf.ctx)
+    if (!zeichnen) aktivieren(buehne.querySelector(".sa-lernkarte__vorne"), lauf.ctx)
     lauf.karte = karte
     lauf.eintrag = eintrag
+    lauf.deck = deck
     if (lauf.cfg.modus === "auswahl") auswahlAktivieren(lauf)
+    else if (lauf.cfg.modus === "tippen") tippenAktivieren(lauf)
+    else if (zeichnen) zeichnenAktivieren(lauf)
     else fussFrage(lauf)
     buehne.querySelector(".sa-lernkarte").focus?.()
 }
@@ -161,17 +172,19 @@ function aufdecken(lauf) {
     fuss.querySelectorAll("[data-b]").forEach((k) => k.addEventListener("click", () => antworten(lauf, { b: +k.dataset.b })))
 }
 
-async function antworten(lauf, ergebnis) {
+async function antworten(lauf, ergebnis, { bleiben = false } = {}) {
     if (lauf.phase === "speichern") return
     const vorher = lauf.phase
     lauf.phase = "speichern"
     const { app, s } = lauf
     try {
-        const ms = "b" in ergebnis ? lauf.ms : lauf.ms ?? performance.now() - lauf.start
-        const r = await app.lager.bewerten(s.aktuell, ergebnis, { ms })
+        const ms = lauf.ms ?? performance.now() - lauf.start
+        const modus = ["tippen", "zeichnen"].includes(lauf.cfg.modus) ? lauf.cfg.modus : null
+        const r = await app.lager.bewerten(s.aktuell, ergebnis, { ms, modus })
         s.antworten(ergebnis, r.ereignis.id)
-        rueckgaengigAnbieten(lauf, r.ereignis.id, ergebnis)
-        if ("b" in ergebnis) naechste(lauf)
+        lauf.letzteAntwort = { ereignisId: r.ereignis.id, aufgabe: s.fertig.at(-1).aufgabe }
+        if (!bleiben) rueckgaengigAnbieten(lauf, r.ereignis.id, ergebnis)
+        if ("b" in ergebnis && !bleiben) naechste(lauf)
         else { lauf.phase = "weiter"; standZeigen(lauf) }
     } catch (f) {
         lauf.phase = vorher
@@ -226,6 +239,94 @@ async function waehlen(lauf, i) {
     fuss.querySelector("[data-weiter]").focus({ preventScroll: true })
 }
 
+// ---------- Schreiben ----------
+function tippenAktivieren(lauf) {
+    const form = lauf.buehne.querySelector("[data-tippen]")
+    const feld = form.querySelector("input")
+    const fuss = lauf.buehne.querySelector("[data-fuss]")
+    fuss.innerHTML = `<p class="sa-klein sa-lernen__tipp">${lauf.karte.eingaben?.length ? `Auch möglich: ${esc(lauf.karte.eingaben.join(" · ").slice(0, 60))}${lauf.karte.eingaben.join("").length > 60 ? " …" : ""} · ` : ""}Groß/klein und kleine Tippfehler sind egal.</p>`
+    form.addEventListener("submit", (e) => { e.preventDefault(); tippenPruefen(lauf) })
+    feld.focus({ preventScroll: true })
+}
+
+async function tippenPruefen(lauf) {
+    if (lauf.phase !== "frage") return
+    const feld = lauf.buehne.querySelector("[data-tippen] input")
+    const r = eingabePruefen(feld.value, loesungenVon(lauf.karte), { japanisch: lauf.deck.sprachen?.vorne === "ja" || lauf.deck.sprachen?.hinten === "ja" })
+    if (r.ergebnis === "leer") { feld.focus(); return }
+    lauf.ms = performance.now() - lauf.start
+    const richtig = r.ergebnis !== "falsch"
+    feld.readOnly = true
+    feld.dataset.ergebnis = r.ergebnis
+    lauf.buehne.querySelector("[data-tippen] button").disabled = true
+    await antworten(lauf, { b: richtig ? 3 : 1 }, { bleiben: true })
+    if (lauf.phase !== "weiter") return
+    lauf.urteil = { richtig, text: r.ergebnis === "fast" ? `Fast – richtig geschrieben: „${r.loesung}“` : richtig ? "Richtig" : `Leider nicht – richtig ist „${lauf.karte.antwort}“` }
+    hintenZeigen(lauf)
+    urteilZeigen(lauf)
+}
+
+// ---------- Zeichnen ----------
+function zeichnenAktivieren(lauf) {
+    lauf.flaeche = zeichenflaeche(lauf.buehne.querySelector("[data-mal]"), { hoehe: 300, hinweis: "Hier zeichnen – mit Maus, Finger oder Stift" })
+    const fuss = lauf.buehne.querySelector("[data-fuss]")
+    fuss.innerHTML = `<button class="g-knopf sa-knopf-gross" type="button" data-fertig-gemalt>Fertig <kbd>Enter</kbd></button>
+        <button class="g-knopf-text" type="button" data-weiss-nicht>Weiß ich nicht</button>`
+    fuss.querySelector("[data-fertig-gemalt]").addEventListener("click", () => zeichnenPruefen(lauf))
+    fuss.querySelector("[data-weiss-nicht]").addEventListener("click", () => zeichnenPruefen(lauf, { aufgegeben: true }))
+}
+
+async function zeichnenPruefen(lauf, { aufgegeben = false } = {}) {
+    if (lauf.phase !== "frage") return
+    const f = lauf.flaeche
+    if (f.leer() && !aufgegeben) { meldung("Zeichne zuerst etwas – oder wähle „Weiß ich nicht“."); return }
+    lauf.ms = performance.now() - lauf.start
+    const schablone = schablonenRaster(lauf.karte)
+    const zeichnung = strichRaster(f.striche())
+    const e = aufgegeben ? { wert: 0, treffsicherheit: 0, abdeckung: 0 } : aehnlichkeit(zeichnung, schablone)
+    const richtig = !aufgegeben && zaehlt(e)
+    f.sperren()
+    await antworten(lauf, { b: richtig ? 3 : 1 }, { bleiben: true })
+    if (lauf.phase !== "weiter") return
+    const mal = lauf.buehne.querySelector("[data-mal]")
+    mal.insertAdjacentHTML("beforeend", `<div class="sa-vergleich">
+        <figure>${schablonenHtml(lauf.karte)}<figcaption>Schablone</figcaption></figure>
+        ${aufgegeben ? "" : `<figure><img src="${vergleichBild(zeichnung, schablone)}" alt="Deine Zeichnung über der Schablone"><figcaption>übereinander · ${Math.round(e.wert * 100)} % ähnlich</figcaption></figure>`}
+    </div>`)
+    lauf.buehne.querySelector("[data-loesung-vorne]").hidden = false
+    lauf.urteil = { richtig, text: aufgegeben ? "Kein Problem – so sieht es aus." : richtig ? `Richtig erkannt (${Math.round(e.wert * 100)} % ähnlich)` : `Noch nicht ähnlich genug (${Math.round(e.wert * 100)} %)` }
+    hintenZeigen(lauf)
+    urteilZeigen(lauf, { korrigierbar: !aufgegeben })
+}
+
+// Urteil + „Doch richtig/falsch“ + Weiter (Schreiben & Zeichnen)
+function urteilZeigen(lauf, { korrigierbar = true } = {}) {
+    const fuss = lauf.buehne.querySelector("[data-fuss]")
+    const { richtig, text } = lauf.urteil
+    fuss.innerHTML = `
+        <p class="sa-urteil sa-urteil--${richtig ? "richtig" : "falsch"}" role="status">${richtig ? S.haken : S.zu} ${esc(text)}</p>
+        <div class="sa-held__knoepfe">
+            ${korrigierbar ? `<button class="g-knopf-leise" type="button" data-korrektur title="Wenn die Prüfung danebenlag">${richtig ? "Doch falsch" : "Doch richtig"}</button>` : ""}
+            <button class="g-knopf sa-knopf-gross" type="button" data-weiter>Weiter <kbd>Enter</kbd></button>
+        </div>`
+    fuss.querySelector("[data-weiter]").addEventListener("click", () => naechste(lauf))
+    fuss.querySelector("[data-korrektur]")?.addEventListener("click", () => korrigieren(lauf))
+    fuss.querySelector("[data-weiter]").focus({ preventScroll: true })
+}
+
+async function korrigieren(lauf) {
+    if (lauf.phase !== "weiter" || !lauf.letzteAntwort) return
+    lauf.phase = "speichern"
+    try {
+        await lauf.app.lager.aufheben(lauf.letzteAntwort.ereignisId)
+        lauf.s.rueckgaengig()
+        lauf.phase = "frage"
+        lauf.urteil = { richtig: !lauf.urteil.richtig, text: lauf.urteil.richtig ? "Als falsch gezählt" : "Als richtig gezählt" }
+        await antworten(lauf, { b: lauf.urteil.richtig ? 3 : 1 }, { bleiben: true })
+        urteilZeigen(lauf, { korrigierbar: false })
+    } catch (f) { lauf.phase = "weiter"; fehlerMeldung(f) }
+}
+
 // ---------- Ende ----------
 function ende(lauf) {
     const { s, app, cfg } = lauf
@@ -235,16 +336,18 @@ function ende(lauf) {
     const nochOffen = f.faellig.length + f.neu.length
     const z = s.zaehler
     const auswahl = cfg.modus === "auswahl"
-    const gesamt = auswahl ? z.richtig + z.falsch : z[1] + z[2] + z[3] + z[4]
+    const binaer = ["tippen", "zeichnen"].includes(cfg.modus)
+    if (binaer) { z.richtig = z[3] + z[4]; z.falsch = z[1] + z[2] }
+    const gesamt = auswahl || binaer ? z.richtig + z.falsch : z[1] + z[2] + z[3] + z[4]
     lauf.phase = "ende"
     lauf.buehne.innerHTML = `
         <article class="sa-ende">
-            ${ringHtml(gesamt ? (auswahl ? z.richtig : z[3] + z[4]) / gesamt : 1, `${s.erledigt}`, s.erledigt === 1 ? "Karte" : "Karten")}
+            ${ringHtml(gesamt ? (auswahl || binaer ? z.richtig : z[3] + z[4]) / gesamt : 1, `${s.erledigt}`, s.erledigt === 1 ? "Karte" : "Karten")}
             <h1>${s.erledigt ? "Geschafft." : "Nichts mehr zu tun."}</h1>
-            ${auswahl
+            ${auswahl || binaer
                 ? `<ul class="sa-ende__zahlen"><li><b>${z.richtig}</b> richtig</li><li><b>${z.falsch}</b> falsch</li></ul>`
                 : `<ul class="sa-ende__zahlen">${BEWERTUNGEN.map((x) => `<li class="sa-ende--${x.b}"><b>${z[x.b]}</b> ${esc(x.text)}</li>`).join("")}</ul>`}
-            ${cfg.laufend.uebersprungen ? `<p class="sa-klein">${cfg.laufend.uebersprungen} Karte(n) ohne passende Antwortmöglichkeiten wurden ausgelassen – lern sie im Karteikarten-Modus.</p>` : ""}
+            ${cfg.laufend.uebersprungen ? `<p class="sa-klein">${cfg.laufend.uebersprungen} Karte(n) passten nicht zu dieser Lernart (${cfg.modus === "zeichnen" ? "keine Zeichen-Schablone" : cfg.modus === "auswahl" ? "keine fairen Antwortmöglichkeiten" : "keine kurze Lösung"}) und wurden ausgelassen.</p>` : ""}
             <p class="sa-klein">${nochOffen ? `Es warten noch ${nochOffen} Karten.` : f.naechste ? `Nächste Karte fällig in ${dauerText(f.naechste - l.jetzt())}.` : ""}</p>
             <div class="sa-held__knoepfe">
                 <button class="g-knopf" type="button" data-fertig>Zur Übersicht</button>
@@ -271,6 +374,9 @@ function tastenSetzen(lauf) {
         if (lauf.cfg.modus === "karte") {
             if (lauf.phase === "frage" && (e.key === " " || e.key === "Enter")) { e.preventDefault(); aufdecken(lauf) }
             else if (lauf.phase === "bewerten" && ["1", "2", "3", "4"].includes(e.key)) { e.preventDefault(); antworten(lauf, { b: +e.key }) }
+        } else if (lauf.cfg.modus === "tippen" || lauf.cfg.modus === "zeichnen") {
+            if (lauf.phase === "frage" && e.key === "Enter" && lauf.cfg.modus === "zeichnen") { e.preventDefault(); zeichnenPruefen(lauf) }
+            else if (lauf.phase === "weiter" && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); naechste(lauf) }
         } else {
             if (lauf.phase === "frage" && ["1", "2", "3"].includes(e.key)) { e.preventDefault(); waehlen(lauf, +e.key - 1) }
             else if (lauf.phase === "weiter" && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); naechste(lauf) }

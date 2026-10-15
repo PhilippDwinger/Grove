@@ -10,7 +10,6 @@ import { vorderseite, rueckseite, aktivieren } from "../darstellung.js"
 import { ERGEBNIS } from "../planer.js"
 import { dialog, stufeMarke, datumZeit, faelligText, prozent, zahl, meldung, fehlerMeldung } from "./ui.js"
 import { ctxFuer } from "./kontext.js"
-import { aufgabeTauglich } from "./lernen.js"
 
 const ERGEBNIS_TEXT = { nicht: "Nicht gewusst", erkannt: "Kam mir bekannt vor", gewusst: "Gewusst", leicht: "Ganz leicht" }
 
@@ -37,7 +36,7 @@ export function karteDetailHtml(app, schluessel, { schliessen = false } = {}) {
     </div>
     <div class="sa-detail__knoepfe">
         <button class="g-knopf" type="button" data-abfragen>${S.spielen} Jetzt abfragen</button>
-        <button class="g-knopf-leise" type="button" data-auswahl ${aufgabeTauglich(l, { schluessel }) ? "" : "disabled title=\"Keine passenden Antwortmöglichkeiten\""}>${S.auswahl} Auswahl</button>
+        <button class="g-knopf-leise" type="button" data-auswahl>${S.sprechblase} Andere Lernart</button>
     </div>
     ${geaendert ? `<p class="sa-hinweis">${S.info}<span>Vorderseite oder Antwort haben sich seit der letzten Abfrage geändert. Der Lernstand gilt weiter.</span></p>` : ""}
     ${e.konflikt && !e.konflikt.geloest ? `<p class="sa-hinweis sa-hinweis--warm">${S.warnung}<span>Diese ID hat in einer anderen Datei einen anderen Inhalt.</span><button class="g-knopf-leise" type="button" data-konflikte>Klären</button></p>` : ""}
@@ -65,7 +64,7 @@ export function karteDetailAktivieren(el, app, schluessel, { schliessen } = {}) 
     const zu = () => schliessen?.()
     el.querySelector("[data-zu]")?.addEventListener("click", zu)
     el.querySelector("[data-abfragen]")?.addEventListener("click", () => { zu(); app.lernen({ modus: "karte", aufgaben: [{ schluessel }], titel: "Einzelne Karte" }) })
-    el.querySelector("[data-auswahl]")?.addEventListener("click", () => { zu(); app.lernen({ modus: "auswahl", aufgaben: [{ schluessel }], titel: "Einzelne Karte" }) })
+    el.querySelector("[data-auswahl]")?.addEventListener("click", () => { zu(); app.modusWaehlen([{ schluessel }], { titel: "Einzelne Karte" }) })
     el.querySelector("[data-konflikte]")?.addEventListener("click", async () => { zu(); (await import("./konflikte.js")).konflikteDialog(app) })
     el.querySelector("[data-zuruecksetzen]")?.addEventListener("click", async () => {
         if (!(await bestaetigen({ titel: "Lernstand zurücksetzen?", text: "Die Karte gilt danach wieder als neu. Der bisherige Verlauf bleibt im Protokoll erhalten, zählt aber nicht mehr.", ja: "Zurücksetzen", gefahr: true }))) return

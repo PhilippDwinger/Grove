@@ -95,7 +95,7 @@ kbd { display: inline-block; min-width: 1.5em; padding: 1px 5px; border: 1px sol
 .sa-ring { position: relative; display: grid; place-items: center; width: 150px; aspect-ratio: 1; }
 .sa-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; rotate: -90deg; }
 .sa-ring circle { fill: none; stroke-width: 3; }
-.sa-ring .spur { stroke: var(--surface-hi); stroke-width: 5; }
+.sa-ring .spur { stroke: var(--border-hi); stroke-width: 5; }
 .sa-ring .innen { stroke: var(--border-hi); stroke-width: 1; opacity: .7; }
 .sa-ring[data-leer] .bogen { opacity: 0; }
 .sa-ring .bogen { stroke: var(--amber); stroke-width: 5; stroke-linecap: round; transition: stroke-dasharray .8s cubic-bezier(.2,.8,.2,1); }
@@ -645,3 +645,207 @@ kbd { display: inline-block; min-width: 1.5em; padding: 1px 5px; border: 1px sol
 .sb__code code { padding: 0 !important; background: none !important; font-size: inherit !important; }
 .sa-vollbild .sa-meldungen { bottom: 128px; }
 @media (max-width: 560px) { .sa-vollbild .sa-meldungen { bottom: 190px; } }
+
+/* ==========================================================
+   Saat 1.1 – Lernarten, Malfeld, Kurse, Lernserie, Kalender, Professor Uhu
+   ========================================================== */
+.sa-marke--gut { border-color: color-mix(in srgb, var(--gut) 50%, transparent); color: var(--gut); }
+.sa-liste__knoepfe { display: inline-flex; align-items: center; gap: 4px; }
+
+/* Lernart wählen */
+.sa-modi { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; margin-top: 6px; }
+.sa-modus { display: grid; grid-template-columns: 30px 1fr; gap: 2px 12px; align-items: start; padding: 14px; border: 1px solid var(--border-hi); border-radius: calc(14px * var(--ecken)); background: var(--surface); color: var(--text); font: inherit; text-align: left; cursor: pointer; transition: border-color .15s, background .15s; }
+.sa-modus svg { grid-row: span 3; width: 26px; height: 26px; color: var(--amber-light); margin-top: 2px; }
+.sa-modus strong { font: 400 1.15rem var(--font-display); }
+.sa-modus span { color: var(--text-soft); font-size: .86rem; line-height: 1.4; }
+.sa-modus small { color: var(--muted); font-size: .78rem; margin-top: 4px; }
+.sa-modus:hover:not(:disabled) { border-color: var(--amber); background: var(--surface-hi); }
+.sa-modus:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Schreiben */
+.sa-tippfeld { display: flex; gap: 8px; margin-top: 24px; }
+.sa-tippfeld input { flex: 1; min-width: 0; height: 52px; padding: 0 18px; border: 1px solid var(--border-hi); border-radius: calc(14px * var(--ecken)); background: var(--ground-deep); color: var(--text); font: 1.2rem var(--font-body); }
+.sa-tippfeld input:focus { outline: none; border-color: var(--amber); }
+.sa-tippfeld input[data-ergebnis="richtig"], .sa-tippfeld input[data-ergebnis="fast"] { border-color: var(--gut); color: var(--gut); }
+.sa-tippfeld input[data-ergebnis="falsch"] { border-color: var(--fehler); color: var(--fehler-hell); animation: sa-schuetteln .4s ease; }
+.sa-tippfeld .g-knopf { height: 52px; padding: 0 20px; }
+.sa-tippfeld .g-knopf kbd { margin-left: 4px; }
+.sa-urteil-platz:empty { display: none; }
+
+/* Zeichnen */
+.sk-begriff--aufgabe { font-size: clamp(1.6rem, 4.5vw, 2.4rem); }
+.sa-lernkarte__mal { margin-top: 18px; }
+.sa-lernkarte__vorne[data-loesung-vorne] { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--border-hi); }
+.sa-malfeld { position: relative; height: var(--hoehe); border: 1px dashed var(--border-hi); border-radius: calc(16px * var(--ecken)); overflow: hidden;
+  background: linear-gradient(var(--border) 0 0) 50% 0 / 1px 100% no-repeat, linear-gradient(var(--border) 0 0) 0 50% / 100% 1px no-repeat, var(--ground-deep); }
+.sa-malfeld canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
+.sa-malfeld.ist-gesperrt canvas { cursor: default; }
+.sa-malfeld__hilfe { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem; pointer-events: none; transition: opacity .2s; }
+.sa-malfeld:not(.ist-leer) .sa-malfeld__hilfe { opacity: 0; }
+.sa-malfeld__knoepfe { position: absolute; top: 6px; right: 6px; display: flex; gap: 2px; padding: 2px; border-radius: 12px; background: color-mix(in srgb, var(--surface) 85%, transparent); }
+.sa-malfeld.ist-gesperrt .sa-malfeld__knoepfe { display: none; }
+.sa-vergleich { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+.sa-vergleich figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.sa-vergleich img { width: 140px; height: 140px; border-radius: 12px; background: var(--ground-deep); image-rendering: pixelated; }
+.sa-vergleich figcaption { color: var(--muted); font-size: .8rem; }
+.sa-schablone { display: grid; place-items: center; width: 140px; height: 140px; border-radius: 12px; background: var(--ground-deep); color: var(--text); }
+.sa-schablone--text { font: 600 4.2rem/1 "Noto Sans JP", "Yu Gothic", "Hiragino Sans", "Meiryo", system-ui, sans-serif; overflow: hidden; white-space: nowrap; }
+svg.sa-schablone { padding: 16px; fill: none; stroke: var(--text); stroke-width: 38; stroke-linecap: round; stroke-linejoin: round; }
+.sa-schablone--klein { width: 72px; height: 72px; font-size: 2rem; }
+svg.sa-schablone--klein { padding: 8px; }
+.sa-schablone-vorschau { display: flex; align-items: center; gap: 12px; }
+.sa-ke__zeichnen summary { display: flex; align-items: center; gap: 8px; }
+.sa-ke__zeichnen summary svg { width: 18px; height: 18px; color: var(--amber-light); }
+.sa-ke__zeichnen .sa-segment { align-self: flex-start; }
+
+/* Lernserie */
+.sa-serie__zahlen { display: flex; gap: 22px; flex-wrap: wrap; align-items: flex-end; }
+.sa-serie__zahlen > div { display: flex; flex-direction: column; }
+.sa-serie__zahlen b { font: 400 2rem/1 var(--font-display); color: var(--text); }
+.sa-serie__zahlen span { color: var(--muted); font-size: .82rem; margin-top: 4px; }
+.sa-serie__aktuell { display: grid !important; grid-template-columns: auto auto; column-gap: 8px; align-items: end; }
+.sa-serie__aktuell svg { grid-row: span 2; width: 34px; height: 34px; color: var(--amber); }
+.sa-serie__aktuell b { font-size: 2.6rem; color: var(--amber-light); }
+.sa-serie__aktuell span { grid-column: 2; }
+.sa-serie__aktuell.ist-aus svg, .sa-serie__aktuell.ist-aus b { color: var(--muted); }
+
+/* Lernkalender (Stufen: eine Farbe, hell → kräftig) */
+.sa-kal { position: relative; margin-top: 14px; }
+.sa-kal__rahmen { display: flex; gap: 6px; }
+.sa-kal__wochentage { display: flex; flex-direction: column; gap: 3px; color: var(--muted); font-size: .7rem; line-height: 14px; }
+.sa-kal__wochentage i { height: 15px; }
+.sa-kal__wochentage span { height: 14px; }
+.sa-kal__scroll { overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+.sa-kal__monate, .sa-kal__gitter { display: grid; grid-template-columns: repeat(var(--wochen), 14px); column-gap: 3px; width: max-content; }
+.sa-kal__monate { height: 18px; color: var(--muted); font-size: .7rem; }
+.sa-kal__monate span { white-space: nowrap; }
+.sa-kal__gitter { grid-template-rows: repeat(7, 14px); grid-auto-flow: column; row-gap: 3px; }
+.sa-kal__tag { display: block; width: 14px; height: 14px; padding: 0; border: 1px solid color-mix(in srgb, var(--border-hi) 70%, transparent); border-radius: 3px; background: var(--surface-hi); cursor: default; }
+button.sa-kal__tag { cursor: pointer; }
+.sa-kal__tag[data-stufe="1"] { background: color-mix(in srgb, var(--amber) 30%, var(--surface-hi)); border-color: transparent; }
+.sa-kal__tag[data-stufe="2"] { background: color-mix(in srgb, var(--amber) 52%, var(--surface-hi)); border-color: transparent; }
+.sa-kal__tag[data-stufe="3"] { background: color-mix(in srgb, var(--amber) 76%, var(--surface-hi)); border-color: transparent; }
+.sa-kal__tag[data-stufe="4"] { background: var(--amber-light); border-color: transparent; }
+.sa-kal__tag.ist-zukunft { visibility: hidden; }
+button.sa-kal__tag:hover, button.sa-kal__tag:focus-visible { outline: 2px solid var(--text); outline-offset: 1px; }
+.sa-kal__fuss { display: flex; align-items: center; justify-content: flex-end; gap: 3px; margin-top: 8px; }
+.sa-kal__fuss .sa-klein { margin: 0 4px; font-size: .74rem; }
+.sa-kal__info { position: absolute; z-index: 6; min-width: 190px; padding: 10px 12px; border: 1px solid var(--border-hi); border-radius: 12px; background: var(--surface-hi); box-shadow: 0 12px 30px rgba(0,0,0,.35); pointer-events: none; animation: sa-hoch .15s ease-out; font-size: .84rem; }
+.sa-kal__info strong { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text); }
+.sa-kal__info span { color: var(--muted); }
+.sa-kal__info dl { display: grid; grid-template-columns: auto auto; gap: 2px 14px; margin: 0; }
+.sa-kal__info dt { color: var(--muted); }
+.sa-kal__info dd { margin: 0; color: var(--text); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Kurse */
+.sa-kurse__liste { display: grid; gap: 14px; }
+.sa-kurs { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; padding: 22px; border: 1px solid var(--border); border-radius: var(--radius); background: radial-gradient(ellipse 60% 120% at 0% 50%, color-mix(in srgb, var(--gut) 7%, transparent), transparent 70%), var(--surface); }
+.sa-kurs.ist-geladen { border-color: color-mix(in srgb, var(--gut) 35%, transparent); }
+.sa-kurs__bild { display: grid; place-items: center; width: 120px; height: 120px; border-radius: calc(24px * var(--ecken)); background: color-mix(in srgb, var(--gut) 12%, var(--surface-hi)); color: var(--gut); }
+.sa-kurs__bild svg { width: 64px; height: 64px; stroke-width: 1.4; }
+.sa-kurs__text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.sa-kurs__text header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sa-kurs__text h2 { margin: 0; font: 400 1.7rem/1.1 var(--font-display); }
+.sa-kurs__text p { margin: 0; color: var(--text-soft); line-height: 1.55; }
+.sa-kurs__unter { color: var(--amber-light) !important; font-family: var(--font-display); font-style: italic; font-size: 1.05rem; }
+.sa-kurs footer { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.sa-kurs footer .g-knopf b { padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--auf-akzent) 15%, transparent); }
+@media (max-width: 640px) { .sa-kurs { grid-template-columns: 1fr; } .sa-kurs__bild { width: 72px; height: 72px; } .sa-kurs__bild svg { width: 40px; height: 40px; } }
+
+/* ---------- Gespräch mit Professor Uhu ---------- */
+.sa-gespraech { display: flex; flex-direction: column; min-height: calc(100vh - 100px); }
+.sa-gespraech__raum { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 18px; align-items: start; flex: 1; }
+.sa-gespraech__lehrer { position: sticky; top: 80px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.sa-gespraech__name { color: var(--muted); font-size: .82rem; font-family: var(--font-display); font-style: italic; }
+.sa-gespraech__verlauf { display: flex; flex-direction: column; gap: 10px; max-height: calc(100vh - 290px); min-height: 260px; overflow-y: auto; padding: 4px 4px 12px; scroll-behavior: smooth; }
+.sa-gespraech__eingabe { position: sticky; bottom: 10px; z-index: 4; margin-top: 10px; }
+.sa-gespraech__eingabe:not(:empty) { padding: 12px; border: 1px solid var(--border-hi); border-radius: calc(20px * var(--ecken)); background: color-mix(in srgb, var(--ground-deep) 85%, transparent); backdrop-filter: blur(12px); box-shadow: 0 16px 40px rgba(0,0,0,.3); }
+.sa-gespraech__eingabe .sa-tippfeld { margin: 0; }
+.sa-gespraech__knoepfe { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; align-items: center; }
+.sa-gespraech__bewerten { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.sa-gespraech__bewerten .sa-bewertung { padding: 10px 6px; }
+.sa-gespraech__optionen { display: grid; gap: 8px; }
+.sa-gespraech__optionen .sa-option { padding: 11px 14px; font-size: 1rem; }
+.sa-gespraech__mal { display: flex; flex-direction: column; gap: 8px; }
+@media (max-width: 760px) {
+  .sa-gespraech__raum { grid-template-columns: 1fr; }
+  .sa-gespraech__lehrer { position: static; flex-direction: row; justify-content: center; }
+  .sa-gespraech__lehrer .sa-uhu { width: 92px; }
+  .sa-gespraech__verlauf { max-height: none; min-height: 0; overflow: visible; }
+  .sa-gespraech__bewerten { grid-template-columns: 1fr 1fr; }
+}
+
+.sa-blase { max-width: min(560px, 92%); padding: 11px 15px; border-radius: 18px; line-height: 1.5; animation: sa-blase-rein .28s cubic-bezier(.2,.8,.2,1); }
+@keyframes sa-blase-rein { from { opacity: 0; translate: 0 8px; scale: .98; } }
+.sa-blase p { margin: 0; }
+.sa-blase--lehrer { align-self: flex-start; position: relative; border: 1px solid var(--border-hi); border-top-left-radius: 6px; background: var(--surface); color: var(--text); }
+.sa-blase--du { align-self: flex-end; border-top-right-radius: 6px; background: color-mix(in srgb, var(--amber) 18%, var(--surface-hi)); color: var(--text); }
+.sa-blase__leise { color: var(--text-soft); font-style: italic; }
+.sa-blase__bild { display: block; width: 110px; height: 110px; border-radius: 10px; background: var(--ground-deep); image-rendering: pixelated; }
+.sa-blase__extra { margin-top: 10px; opacity: 0; transition: opacity .3s; }
+.sa-blase__extra.ist-da { opacity: 1; }
+.sa-blase__karte { padding: 12px; border-radius: 12px; background: var(--ground-deep); }
+.sa-blase__karte .sk-vorne { text-align: center; }
+.sa-blase__karte .sk-begriff { font-size: 1.8rem; }
+.sa-blase__karte .sk-antwort { font-size: 1.3rem; margin-top: 8px; }
+.sa-blase__karte .sk-bloecke { margin-top: 10px; gap: 8px; }
+.sa-blase__karte .sb { animation: none !important; }
+.sa-blase__mehr summary { cursor: pointer; color: var(--amber-light); font-size: .86rem; }
+.sa-blase__mehr[open] summary { margin-bottom: 8px; }
+.sa-blase__vorlage { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
+.sa-blase__vorlage img { width: 72px; height: 72px; border-radius: 10px; background: var(--ground-deep); image-rendering: pixelated; }
+
+/* Professor Uhu (SVG) – Farben aus dem Thema */
+.sa-uhu { width: 170px; }
+.uhu { display: block; width: 100%; height: auto; overflow: visible; }
+.uhu__ast path { fill: none; stroke: var(--border-hi); stroke-width: 5; stroke-linecap: round; }
+.uhu__rumpf, .uhu__schaedel, .uhu__ohr { fill: color-mix(in srgb, var(--amber) 22%, var(--surface-hi)); }
+.uhu__bauch { fill: color-mix(in srgb, var(--amber-light) 16%, var(--surface)); }
+.uhu__federn { fill: none; stroke: color-mix(in srgb, var(--amber) 45%, transparent); stroke-width: 1.6; stroke-linecap: round; }
+.uhu__maske { fill: color-mix(in srgb, var(--text) 10%, var(--surface)); }
+.uhu__fluegel path { fill: color-mix(in srgb, var(--amber) 30%, var(--surface-hi)); }
+.uhu__fuesse path { fill: none; stroke: var(--amber); stroke-width: 3; stroke-linecap: round; }
+.uhu__auge { fill: var(--text); }
+.uhu__pupillen circle { fill: var(--ground); }
+.uhu__pupillen .uhu__glanz { fill: var(--text); }
+.uhu__lider rect { fill: color-mix(in srgb, var(--amber) 22%, var(--surface-hi)); }
+.uhu__froh path { fill: none; stroke: var(--ground); stroke-width: 3; stroke-linecap: round; }
+.uhu__brille { fill: none; stroke: var(--amber-light); stroke-width: 2.4; stroke-linecap: round; }
+.uhu__schnabel path { fill: var(--amber); }
+.uhu__hut-kappe { fill: var(--ground-deep); }
+.uhu__hut-platte { fill: var(--wald-tief, var(--ground-deep)); stroke: var(--border-hi); stroke-width: 1.2; }
+.uhu__quaste path { fill: none; stroke: var(--amber); stroke-width: 2; stroke-linecap: round; }
+.uhu__quaste .uhu__quaste-ende { fill: var(--amber); stroke: none; }
+
+.uhu__ganz, .uhu__kopf, .uhu__koerper, .uhu__fluegel, .uhu__lider rect, .uhu__froh, .uhu__pupillen, .uhu__schnabel-unten, .uhu__quaste { transform-box: fill-box; }
+.uhu__koerper { transform-origin: 50% 100%; animation: uhu-atmen 4.2s ease-in-out infinite; }
+@keyframes uhu-atmen { 50% { transform: scale(1.012, 1.025); } }
+.uhu__kopf { transform-origin: 50% 90%; transition: transform .5s cubic-bezier(.3,1.4,.5,1); }
+.uhu__lider rect { transform-origin: 50% 0; transform: scaleY(0); animation: uhu-blinzeln 5.5s infinite; }
+@keyframes uhu-blinzeln { 0%, 93%, 100% { transform: scaleY(0); } 95.5% { transform: scaleY(1); } }
+.uhu__froh { opacity: 0; transition: opacity .2s; }
+.uhu__pupillen { transition: transform .4s ease; }
+.uhu__quaste { transform-origin: 0% 0%; animation: uhu-quaste 3.4s ease-in-out infinite; }
+@keyframes uhu-quaste { 50% { transform: rotate(4deg); } }
+.uhu__schnabel-unten { transform-origin: 50% 0; }
+.uhu__fluegel--r { transform-origin: 0% 0%; transition: transform .3s; }
+.uhu__fluegel--l { transform-origin: 100% 0%; transition: transform .3s; }
+
+.sa-uhu[data-spricht] .uhu__schnabel-unten { animation: uhu-sprechen .16s ease-in-out infinite alternate; }
+@keyframes uhu-sprechen { to { transform: translateY(3px) scaleY(1.1); } }
+.sa-uhu[data-stimmung="denkt"] .uhu__pupillen { transform: translate(2px, 3px); }
+.sa-uhu[data-stimmung="denkt"] .uhu__kopf { transform: rotate(3deg); }
+.sa-uhu[data-stimmung="freut"] .uhu__ganz { animation: uhu-huepfen .55s ease-out 2; }
+@keyframes uhu-huepfen { 40% { transform: translateY(-9px); } 70% { transform: translateY(0); } 85% { transform: translateY(-2px); } }
+.sa-uhu[data-stimmung="freut"] .uhu__froh { opacity: 1; }
+.sa-uhu[data-stimmung="freut"] .uhu__pupillen, .sa-uhu[data-stimmung="freut"] .uhu__auge { opacity: 0; }
+.sa-uhu[data-stimmung="freut"] .uhu__fluegel--l { transform: rotate(12deg); }
+.sa-uhu[data-stimmung="freut"] .uhu__fluegel--r { transform: rotate(-12deg); }
+.sa-uhu[data-stimmung="traurig"] .uhu__kopf { transform: rotate(-8deg) translateY(2px); }
+.sa-uhu[data-stimmung="traurig"] .uhu__pupillen { transform: translateY(3px); }
+.sa-uhu[data-stimmung="traurig"] .uhu__quaste { animation: none; transform: rotate(-6deg); }
+.sa-uhu[data-stimmung="winkt"] .uhu__fluegel--r { animation: uhu-winken 1.1s ease-in-out 2; }
+@keyframes uhu-winken { 0%, 100% { transform: rotate(0); } 25%, 75% { transform: rotate(-38deg); } 50% { transform: rotate(-22deg); } }
+.sa-uhu .uhu__ganz { animation-fill-mode: none; }
+@media (prefers-reduced-motion: reduce) { .uhu * { animation: none !important; } }
+:root[data-bewegung="aus"] .uhu * { animation: none !important; }

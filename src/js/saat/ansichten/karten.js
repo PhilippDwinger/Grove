@@ -7,7 +7,6 @@ import { normal } from "../hilfen.js"
 import { stufeMarke, faelligText, leerHtml, BILD } from "./ui.js"
 import { karteDetailHtml, karteDetailAktivieren } from "./karte-dialog.js"
 import { konflikteHtml, konflikteAktivieren } from "./konflikte.js"
-import { aufgabeTauglich } from "./lernen.js"
 
 const SEITE = 120
 const SORTEN = [
@@ -103,7 +102,9 @@ function listeZeichnen(el, app) {
 
     const aktionen = el.querySelector("[data-aktionen]")
     aktionen.innerHTML = liste.length ? `<span class="sa-klein">${liste.length} ${liste.length === 1 ? "Karte" : "Karten"}</span>
-        <button class="g-knopf-leise" type="button" data-alle-lernen>${S.spielen} Diese ${Math.min(liste.length, 200)} abfragen</button>` : ""
+        <span class="sa-liste__knoepfe"><button class="g-knopf-leise" type="button" data-alle-lernen>${S.spielen} Diese ${Math.min(liste.length, 200)} abfragen</button><button class="sa-symbolknopf" type="button" data-alle-art title="Mit anderer Lernart" aria-label="Mit anderer Lernart">${S.sprechblase}</button></span>` : ""
+    aktionen.querySelector("[data-alle-art]")?.addEventListener("click", () =>
+        app.modusWaehlen(liste.slice(0, 200).map((x) => ({ schluessel: x.e.schluessel })), { titel: "Auswahl aus der Kartenliste", zurueck: "karten" }))
     aktionen.querySelector("[data-alle-lernen]")?.addEventListener("click", () =>
         app.lernen({ modus: "karte", aufgaben: liste.slice(0, 200).map((x) => ({ schluessel: x.e.schluessel })), titel: "Auswahl aus der Kartenliste", zurueck: "karten" }))
 
@@ -124,7 +125,7 @@ function listeZeichnen(el, app) {
             <span class="sa-zeile__info">${e.vorkommen.length > 1 ? `<span class="sa-marke" title="Steht in ${e.vorkommen.length} Lerndateien – ein gemeinsamer Lernstand">${S.kette}${e.vorkommen.length}</span>` : ""}${e.konflikt && !e.konflikt.geloest ? `<span class="sa-marke sa-marke--warm" title="ID-Konflikt">${S.warnung}</span>` : ""}<span class="sa-zeile__wann">${faelligText(z, jetzt)}</span></span>
             <span class="sa-zeile__knoepfe">
                 <button class="sa-symbolknopf" type="button" data-abfragen title="Jetzt abfragen (auch wenn nicht fällig)" aria-label="Jetzt abfragen">${S.spielen}</button>
-                <button class="sa-symbolknopf" type="button" data-auswahl title="Als Auswahl abfragen" aria-label="Als Auswahl abfragen">${S.auswahl}</button>
+                <button class="sa-symbolknopf" type="button" data-auswahl title="Andere Lernart wählen" aria-label="Andere Lernart wählen">${S.sprechblase}</button>
             </span>
         </div>`).join("") + (liste.length > f.menge ? `<button class="g-knopf-leise sa-mehr" type="button" data-mehr>${liste.length - f.menge} weitere zeigen</button>` : "")
 
@@ -133,10 +134,7 @@ function listeZeichnen(el, app) {
         const k = z.dataset.k
         z.addEventListener("click", (e) => {
             if (e.target.closest("[data-abfragen]")) return app.lernen({ modus: "karte", aufgaben: [{ schluessel: k }], titel: "Einzelne Karte", zurueck: "karten" })
-            if (e.target.closest("[data-auswahl]")) {
-                if (!aufgabeTauglich(l, { schluessel: k })) return app.lernen({ modus: "auswahl", aufgaben: [{ schluessel: k }] })
-                return app.lernen({ modus: "auswahl", aufgaben: [{ schluessel: k }], titel: "Einzelne Karte", zurueck: "karten" })
-            }
+            if (e.target.closest("[data-auswahl]")) return app.modusWaehlen([{ schluessel: k }], { titel: "Einzelne Karte", zurueck: "karten" })
             f.gewaehlt = f.gewaehlt === k ? null : k
             box.querySelectorAll(".sa-zeile").forEach((x) => x.classList.toggle("ist-aktiv", x.dataset.k === f.gewaehlt))
             detailZeichnen(el, app)

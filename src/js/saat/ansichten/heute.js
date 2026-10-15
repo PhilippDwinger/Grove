@@ -9,6 +9,7 @@ import { BEISPIELE } from "../beispiele.js"
 import { deckSchreiben } from "../format.js"
 import { verteilungHtml, ringHtml, leerHtml, BILD, datumKurz, prozent, meldung, fehlerMeldung, dateiWaehlen } from "./ui.js"
 import { konflikteHtml, konflikteAktivieren } from "./konflikte.js"
+import { streaks, kalender } from "../statistik.js"
 
 export function zeigen(el, app) {
     const l = app.lager
@@ -24,6 +25,7 @@ export function zeigen(el, app) {
     const tage = l.vorschauTage(7)
     const groesste = Math.max(1, ...tage.map((t) => t.anzahl))
     const fortschritt = h.abfragen + offen ? h.abfragen / (h.abfragen + offen) : 1
+    const st = streaks(l.profil.tage || {}, jetzt)
 
     el.innerHTML = `
     <section class="sa-heute">
@@ -42,7 +44,7 @@ export function zeigen(el, app) {
                     </ul>
                     <div class="sa-held__knoepfe">
                         <button class="g-knopf sa-knopf-gross" type="button" data-lernen>${S.spielen} Jetzt lernen</button>
-                        <button class="g-knopf-leise" type="button" data-auswahl title="Drei Antworten zur Wahl – leichter, zählt weniger">${S.auswahl} Als Auswahl üben</button>
+                        <button class="g-knopf-leise" type="button" data-auswahl title="Auswahl, Schreiben, Zeichnen oder Gespräch mit Professor Uhu">${S.sprechblase} Andere Lernart …</button>
                     </div>
                     ${offen > max ? `<p class="sa-klein">Eine Sitzung umfasst höchstens ${max} Karten (einstellbar im Lernprofil).</p>` : ""}`
                 : `
@@ -76,17 +78,22 @@ export function zeigen(el, app) {
                         <span>${i === 0 ? "heute" : datumKurz(t.tag).slice(0, 2)}</span></div>`).join("")}
                 </div>
             </article>
-            <article class="sa-kachel">
-                <header><h2>Heute geübt</h2></header>
-                <p class="sa-gross">${h.abfragen}<small> Abfragen</small></p>
-                <p class="sa-klein">${h.abfragen ? `${prozent(h.quote)} gewusst bzw. richtig` : "Noch nichts – leg los, wenn du magst."}</p>
+            <article class="sa-kachel sa-serie">
+                <header><h2>Lernserie</h2></header>
+                <div class="sa-serie__zahlen">
+                    <div class="sa-serie__aktuell${st.aktuell ? "" : " ist-aus"}">${S.flamme}<b>${st.aktuell}</b><span>${st.aktuell === 1 ? "Tag" : "Tage"} aktuell</span></div>
+                    <div><b>${st.laengste}</b><span>längste Serie</span></div>
+                    <div><b>${h.abfragen}</b><span>heute geübt</span></div>
+                </div>
+                <p class="sa-klein">${st.heuteGelernt ? `Heute erledigt${h.abfragen ? ` – ${prozent(h.quote)} gewusst bzw. richtig` : ""}.` : st.aktuell ? "Lern heute noch eine Karte, damit die Serie weiterläuft." : "Eine Karte am Tag genügt für eine Serie."}</p>
             </article>
         </div>
+        ${kalenderHtml(l)}
     </section>`
 
     const auswahl = () => sitzungsListe(f.faellig, f.neu, max).map((schluessel) => ({ schluessel }))
     el.querySelector("[data-lernen]")?.addEventListener("click", () => app.lernen({ modus: "karte", aufgaben: auswahl(), titel: "Fällige Karten" }))
-    el.querySelector("[data-auswahl]")?.addEventListener("click", () => app.lernen({ modus: "auswahl", aufgaben: auswahl(), titel: "Auswahl üben" }))
+    el.querySelector("[data-auswahl]")?.addEventListener("click", () => app.modusWaehlen(auswahl(), { titel: "Fällige Karten" }))
     el.querySelector("[data-vorziehen]")?.addEventListener("click", () => {
         const naechste = [...l.zustaende].filter(([k]) => l.eintrag(k)?.aktiv).sort((a, b) => a[1].faellig - b[1].faellig).slice(0, 10).map(([schluessel]) => ({ schluessel }))
         app.lernen({ modus: "karte", aufgaben: naechste, titel: "Vorgezogen" })
@@ -96,7 +103,70 @@ export function zeigen(el, app) {
         app.lernen({ modus: "karte", aufgaben: neue, titel: "Neue Karten" })
     })
     konflikteAktivieren(el, app)
+    kalenderAktivieren(el, l)
     zaehlen(el)
+}
+
+// ---------- Lernkalender ----------
+// Jedes Kästchen ein Tag, Farbe = wie viel du gelernt hast (Stufen nach deinen eigenen Mengen).
+// Maus drauf oder Tab-Fokus → kleine Tageskarte. Daten: Lerntage im Profil (statistik.js).
+const MONATE = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+const tagLang = new Intl.DateTimeFormat("de-DE", { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+function kalenderHtml(l) {
+    const breite = document.querySelector(".sa-seite")?.clientWidth || innerWidth
+    const wochen = breite > 1050 ? 52 : breite > 700 ? 34 : 18
+    const { spalten } = kalender(l.profil.tage || {}, l.jetzt(), wochen)
+    let letzterMonat = -1
+    const monate = spalten.map((sp) => {
+        const m = sp[0].datum.getMonth()
+        const neu = m !== letzterMonat
+        letzterMonat = m
+        return `<span>${neu ? MONATE[m] : ""}</span>`
+    }).join("")
+    const gelernt = spalten.flat().filter((t) => t.werte).length
+    return `<article class="sa-kachel sa-kachel--breit sa-kal">
+        <header><h2>Lernkalender</h2><span class="sa-klein">${gelernt} ${gelernt === 1 ? "Lerntag" : "Lerntage"} in den letzten ${wochen === 52 ? "12 Monaten" : `${wochen} Wochen`}</span></header>
+        <div class="sa-kal__rahmen">
+            <div class="sa-kal__wochentage" aria-hidden="true"><i></i><span>Mo</span><span></span><span>Mi</span><span></span><span>Fr</span><span></span><span>So</span></div>
+            <div class="sa-kal__scroll" data-kal-scroll>
+                <div class="sa-kal__monate" aria-hidden="true" style="--wochen:${wochen}">${monate}</div>
+                <div class="sa-kal__gitter" style="--wochen:${wochen}" role="grid" aria-label="Lernkalender">
+                    ${spalten.map((sp) => sp.map((t) => t.zukunft ? `<span class="sa-kal__tag ist-zukunft"></span>`
+                        : `<button type="button" class="sa-kal__tag" data-stufe="${t.stufe}" data-tag="${t.tag}" aria-label="${esc(tagLang.format(t.datum))}: ${t.werte ? `${t.werte[0]} Abfragen` : "nicht gelernt"}"></button>`).join("")).join("")}
+                </div>
+            </div>
+        </div>
+        <div class="sa-kal__fuss"><span class="sa-klein">weniger</span>${[0, 1, 2, 3, 4].map((x) => `<i class="sa-kal__tag" data-stufe="${x}"></i>`).join("")}<span class="sa-klein">mehr</span></div>
+        <div class="sa-kal__info" data-kal-info role="tooltip" hidden></div>
+    </article>`
+}
+function kalenderAktivieren(el, l) {
+    const box = el.querySelector(".sa-kal")
+    if (!box) return
+    const info = box.querySelector("[data-kal-info]")
+    const scroll = box.querySelector("[data-kal-scroll]")
+    scroll.scrollLeft = scroll.scrollWidth
+    const zeigen = (knopf) => {
+        const tag = knopf.dataset.tag
+        const w = l.profil.tage?.[tag]
+        const [j, m, t] = tag.split("-").map(Number)
+        info.innerHTML = `<strong>${esc(tagLang.format(new Date(j, m - 1, t)))}</strong>${w ? `
+            <dl><dt>Abfragen</dt><dd>${w[0]}</dd><dt>Gewusst / richtig</dt><dd>${w[1]} (${Math.round((w[1] / w[0]) * 100)} %)</dd>
+            <dt>Neue Karten</dt><dd>${w[2]}</dd><dt>Lernzeit</dt><dd>≈ ${Math.max(1, Math.round(w[3] / 60))} Min.</dd></dl>` : `<span>Nicht gelernt</span>`}`
+        info.hidden = false
+        const r = knopf.getBoundingClientRect(), b = box.getBoundingClientRect()
+        const breite = info.offsetWidth
+        info.style.left = `${Math.max(8, Math.min(b.width - breite - 8, r.left - b.left + r.width / 2 - breite / 2))}px`
+        info.style.top = `${r.top - b.top - info.offsetHeight - 8}px`
+    }
+    const weg = () => { info.hidden = true }
+    box.querySelectorAll("button[data-tag]").forEach((k) => {
+        k.addEventListener("mouseenter", () => zeigen(k))
+        k.addEventListener("focus", () => zeigen(k))
+        k.addEventListener("click", () => zeigen(k))
+        k.addEventListener("mouseleave", weg)
+        k.addEventListener("blur", weg)
+    })
 }
 
 function naechsteText(t, jetzt) {

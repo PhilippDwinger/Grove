@@ -19,7 +19,7 @@ import { Lager } from "../saat/lager.js"
 import { gemerkterOrt, ortMerken, zugriff, verzeichnisFuer } from "../saat/ort.js"
 import { meldung, fehlerMeldung } from "../saat/ansichten/ui.js"
 import { S } from "../saat/symbole.js"
-import { aufgabeTauglich } from "../saat/ansichten/lernen.js"
+import { tauglich, modusName } from "../saat/ansichten/modi.js"
 import * as willkommen from "../saat/ansichten/willkommen.js"
 import * as heute from "../saat/ansichten/heute.js"
 import * as karten from "../saat/ansichten/karten.js"
@@ -27,6 +27,8 @@ import * as saatgut from "../saat/ansichten/saatgut.js"
 import * as editor from "../saat/ansichten/editor.js"
 import * as profil from "../saat/ansichten/profil.js"
 import * as lernen from "../saat/ansichten/lernen.js"
+import * as kurse from "../saat/ansichten/kurse.js"
+import { modusWaehlen } from "../saat/ansichten/modi.js"
 import { importieren } from "../saat/ansichten/importieren.js"
 import { karteAnsehen } from "../saat/ansichten/karte-dialog.js"
 
@@ -34,11 +36,12 @@ sucheEinrichten()
 kontoEinbinden()
 
 const seite = document.getElementById("saat")
-const ANSICHTEN = { heute, karten, saatgut, editor, profil, lernen }
+const ANSICHTEN = { heute, karten, saatgut, editor, profil, lernen, kurse }
 const NAV = [
     ["heute", "Heute", S.blitz],
     ["karten", "Karten", S.stapel],
     ["saatgut", "Saatgut", S.ordner],
+    ["kurse", "Kurse", S.kurs],
     ["profil", "Lernprofil", S.profil],
 ]
 
@@ -57,12 +60,12 @@ export const app = {
     lernen({ modus = "karte", aufgaben, titel = "Lernen", zurueck = location.hash.slice(1) || "heute" }) {
         if (!aufgaben.length) { meldung("Keine passenden Karten."); return }
         let ausgelassen = 0
-        if (modus === "auswahl") {
-            const tauglich = aufgaben.filter((a) => aufgabeTauglich(app.lager, a))
-            ausgelassen = aufgaben.length - tauglich.length
-            aufgaben = tauglich
+        if (modus !== "karte" && modus !== "gespraech") {
+            const passend = aufgaben.filter((a) => tauglich(app.lager, a, modus))
+            ausgelassen = aufgaben.length - passend.length
+            aufgaben = passend
             if (!aufgaben.length) {
-                meldung("Für diese Karten gibt es keine passenden Antwortmöglichkeiten – lern sie im Karteikarten-Modus.", { dauer: 5000 })
+                meldung(`Für diese Karten passt „${modusName(modus)}“ nicht – ${modus === "zeichnen" ? "lege im Editor eine Zeichen-Schablone an" : "lern sie im Karteikarten-Modus"}.`, { dauer: 5000 })
                 return
             }
         }
@@ -70,6 +73,8 @@ export const app = {
         app.gehe("lernen")
     },
 
+    // Lernart wählen lassen und dann starten
+    modusWaehlen: (aufgaben, optionen) => modusWaehlen(app, aufgaben, optionen),
     importieren: (dateien) => importieren(app, dateien),
     karteAnsehen: (schluessel) => karteAnsehen(app, schluessel),
     neuZeichnen: () => zeichnen(),

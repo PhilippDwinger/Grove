@@ -55,6 +55,11 @@ Saat (Grove-Dienst „Lernen“, `/dienste/saat/`) trennt strikt zwischen **Inha
 - **`antwort`**: kurze Lösung. Wird im Auswahl-Modus als Antwortmöglichkeit gezeigt – darum knapp halten (≤ 80 Zeichen).
 - **`alternativen`**: gelten ebenfalls als richtig (werden nie als falsche Auswahl angeboten).
 - **`ablenker`**: optionale falsche Antworten für den Auswahl-Modus. Ohne sie wählt Saat passende Antworten anderer Karten.
+- **`eingaben`**: weitere Lösungen für den **Schreiben-Modus** (z. B. Kana und Romaji zu einem Kanji: `["たべる", "taberu"]`).
+  Beim Prüfen sind Groß/klein, Satzzeichen, Artikel, ä/ae, Katakana/Hiragana und Romaji-Längen (ō = ou = oo = o) egal.
+- **`zeichnen`**: macht die Karte im **Zeichnen-Modus** abfragbar: `{ "aufgabe": "Schreib das Kanji für „Wasser“", "text": "水" }`
+  (ohne `text` gilt die Vorderseite als Schablone) oder mit eigener Schablone `{ "striche": [[x, y, x, y, …], …] }` (Koordinaten 0–1000).
+  Verglichen wird ohne KI: beide Bilder auf 48×48 normalisieren, auf Mittellinien ausdünnen, Abstände messen (≥ 85 % Ähnlichkeit = richtig).
 - **`hinten`**: Liste von Blöcken (Reihenfolge = Anzeige).
 - **`verknuepft`**, **`tags`**, **`gebiet`** (überschreibt das Lerngebiet der Datei, wichtig fürs Lernprofil).
 - Unbekannte Felder bleiben beim Speichern erhalten.
@@ -125,7 +130,8 @@ Ganzen Ordner kopieren = umziehen. Der Lernstand ist **kein** Zustand pro Datei,
 {"v":1,"id":"e-…","t":1792091519999,"a":"aufheben","ref":"e-…"}
 ```
 
-`a`: `karte` (Bewertung `b` 1–4), `auswahl` (`ok`), `zuruecksetzen`, `aufheben` (Rückgängig). `vz` = vorgezogen, `fp` = Kern-Abdruck der Karte
+`a`: `karte` (Bewertung `b` 1–4), `auswahl` (`ok`), `zuruecksetzen`, `aufheben` (Rückgängig). `vz` = vorgezogen, `mo` = Lernart
+(`tippen`, `zeichnen`, `gespraech`; fehlt bei Karteikarte/Auswahl), `fp` = Kern-Abdruck der Karte
 (Vorderseite + Antwort) zum Erkennen von Konflikten. Zusammenführen = Zeilen vereinigen (gleiche `id` = gleiche Abfrage).
 
 ## Lernprofil (`profil.json` / `.saatprofil`)
@@ -136,5 +142,16 @@ Ganzen Ordner kopieren = umziehen. Der Lernstand ist **kein** Zustand pro Datei,
   "modell": { "algorithmus": "saat-fsrs5", "w": [19 FSRS-Parameter], "faktor": 1.12,
               "gebiete": { "Japanisch": { "faktor": 0.94, "n": 120 } },
               "mcGewicht": 0.35, "erkanntBonus": 0.6, "kurzMax": 1.5 },
-  "anpassung": { "letzte": 1792091495686, "beobachtungen": 340, "verlauf": [{ "datum", "faktor", "n", "quote", "erwartet" }] } }
+  "anpassung": { "letzte": 1792091495686, "beobachtungen": 340, "verlauf": [{ "datum", "faktor", "n", "quote", "erwartet" }] },
+  "tage": { "2026-10-16": [42, 35, 8, 610] } }
 ```
+
+`tage` = Lerntage für Serie und Lernkalender: `[Abfragen, gewusst/richtig, neue Karten, Sekunden]` je Lerntag (beginnt um 4 Uhr),
+höchstens ~3 Jahre (≈ 10 KB pro Jahr). Wird aus dem Protokoll ergänzt; bleibt erhalten, wenn Abfragen gelöscht werden (z. B. Kurs entfernt).
+
+## Kurse von Grove
+
+Kurse sind normale Lerndateien mit einem zusätzlichen Feld `"kurs": { "id": "grove-baeume", "version": 1, "von": "Grove" }`.
+Sie stecken als Script in `src/js/saat/kurse/<id>.js` und werden beim Herunterladen als `saatgut/kurs-<id>.saat` in den
+**gerade geöffneten** Lernspeicher gelegt. Entfernen löscht die Datei und die Protokollzeilen ihrer Karten in diesem Speicher
+(vorher Sicherung in `sicherung/`); Karten, die auch in eigenen Lerndateien stehen, behalten ihren Stand. Andere Speicher bleiben unberührt.

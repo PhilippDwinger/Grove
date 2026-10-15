@@ -26,6 +26,8 @@ import { faelligkeit } from "./sitzung.js"
 import { zipBauen, zipLesen, verzeichnisZuZip } from "./paket.js"
 import { alleDateien } from "./speicher.js"
 import { TAG, neueId, tagSchluessel, tagesbeginn, idAusText, fnv } from "./hilfen.js"
+import { tageAusProtokoll, tageZusammen } from "./statistik.js"
+import { kursVon, deckIdFuer } from "./kurse.js"
 
 export const PFAD = {
     kennung: "saat.json",
@@ -107,6 +109,7 @@ export class Lager extends EventTarget {
     }
 
     async laden() {
+        if (this.profilTimer) await this.profilSpeichernJetzt()     // nichts Ungespeichertes verlieren
         this.warnungen = this.warnungen.filter((w) => w.includes("saat.json"))
         this.kaputt = []
         this.medienCache.clear()
@@ -161,6 +164,12 @@ export class Lager extends EventTarget {
             await this.profilAnpassen({ schritte: 12 })
         } else if (profilFehlte) {
             await this.jsonSchreiben(PFAD.profil, this.profil)
+        }
+        // Lerntage im Profil mit dem Protokoll abgleichen (fehlende ergänzen)
+        const tage = tageZusammen(this.profil.tage, this.tageBerechnen())
+        if (JSON.stringify(tage) !== JSON.stringify(this.profil.tage)) {
+            this.profil.tage = tage
+            await this.jsonSchreiben(PFAD.profil, this.profil).catch(() => {})
         }
         await this.taeglichSichern().catch((f) => console.warn("Saat: Sicherung fehlgeschlagen", f))
         this.kanalEinrichten()
@@ -247,7 +256,26 @@ export class Lager extends EventTarget {
 
     // ---------- Lernen ----------
     // aufgabe: { schluessel, deckId?, kartenId? } · ergebnis: { b: 1–4 } oder { ok: bool } · zusatz: { ms, vz }
-    async bewerten(aufgabe, ergebnis, { ms = null } = {}) {
+    tageBerechnen() {
+        return tageAusProtokoll(this.ereignisse, this.aufgehoben, { alias: this.index.alias })
+    }
+    // Der Tag eines Ereignisses neu aus dem Protokoll berechnen und ins Profil schreiben (verzögert)
+    tagAktualisieren(t) {
+        const tag = tagSchluessel(t)
+        const w = this.tageBerechnen()[tag]
+        this.profil.tage ??= {}
+        if (w) this.profil.tage[tag] = w
+        else delete this.profil.tage[tag]
+        clearTimeout(this.profilTimer)
+        this.profilTimer = setTimeout(() => this.profilSpeichernJetzt(), 1500)
+    }
+    async profilSpeichernJetzt() {
+        clearTimeout(this.profilTimer)
+        this.profilTimer = null
+        await this.jsonSchreiben(PFAD.profil, this.profil).catch((f) => console.warn("Saat: Profil nicht gespeichert", f))
+    }
+
+    async bewerten(aufgabe, ergebnis, { ms = null, modus = null } = {}) {
         const e = this.eintrag(aufgabe.schluessel)
         if (!e) throw new Error("Diese Karte gibt es nicht mehr.")
         const deckId = aufgabe.deckId ?? e.deck.id
@@ -258,6 +286,7 @@ export class Lager extends EventTarget {
         if ("ok" in ergebnis) Object.assign(teil, { a: "auswahl", ok: !!ergebnis.ok })
         else Object.assign(teil, { a: "karte", b: ergebnis.b })
         if (ms != null) teil.ms = Math.round(ms)
+        if (modus) teil.mo = modus
         if (vorher && vorher.faellig > jetzt) teil.vz = true
         const ev = ereignis(teil, jetzt)
         await this.anhaengen([ev])
@@ -271,6 +300,7 @@ export class Lager extends EventTarget {
         if (!this.verlauf.has(e.schluessel)) this.verlauf.set(e.schluessel, [])
         this.verlauf.get(e.schluessel).push(ev)
 
+        this.tagAktualisieren(ev.t)
         if (anpassenFaellig(this.profil, this.beobachtungen.length, jetzt)) await this.profilAnpassen()
         else this.melden()
         this.senden()
@@ -279,9 +309,11 @@ export class Lager extends EventTarget {
 
     async aufheben(ereignisId) {
         const ev = ereignis({ a: "aufheben", ref: ereignisId }, this.jetzt())
+        const ziel = this.ereignisse.find((e) => e.id === ereignisId)
         await this.anhaengen([ev])
         this.ereignisse.push(ev)
         this.neuBerechnen()
+        if (ziel) this.tagAktualisieren(ziel.t)
         this.senden()
     }
 
@@ -331,7 +363,7 @@ export class Lager extends EventTarget {
     async profilErsetzen(profil, { nurEinstellungen = false } = {}) {
         const neu = profilLesen(profil).profil
         if (nurEinstellungen) this.profil.einstellungen = neu.einstellungen
-        else this.profil = { ...neu, id: neu.id }
+        else this.profil = { ...neu, id: neu.id, tage: tageZusammen({ ...this.profil.tage, ...neu.tage }, this.tageBerechnen()) }
         await this.jsonSchreiben(PFAD.profil, this.profil)
         this.neuBerechnen()
         this.senden()
@@ -670,7 +702,69 @@ export class Lager extends EventTarget {
         this.kanal.onmessage = () => { this.laden().then(() => this.melden("von-aussen")).catch(() => {}) }
     }
     senden() { this.kanal?.postMessage({ art: "geaendert", t: Date.now() }) }
-    schliessen() { this.kanal?.close(); this.kanal = null }
+    schliessen() {
+        if (this.profilTimer) this.profilSpeichernJetzt()
+        this.kanal?.close(); this.kanal = null
+    }
+
+    // ---------- Kurse von Grove ----------
+    kursDeck(kursId) {
+        return [...this.decks.values()].find((d) => kursVon(d.deck)?.id === kursId) ?? null
+    }
+    // deck = Inhalt aus js/saat/kurse/<id>.js – landet als saatgut/kurs-<id>.saat im AKTUELLEN Speicher
+    async kursInstallieren(kursDeck) {
+        const kurs = kursVon(kursDeck)
+        if (!kurs) throw new Error("Das ist kein Kurs.")
+        const vorhanden = this.kursDeck(kurs.id)
+        const datei = vorhanden?.datei ?? `${deckIdFuer(kurs.id)}${ENDUNG}`
+        const deck = deckLesen(structuredClone(kursDeck), { dateiname: datei }).deck
+        if (vorhanden) await this.vorherSichern(`${PFAD.saatgut}/${datei}`, `saatgut/${datei}`)
+        await this.verz.schreiben(`${PFAD.saatgut}/${datei}`, deckSchreiben(deck))
+        if (vorhanden && vorhanden.deck.id !== deck.id) this.decks.delete(vorhanden.deck.id)
+        this.decks.set(deck.id, { deck, datei, warnungen: [], nurLesen: false })
+        this.neuBerechnen()
+        this.senden()
+        return deck
+    }
+    // Kurs entfernen: Datei weg UND der Lernstand seiner Karten wird aus dem Protokoll dieses Speichers
+    // gelöscht – außer für Karten, die auch in einer anderen Lerndatei stehen.
+    async kursEntfernen(kursId) {
+        const d = this.kursDeck(kursId)
+        if (!d) return { karten: 0, abfragen: 0 }
+        const anderswo = new Set()
+        for (const x of this.decks.values()) {
+            if (x === d) continue
+            for (const k of x.deck.karten) { const s = this.index.schluessel(x.deck.id, k.id); if (s) anderswo.add(s) }
+        }
+        const weg = new Set(d.deck.karten.map((k) => this.index.schluessel(d.deck.id, k.id)).filter((s) => s && !anderswo.has(s)))
+        const abfragen = await this.ereignisseEntfernen(weg)
+        await this.verz.loeschen(`${PFAD.saatgut}/${d.datei}`)
+        await this.laden()
+        this.senden()
+        return { karten: weg.size, abfragen }
+    }
+    // Ereignisse bestimmter Karten wirklich aus den Protokolldateien entfernen (vorher Sicherung)
+    async ereignisseEntfernen(schluessel) {
+        if (!schluessel.size) return 0
+        const alias = this.index.alias
+        let entfernt = 0
+        await sperre(async () => {
+            for (const e of await this.verz.liste(PFAD.fortschritt)) {
+                if (e.art !== "datei" || !/^protokoll-.*\.jsonl$/.test(e.name)) continue
+                const pfad = `${PFAD.fortschritt}/${e.name}`
+                const zeilen = (await this.verz.lesenText(pfad)).split("\n")
+                const bleiben = zeilen.filter((z) => {
+                    if (!z.trim()) return false
+                    try { const ev = JSON.parse(z); if (ev.k && schluessel.has(alias(ev.k))) { entfernt++; return false } } catch { /* kaputte Zeilen bleiben, wie sie sind */ }
+                    return true
+                })
+                if (bleiben.length === zeilen.filter((z) => z.trim()).length) continue
+                await this.vorherSichern(pfad, pfad)
+                await this.verz.schreiben(pfad, bleiben.length ? bleiben.join("\n") + "\n" : "")
+            }
+        })
+        return entfernt
+    }
 
     // Für den Prüfbericht in den Einstellungen
     async pruefen() {
