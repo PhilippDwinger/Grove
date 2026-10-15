@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <!-- Grove · Saat: ein Beet – von links nach rechts wächst aus dem Samenkorn eine reife Ähre.
+       Dahinter zwei Lernkarten. So fühlt sich Lernen mit Wiederholungen an: Schritt für Schritt reifer. -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Karten im Hintergrund -->
+    <rect x="186" y="28" width="96" height="62" rx="8" stroke="#3A2C3D" stroke-width="2" transform="rotate(-6 234 59)"/>
+    <rect x="196" y="36" width="96" height="62" rx="8" stroke="#E3A15A" stroke-width="2" opacity=".45" transform="rotate(4 244 67)"/>
+    <path d="M214 60 h44 M214 70 h30" stroke="#E3A15A" stroke-width="2" opacity=".35" transform="rotate(4 244 67)"/>
+    <!-- Erde -->
+    <path d="M24 148 C84 136 140 136 200 146 S290 156 304 146" stroke="#E3A15A" stroke-width="3"/>
+    <path d="M40 160 C96 152 150 152 206 160 S276 166 292 160" stroke="#3A2C3D" stroke-width="2.4"/>
+    <!-- 1 Samenkorn -->
+    <path d="M60 143 C55 143 52 139 52 135 C52 130 56 126 60 124 C64 126 68 130 68 135 C68 139 65 143 60 143 Z" stroke="#E3A15A" stroke-width="2.2"/>
+    <path d="M60 128 V138" stroke="#F2C08A" stroke-width="1.6" opacity=".7"/>
+    <!-- 2 Keim -->
+    <path d="M112 140 V122" stroke="#E3A15A" stroke-width="2.4"/>
+    <path d="M112 126 C112 117 105 112 96 112 C96 121 103 126 112 126 Z" stroke="#E3A15A" stroke-width="2.2"/>
+    <!-- 3 Halm mit zwei Blättern -->
+    <path d="M168 140 V96" stroke="#E3A15A" stroke-width="2.4"/>
+    <path d="M168 116 C168 105 160 99 149 99 C149 110 157 116 168 116 Z" stroke="#E3A15A" stroke-width="2.2"/>
+    <path d="M168 108 C168 97 176 91 187 91 C187 102 179 108 168 108 Z" stroke="#F2C08A" stroke-width="2.2"/>
+    <!-- 4 Ähre -->
+    <path d="M250 146 V58" stroke="#E3A15A" stroke-width="2.6"/>
+    <path d="M250 50 V40" stroke="#F2C08A" stroke-width="1.8"/>
+    <path d="M250 104 C240 108 230 104 226 96" stroke="#E3A15A" stroke-width="2.2"/>
+  </g>
+  <g fill="#F2C08A">
+    <path d="M250 68 C243 66.5 239 61 239 54 C246 55.5 250 60.5 250 68 Z"/>
+    <path d="M250 68 C257 66.5 261 61 261 54 C254 55.5 250 60.5 250 68 Z"/>
+    <path d="M250 82 C243 80.5 239 75 239 68 C246 69.5 250 74.5 250 82 Z"/>
+    <path d="M250 82 C257 80.5 261 75 261 68 C254 69.5 250 74.5 250 82 Z"/>
+  </g>
+  <g fill="none" stroke="#E3A15A" stroke-width="2" stroke-linejoin="round">
+    <path d="M250 96 C243 94.5 239 89 239 82 C246 83.5 250 88.5 250 96 Z"/>
+    <path d="M250 96 C257 94.5 261 89 261 82 C254 83.5 250 88.5 250 96 Z"/>
+  </g>
+  <!-- Wiederholungs-Bögen: werden größer, wie die Abstände -->
+  <g fill="none" stroke="#CDBFAE" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2 5" opacity=".55">
+    <path d="M64 118 Q86 96 104 108"/>
+    <path d="M118 104 Q140 74 160 88"/>
+    <path d="M176 80 Q206 30 240 50"/>
+  </g>
+</svg>

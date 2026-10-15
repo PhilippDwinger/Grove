@@ -47,6 +47,7 @@ export const DIENST_STANDARD = {
     bridge:   { bilder: { zeichen: "bridge", karte: "bridge" } },
     harz:     { bilder: { zeichen: "harz",   karte: "harz" } },
     muehle:   { bilder: { zeichen: "muehle", karte: "muehle" } },
+    saat:     { bilder: { zeichen: "saat",   karte: "saat" } },
     gewaechshaus: { bilder: { zeichen: "gewaechshaus", karte: "gewaechshaus" } },   // nur zum Testen
 }
 
@@ -61,6 +62,7 @@ export const BEREICHE = [
     { id: "bridge",   name: "Bridge",     zeichen: "bridge" },
     { id: "harz",     name: "Harz",       zeichen: "harz" },
     { id: "muehle",   name: "Mühle",      zeichen: "muehle" },
+    { id: "saat",     name: "Saat",       zeichen: "saat" },
     { id: "gewaechshaus", name: "Gewächshaus", zeichen: "gewaechshaus" },   // nur zum Testen
 ]
 
@@ -123,6 +125,7 @@ export const ZEICHEN = [
     { id: "bridge",   name: "Brücke",      datei: Z + "bridge.svg" },
     { id: "harz",     name: "Harztropfen",  datei: Z + "harz.svg" },
     { id: "muehle",   name: "Mühlrad",      datei: Z + "muehle.svg" },
+    { id: "saat",     name: "Ähre",         datei: Z + "saat.svg" },
     { id: "gewaechshaus", name: "Gewächshaus", datei: Z + "gewaechshaus.svg" },   // nur zum Testen
     { id: "blatt",    name: "Blatt",       datei: Z + "blatt.svg" },
     { id: "eichel",   name: "Eichel",      datei: Z + "eichel.svg" },
@@ -150,6 +153,7 @@ export const KARTEN = [
     { id: "bridge",      name: "Bridge",          datei: D + "bridge.svg" },
     { id: "harz",        name: "Harz",            datei: D + "harz.svg" },
     { id: "muehle",      name: "Mühle",           datei: D + "muehle.svg" },
+    { id: "saat",        name: "Saat",            datei: D + "saat.svg" },
     { id: "gewaechshaus", name: "Gewächshaus",    datei: D + "gewaechshaus.svg" },   // nur zum Testen
     { id: "laub",        name: "Laub",            datei: D + "laub.svg" },
     { id: "mehr",        name: "Keimling",        datei: D + "mehr.svg" },

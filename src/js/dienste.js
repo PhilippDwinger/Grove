@@ -76,6 +76,15 @@ export const dienste = [
         bild: "/bilder/dienste/muehle.svg",
         status: "aktiv",
     },
+    {
+        id: "saat",
+        name: "Saat",
+        art: "Lernen",
+        beschreibung: "Sprachen, Begriffe und Wissen lernen – mit klugen Wiederholungen. Alles bleibt lokal, auch ohne Konto.",
+        pfad: "/dienste/saat/",
+        bild: "/bilder/dienste/saat.svg",
+        status: "aktiv",
+    },
     // NUR ZUM TESTEN – fliegt später wieder raus (siehe CLAUDE.md → „Gewächshaus entfernen“)
     {
         id: "gewaechshaus",
