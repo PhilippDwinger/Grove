@@ -18,6 +18,7 @@ import schrift from "./abteile/schrift.js"
 import leer from "./abteile/leer.js"
 import fortschritt from "./abteile/fortschritt.js"
 import mikro from "./abteile/mikro.js"
+import pets from "./abteile/pets.js"
 
 export const ABTEILE = [
   ladeanimationen,
@@ -33,4 +34,5 @@ export const ABTEILE = [
   leer,
   fortschritt,
   mikro,
+  pets,
 ]

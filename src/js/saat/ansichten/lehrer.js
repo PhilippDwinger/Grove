@@ -7,6 +7,7 @@
 // Redewendungen: je Anlass mehrere, nie zweimal hintereinander dieselbe.
 // ==========================================================
 import { esc } from "../../kern/html.js"
+import "../../../css/pets/uhu.css"
 
 export const NAME = "Professor Uhu"
 

@@ -2,7 +2,7 @@
 // Gewächshaus · Seite (src/dienste/gewaechshaus/index.html)
 // NUR ZUM TESTEN – hier wachsen Animationen und Design-Ideen,
 // bevor sie nach Grove umziehen. Wird später wieder entfernt.
-// Abteile: js/gewaechshaus/abteile.js · Adresse: /dienste/gewaechshaus/#<abteil-id>
+// Abteile: js/gewaechshaus/abteile.js · Adresse: /dienste/gewaechshaus/#<abteil-id>[/<unterseite>]
 // ==========================================================
 import "../kern/thema.js"                        // zuerst: Gestaltung aus Laub
 import "../kern/schutz.js"
@@ -19,7 +19,8 @@ sucheEinrichten()
 const app = document.getElementById("gewaechshaus")
 
 function zeigen() {
-  const id = decodeURIComponent(location.hash.slice(1))
+  const [id, ...rest] = decodeURIComponent(location.hash.slice(1)).split("/")   // #abteil/unterseite (z. B. #pets/funke)
+  const unter = rest.join("/")
   const abteil = ABTEILE.find((a) => a.id === id) || null
   app.innerHTML = `
     <p class="gh-hinweis">Nur zum Testen · Das Gewächshaus fliegt später wieder raus. Was hier gefällt, zieht vorher nach Grove um.</p>
@@ -40,7 +41,7 @@ function zeigen() {
     kopf.innerHTML = `<h2>${esc(abteil.name)}</h2><p>${esc(abteil.beschreibung)}</p>`
     const inhalt = document.createElement("div")
     bereich.append(kopf, inhalt)
-    abteil.bauen(inhalt)
+    abteil.bauen(inhalt, unter)
   } else {
     bereich.innerHTML = `
       <div class="gh-uebersicht">

@@ -534,10 +534,12 @@
 .lmini[data-l="terminal"] .lmini__flaeche i:nth-child(n + 6) { display: none !important; }
 .lmini[data-l="terminal"] .lmini__flaeche i::before { display: none; }
 
-.lmini[data-l="dock"] .lmini__held { flex: 1; }
-.lmini[data-l="dock"] .lmini__flaeche { flex: none; display: flex; justify-content: center; gap: 4px; margin: 0 auto 8px; padding: 4px 6px; border-radius: 8px; background: color-mix(in srgb, var(--surface) 70%, transparent); border: 1px solid var(--border-hi); }
-.lmini[data-l="dock"] .lmini__flaeche i { display: block !important; width: 14px; height: 14px; min-height: 0; border-radius: 4px; background: color-mix(in srgb, var(--amber) 45%, var(--surface-hi)); border: 0; }
-.lmini[data-l="dock"] .lmini__flaeche i:nth-child(4) { width: 20px; height: 20px; translate: 0 -3px; }
+.lmini[data-l="dock"] { background: linear-gradient(180deg, color-mix(in srgb, var(--amber) 22%, var(--ground-deep)), var(--ground)); }
+.lmini[data-l="dock"] .lmini__held { background: none; height: 30px; }
+.lmini[data-l="dock"] .lmini__held i { left: 30%; width: 40%; } .lmini[data-l="dock"] .lmini__held b { left: 38%; width: 24%; }
+.lmini[data-l="dock"] .lmini__flaeche { grid-template-columns: repeat(4, 22px); justify-content: center; gap: 8px 12px; margin: 0 auto 8px; padding: 8px 12px; border-radius: 10px; background: color-mix(in srgb, var(--surface) 45%, transparent); border: 1px solid color-mix(in srgb, var(--text) 12%, transparent); }
+.lmini[data-l="dock"] .lmini__flaeche i { display: block !important; width: 22px; height: 22px; min-height: 0; border-radius: 6px; border: 0; background: linear-gradient(160deg, color-mix(in srgb, var(--amber) 40%, var(--surface-hi)), var(--surface)); }
+.lmini[data-l="dock"] .lmini__flaeche i:nth-child(n + 9) { display: none !important; }
 .lmini[data-l="dock"] .lmini__flaeche i::before { display: none; }
 
 .lmini[data-l="faecher"] .lmini__flaeche { display: flex; justify-content: center; align-items: flex-end; padding-bottom: 0; }

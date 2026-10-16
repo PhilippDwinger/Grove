@@ -50,10 +50,10 @@ html[data-eingang="keiner"] :is(.dienst, .karte, .eingang) { animation: none; }
 @keyframes thema-einblenden { from { opacity: 0; } to { opacity: 1; } }
 
 /* ---------- Karten beim Drüberfahren ---------- */
-html:not([data-hover="heben"]) a.dienst:hover { translate: none; }
-html[data-hover="ruhig"] a.dienst:hover { box-shadow: none; }
-html:not([data-hover="heben"]) a.dienst:hover .dienst__bild { scale: 1; }
-html[data-hover="kippen"] a.dienst:hover { box-shadow: 0 22px 50px rgba(0,0,0,.35); }
+html:not([data-hover="heben"]) a.dienst.schwebt { translate: none; }
+html[data-hover="ruhig"] a.dienst.schwebt { box-shadow: none; }
+html:not([data-hover="heben"]) a.dienst.schwebt .dienst__bild { scale: 1; }
+html[data-hover="kippen"] a.dienst.schwebt { box-shadow: 0 22px 50px rgba(0,0,0,.35); }
 
 /* ---------- Begrüßung (Lichtung) ---------- */
 .gruss--schreibmaschine span:not(.gruss__cursor) { opacity: 0; animation: thema-tippen .01s steps(1) forwards; animation-delay: calc(.25s + var(--i) * .065s); }

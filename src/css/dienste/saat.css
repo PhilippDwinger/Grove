@@ -813,60 +813,7 @@ button.sa-kal__tag:hover, button.sa-kal__tag:focus-visible { outline: 2px solid 
 .sa-blase__vorlage { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
 .sa-blase__vorlage img { width: 72px; height: 72px; border-radius: 10px; background: var(--ground-deep); image-rendering: pixelated; }
 
-/* Professor Uhu (SVG) – Farben aus dem Thema */
-.sa-uhu { width: 170px; }
-.uhu { display: block; width: 100%; height: auto; overflow: visible; }
-.uhu__ast path { fill: none; stroke: var(--border-hi); stroke-width: 5; stroke-linecap: round; }
-.uhu__rumpf, .uhu__schaedel, .uhu__ohr { fill: color-mix(in srgb, var(--amber) 22%, var(--surface-hi)); }
-.uhu__bauch { fill: color-mix(in srgb, var(--amber-light) 16%, var(--surface)); }
-.uhu__federn { fill: none; stroke: color-mix(in srgb, var(--amber) 45%, transparent); stroke-width: 1.6; stroke-linecap: round; }
-.uhu__maske { fill: color-mix(in srgb, var(--text) 10%, var(--surface)); }
-.uhu__fluegel path { fill: color-mix(in srgb, var(--amber) 30%, var(--surface-hi)); }
-.uhu__fuesse path { fill: none; stroke: var(--amber); stroke-width: 3; stroke-linecap: round; }
-.uhu__auge { fill: var(--text); }
-.uhu__pupillen circle { fill: var(--ground); }
-.uhu__pupillen .uhu__glanz { fill: var(--text); }
-.uhu__lider rect { fill: color-mix(in srgb, var(--amber) 22%, var(--surface-hi)); }
-.uhu__froh path { fill: none; stroke: var(--ground); stroke-width: 3; stroke-linecap: round; }
-.uhu__brille { fill: none; stroke: var(--amber-light); stroke-width: 2.4; stroke-linecap: round; }
-.uhu__schnabel path { fill: var(--amber); }
-.uhu__hut-kappe { fill: var(--ground-deep); }
-.uhu__hut-platte { fill: var(--wald-tief, var(--ground-deep)); stroke: var(--border-hi); stroke-width: 1.2; }
-.uhu__quaste path { fill: none; stroke: var(--amber); stroke-width: 2; stroke-linecap: round; }
-.uhu__quaste .uhu__quaste-ende { fill: var(--amber); stroke: none; }
-
-.uhu__ganz, .uhu__kopf, .uhu__koerper, .uhu__fluegel, .uhu__lider rect, .uhu__froh, .uhu__pupillen, .uhu__schnabel-unten, .uhu__quaste { transform-box: fill-box; }
-.uhu__koerper { transform-origin: 50% 100%; animation: uhu-atmen 4.2s ease-in-out infinite; }
-@keyframes uhu-atmen { 50% { transform: scale(1.012, 1.025); } }
-.uhu__kopf { transform-origin: 50% 90%; transition: transform .5s cubic-bezier(.3,1.4,.5,1); }
-.uhu__lider rect { transform-origin: 50% 0; transform: scaleY(0); animation: uhu-blinzeln 5.5s infinite; }
-@keyframes uhu-blinzeln { 0%, 93%, 100% { transform: scaleY(0); } 95.5% { transform: scaleY(1); } }
-.uhu__froh { opacity: 0; transition: opacity .2s; }
-.uhu__pupillen { transition: transform .4s ease; }
-.uhu__quaste { transform-origin: 0% 0%; animation: uhu-quaste 3.4s ease-in-out infinite; }
-@keyframes uhu-quaste { 50% { transform: rotate(4deg); } }
-.uhu__schnabel-unten { transform-origin: 50% 0; }
-.uhu__fluegel--r { transform-origin: 0% 0%; transition: transform .3s; }
-.uhu__fluegel--l { transform-origin: 100% 0%; transition: transform .3s; }
-
-.sa-uhu[data-spricht] .uhu__schnabel-unten { animation: uhu-sprechen .16s ease-in-out infinite alternate; }
-@keyframes uhu-sprechen { to { transform: translateY(3px) scaleY(1.1); } }
-.sa-uhu[data-stimmung="denkt"] .uhu__pupillen { transform: translate(2px, 3px); }
-.sa-uhu[data-stimmung="denkt"] .uhu__kopf { transform: rotate(3deg); }
-.sa-uhu[data-stimmung="freut"] .uhu__ganz { animation: uhu-huepfen .55s ease-out 2; }
-@keyframes uhu-huepfen { 40% { transform: translateY(-9px); } 70% { transform: translateY(0); } 85% { transform: translateY(-2px); } }
-.sa-uhu[data-stimmung="freut"] .uhu__froh { opacity: 1; }
-.sa-uhu[data-stimmung="freut"] .uhu__pupillen, .sa-uhu[data-stimmung="freut"] .uhu__auge { opacity: 0; }
-.sa-uhu[data-stimmung="freut"] .uhu__fluegel--l { transform: rotate(12deg); }
-.sa-uhu[data-stimmung="freut"] .uhu__fluegel--r { transform: rotate(-12deg); }
-.sa-uhu[data-stimmung="traurig"] .uhu__kopf { transform: rotate(-8deg) translateY(2px); }
-.sa-uhu[data-stimmung="traurig"] .uhu__pupillen { transform: translateY(3px); }
-.sa-uhu[data-stimmung="traurig"] .uhu__quaste { animation: none; transform: rotate(-6deg); }
-.sa-uhu[data-stimmung="winkt"] .uhu__fluegel--r { animation: uhu-winken 1.1s ease-in-out 2; }
-@keyframes uhu-winken { 0%, 100% { transform: rotate(0); } 25%, 75% { transform: rotate(-38deg); } 50% { transform: rotate(-22deg); } }
-.sa-uhu .uhu__ganz { animation-fill-mode: none; }
-@media (prefers-reduced-motion: reduce) { .uhu * { animation: none !important; } }
-:root[data-bewegung="aus"] .uhu * { animation: none !important; }
+/* Professor Uhu: css/pets/uhu.css (wird von ansichten/lehrer.js geladen – der Uhu ist auch ein Grove-Pet) */
 
 /* ==========================================================
    Saat · Feinschliff Bewegung (16.10.2026)

@@ -1,0 +1,499 @@
+/* ==========================================================
+   Gewächshaus · Pets W01–W10 (NUR ZUM TESTEN)  ·  Präfix .pt
+   Stil wie Professor Uhu: zwei Tonstufen je Tier, feine Fell-/Federstriche,
+   Augen mit Iris + Pupille + Glanz, ein Requisit. Farben nur aus dem Theme.
+   Gemeinsam: .pt-k (Fell), .pt-k2 (helles Fell/Bauch), .pt-fell (Striche), .pt-sklera/.pt-iris/.pt-auge/.pt-glanz/.pt-lid,
+   .pt-mund, .pt-nase, .pt-schatten. Je Tier setzt --fell/--fell2/--iris (Lid = Fellfarbe).
+   ========================================================== */
+.gh-kachel .gh-buehne:has(.pt-buehne) { height: 310px; }
+.pt-buehne { position: absolute; inset: 0; display: grid; grid-template-rows: 1fr auto auto; justify-items: center; align-items: center; gap: 4px; padding: 6px 12px 12px; }
+.pt-buehne > .pt { width: 190px; cursor: pointer; }
+.pt-buehne > .pt--quak { width: 100%; max-width: 290px; }
+.pt-uhu { width: 140px !important; cursor: pointer; }
+.pt svg { display: block; width: 100%; height: auto; overflow: visible; }
+.pt-wert { font: 500 .82rem var(--font-body); color: var(--amber-light); padding: 2px 10px; border-radius: 999px; background: color-mix(in srgb, var(--amber) 12%, transparent); }
+.pt-regler { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; min-height: 34px; }
+.pt-regler .gh-demo-knopf { padding: 5px 12px; font-size: .78rem; }
+.pt-schieber { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .76rem; }
+.pt-schieber input { width: 120px; accent-color: var(--amber); }
+
+/* ---------- gemeinsame Teile ---------- */
+.pt { --fell: color-mix(in srgb, var(--amber) 34%, var(--surface-hi)); --fell2: color-mix(in srgb, var(--amber-light) 20%, var(--surface)); --iris: var(--amber); }
+.pt-k { fill: var(--fell); }
+.pt-k2 { fill: var(--fell2); }
+.pt-fell { fill: none; stroke: color-mix(in srgb, var(--ground-deep) 45%, transparent); stroke-width: 1.4; stroke-linecap: round; }
+.pt-fell--hell { stroke: color-mix(in srgb, var(--text) 22%, transparent); }
+.pt-sklera { fill: color-mix(in srgb, var(--text) 88%, var(--fell)); }
+.pt-iris { fill: var(--iris); }
+.pt-auge { fill: var(--ground-deep); }
+.pt-glanz { fill: var(--text); }
+.pt-blick { transform: translate(calc(var(--bx, 0) * var(--bw, 1.5px)), calc(var(--by, 0) * var(--bw, 1.5px) * .8)); transition: transform .35s ease-out; }
+.pt-lid { fill: var(--fell); transform-box: fill-box; transform-origin: 50% 0; transform: scaleY(0); animation: pt-blinzeln 6.5s infinite; }
+.pt-mund, .pt-stiel, .pt-bein, .pt-fuehler { fill: none; stroke: var(--ground-deep); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.pt-nase { fill: var(--ground-deep); }
+.pt-schatten { fill: color-mix(in srgb, var(--ground-deep) 70%, transparent); }
+.pt-ohr-innen { fill: color-mix(in srgb, var(--ground-deep) 55%, var(--fell)); }
+.pt-koerper { transform-box: fill-box; transform-origin: 50% 100%; animation: pt-atmen 4.8s ease-in-out infinite; }
+@keyframes pt-atmen { 50% { transform: scale(1.01, 1.022); } }
+@keyframes pt-blinzeln { 0%, 92%, 100% { transform: scaleY(0); } 95% { transform: scaleY(1); } }
+@keyframes pt-huepf { 40% { transform: translateY(-10px); } 70% { transform: translateY(0) scale(1.03, .97); } }
+.pt-zzz { font: 600 15px var(--font-display); fill: var(--muted); opacity: 0; }
+.pt[data-schlaeft] .pt-zzz { animation: pt-zzz 2.8s ease-in-out infinite; }
+.pt[data-schlaeft] .pt-zzz--2 { animation-delay: 1.4s; }
+@keyframes pt-zzz { 0% { opacity: 0; transform: translate(0, 4px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(6px, -12px); } }
+.pt[data-schlaeft] .pt-lid { animation: none; transform: scaleY(1); }
+
+/* ---------- W02 Moosling (Schildkröte mit Garten) ---------- */
+.pt--moos { --fell: color-mix(in srgb, var(--gut) 22%, var(--surface-hi)); --iris: color-mix(in srgb, var(--amber) 70%, var(--ground-deep)); }
+.pt--moos .pt-haut { fill: var(--fell); }
+.pt--moos .pt-panzer { fill: color-mix(in srgb, var(--amber) 30%, var(--surface)); }
+.pt--moos .pt-panzer-muster { fill: none; stroke: color-mix(in srgb, var(--ground-deep) 55%, transparent); stroke-width: 1.6; stroke-linejoin: round; }
+.pt--moos .pt-rand { fill: color-mix(in srgb, var(--amber) 18%, var(--ground-deep)); }
+.pt--moos .pt-moos { fill: color-mix(in srgb, var(--gut) 55%, var(--surface)); }
+.pt--moos .pt-blatt { fill: var(--gut); }
+.pt--moos .pt-farn { fill: none; stroke: var(--gut); stroke-width: 2; stroke-linecap: round; }
+.pt--moos .pt-stiel { stroke: color-mix(in srgb, var(--gut) 60%, var(--ground-deep)); }
+.pt--moos .pt-pilzhut { fill: var(--amber); } .pt--moos .pt-punkt { fill: var(--text); }
+.pt-spross { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .5s cubic-bezier(.3,1.5,.5,1), opacity .3s; transform: scale(0); opacity: 0; }
+.pt--moos[data-stufe="1"] .pt-spross--1, .pt--moos[data-stufe="2"] :is(.pt-spross--1, .pt-spross--2), .pt--moos[data-stufe="3"] .pt-spross { transform: scale(1); opacity: 1; }
+.pt--moos[data-stufe="0"] .pt-moos { fill: color-mix(in srgb, var(--gut) 25%, var(--surface)); }
+
+/* ---------- W03 Funke (Glühwürmchen) ---------- */
+.pt--funke { --fell: color-mix(in srgb, var(--ground-deep) 75%, var(--flieder)); }
+.pt--funke .pt-halm { fill: none; stroke: color-mix(in srgb, var(--gut) 45%, var(--ground-deep)); stroke-width: 3; stroke-linecap: round; }
+.pt--funke .pt-halm--blatt { fill: color-mix(in srgb, var(--gut) 35%, var(--ground-deep)); stroke: none; }
+.pt--funke .pt-schild { fill: color-mix(in srgb, var(--amber) 73%, var(--fehler)); }
+.pt--funke .pt-schildfleck { fill: var(--ground-deep); }
+.pt--funke .pt-facette { fill: var(--ground-deep); }
+.pt--funke .pt-hinterleib { fill: color-mix(in srgb, var(--ground-deep) 40%, var(--surface-hi)); }
+.pt--funke .pt-segment { fill: none; stroke: color-mix(in srgb, var(--ground-deep) 70%, transparent); stroke-width: 1.4; }
+.pt--funke .pt-fuehler, .pt--funke .pt-bein { stroke: color-mix(in srgb, var(--ground-deep) 50%, var(--text-soft)); stroke-width: 1.4; }
+.pt--funke .pt-fluegel { fill: color-mix(in srgb, var(--text) 28%, var(--surface-hi)); stroke: color-mix(in srgb, var(--text) 45%, var(--surface-hi)); stroke-width: 1; transform-box: fill-box; transform-origin: 0% 100%; animation: pt-flattern .3s ease-in-out infinite alternate; }
+.pt--funke .pt-fluegel--2 { animation-delay: -.15s; }
+.pt--funke .pt-ader { fill: none; stroke: color-mix(in srgb, var(--text) 25%, transparent); stroke-width: .8; }
+@keyframes pt-flattern { to { transform: rotate(-10deg) scaleY(.9); } }
+.pt--funke .pt-licht { fill: color-mix(in srgb, var(--amber-light) calc(25% + var(--glut) * 75%), var(--surface-hi)); transition: fill .4s; }
+.pt--funke .pt-licht-hof { fill: var(--amber-light); opacity: calc(var(--glut) * .4); filter: blur(10px); transition: opacity .4s; }
+.pt--funke .pt-schweben { animation: pt-schweben 3.6s ease-in-out infinite; }
+@keyframes pt-schweben { 50% { transform: translate(2px, -6px); } }
+.pt--funke:is([data-schlaeft], [data-tut="landen"]) :is(.pt-fluegel, .pt-ader) { animation: none; opacity: 0; transition: opacity .4s; }
+.pt--funke:is([data-schlaeft], [data-tut="landen"]) .pt-schweben { animation: none; transform: translate(-6px, 14px) rotate(-12deg); transition: transform .8s; }
+
+/* ---------- W04 Harzel (Eichhörnchen) ---------- */
+.pt--harzel { --fell: color-mix(in srgb, var(--amber) 86%, var(--fehler)); --fell2: color-mix(in srgb, var(--text) 80%, var(--amber) 20%); --iris: var(--ground-deep); }
+.pt--harzel .pt-schwanz { fill: color-mix(in srgb, var(--amber) 82%, var(--fehler)); }
+.pt--harzel .pt-pinsel { fill: none; stroke: var(--fell); stroke-width: 1.6; stroke-linecap: round; }
+.pt--harzel .pt-ast { fill: none; stroke: color-mix(in srgb, var(--amber) 22%, var(--ground-deep)); stroke-width: 7; stroke-linecap: round; }
+.pt--harzel .pt-ast--zweig { stroke-width: 3; }
+.pt--harzel .pt-ast-blatt { fill: color-mix(in srgb, var(--gut) 45%, var(--ground-deep)); }
+.pt--harzel .pt-backe { fill: var(--fell2); transform-box: fill-box; transform-origin: center; transition: transform .4s cubic-bezier(.3,1.5,.5,1); }
+.pt--harzel[data-voll] .pt-backe { transform: scale(1.45); }
+.pt--harzel .pt-nuss { fill: color-mix(in srgb, var(--amber) 55%, var(--ground-deep)); }
+.pt--harzel .pt-kappe { fill: color-mix(in srgb, var(--amber) 25%, var(--ground-deep)); }
+.pt-vorrat__n { transform-box: fill-box; transform-origin: 50% 100%; transform: scale(0); transition: transform .35s cubic-bezier(.3,1.5,.5,1); transition-delay: calc(var(--n) * 40ms); }
+.pt--harzel[data-stufe="1"] .pt-vorrat__n:nth-child(-n + 1), .pt--harzel[data-stufe="2"] .pt-vorrat__n:nth-child(-n + 2),
+.pt--harzel[data-stufe="3"] .pt-vorrat__n:nth-child(-n + 3), .pt--harzel[data-stufe="4"] .pt-vorrat__n:nth-child(-n + 4), .pt--harzel[data-stufe="5"] .pt-vorrat__n { transform: scale(1); }
+.pt--harzel :is(.pt-schwanz, .pt-schwanzfell) { transform-box: view-box; transform-origin: 98px 150px; animation: pt-wippen 5s ease-in-out infinite; }
+@keyframes pt-wippen { 50% { transform: rotate(-2.5deg); } }
+
+/* ---------- W05 Stachel (Igel) ---------- */
+.pt--igel { --fell: color-mix(in srgb, var(--amber) 42%, var(--text-soft)); --fell2: color-mix(in srgb, var(--amber-light) 30%, var(--surface-hi)); --iris: var(--ground-deep); }
+.pt--igel .pt-stachel { fill: none; stroke: color-mix(in srgb, var(--ground-deep) 65%, var(--muted)); stroke-width: 3; stroke-linecap: round; }
+.pt--igel .pt-stachel--hell { stroke: color-mix(in srgb, var(--text-soft) 55%, var(--ground-deep)); stroke-width: 2.4; }
+.pt--igel .pt-stacheln { transform-box: fill-box; transform-origin: 50% 100%; transform: scale(calc(.82 + var(--staerke) * .22), calc(.62 + var(--staerke) * .45)); transition: transform .45s cubic-bezier(.3,1.5,.5,1); }
+.pt--igel .pt-bauchfell { fill: color-mix(in srgb, var(--ground-deep) 79%, var(--amber)); }
+.pt--igel .pt-laub { fill: color-mix(in srgb, var(--amber) 73%, var(--fehler)); }
+.pt--igel .pt-schloss { opacity: 0; transition: opacity .3s .3s; }
+.pt--igel .pt-schloss rect { fill: var(--amber); } .pt--igel .pt-schloss path { fill: none; stroke: var(--amber); stroke-width: 2.8; }
+.pt--igel .pt-gesicht { transition: opacity .3s, transform .4s; transform-box: fill-box; transform-origin: 0% 50%; }
+.pt--igel:is([data-zu], [data-tut="einrollen"]) .pt-gesicht { opacity: 0; transform: scaleX(.5); }
+.pt--igel:is([data-zu], [data-tut="einrollen"]) .pt-stacheln { transform: scale(1.12, 1.18) translateX(6px); }
+.pt--igel[data-zu] .pt-schloss { opacity: 1; }
+.pt--igel:is([data-zu], [data-tut="einrollen"]) .pt-koerper { animation: none; }
+
+/* ---------- W06 Sporli (Waldpilz mit Laterne) ---------- */
+.pt--sporli { --hut: color-mix(in srgb, var(--amber) 85%, var(--fehler)); --fell: color-mix(in srgb, var(--text) 72%, var(--surface)); --iris: color-mix(in srgb, var(--ground-deep) 60%, var(--hut)); }
+.pt--sporli[data-hut="1"] { --hut: var(--flieder); } .pt--sporli[data-hut="2"] { --hut: var(--gut); } .pt--sporli[data-hut="3"] { --hut: var(--text-soft); }
+.pt--sporli .pt-hut { fill: var(--hut); transition: fill .5s; }
+.pt--sporli .pt-hutglanz { fill: none; stroke: color-mix(in srgb, var(--text) 40%, transparent); stroke-width: 3; stroke-linecap: round; }
+.pt--sporli .pt-hutpunkt { fill: color-mix(in srgb, var(--text) 85%, var(--hut)); }
+.pt--sporli .pt-lamellen-flaeche { fill: color-mix(in srgb, var(--hut) 30%, var(--ground-deep)); }
+.pt--sporli .pt-lamellen { fill: none; stroke: color-mix(in srgb, var(--text) 25%, transparent); stroke-width: 1; }
+.pt--sporli .pt-stiel-pilz { fill: var(--fell); }
+.pt--sporli .pt-manschette { fill: color-mix(in srgb, var(--text) 85%, var(--surface)); }
+.pt--sporli .pt-moosbett { fill: color-mix(in srgb, var(--gut) 40%, var(--ground-deep)); }
+.pt--sporli .pt-faden { fill: none; stroke: color-mix(in srgb, var(--text-soft) 50%, transparent); stroke-width: 1; }
+.pt--sporli .pt-laterne__rahmen { fill: color-mix(in srgb, var(--ground-deep) 82%, var(--amber)); }
+.pt--sporli .pt-laterne__licht { fill: var(--amber-light); }
+.pt--sporli .pt-laterne__hof { fill: var(--amber-light); opacity: .25; filter: blur(6px); }
+.pt--sporli .pt-laterne { transform-box: fill-box; transform-origin: 50% 0; animation: pt-pendel 4s ease-in-out infinite; }
+@keyframes pt-pendel { 50% { transform: rotate(4deg); } }
+.pt-sporen circle { fill: color-mix(in srgb, var(--hut) 60%, var(--text)); opacity: 0; animation: pt-spore 5.5s ease-out infinite; animation-delay: calc(var(--s) * 1.1s); }
+@keyframes pt-spore { 0% { opacity: 0; transform: translate(0, 12px); } 20% { opacity: .8; } 100% { opacity: 0; transform: translate(calc((var(--s) - 2) * 6px), -30px); } }
+
+/* ---------- W07 Quak (Kröte) ---------- */
+.pt--quak { --fell: color-mix(in srgb, var(--gut) 81%, var(--amber)); --fell2: color-mix(in srgb, var(--gut) 31%, var(--text)); --iris: color-mix(in srgb, var(--amber) 85%, var(--text)); }
+.pt--quak .pt-k { fill: color-mix(in srgb, var(--fell) 70%, var(--surface)); }
+.pt--quak .pt-fleck { fill: color-mix(in srgb, var(--ground-deep) 40%, var(--fell)); }
+.pt--quak .pt-lid { fill: color-mix(in srgb, var(--fell) 70%, var(--surface)); }
+.pt--quak .pt-wasser { fill: none; stroke: color-mix(in srgb, var(--flieder) 35%, transparent); stroke-width: 1.4; }
+.pt-rose { fill: color-mix(in srgb, var(--gut) 32%, var(--ground-deep)); stroke: color-mix(in srgb, var(--gut) 45%, transparent); stroke-width: 1; }
+.pt-rose--ziel { fill: color-mix(in srgb, var(--gut) 45%, var(--ground-deep)); }
+.pt-bluete path { fill: color-mix(in srgb, var(--fehler) 35%, var(--text)); }
+.pt-frosch { transition: transform .7s cubic-bezier(.4,0,.2,1); }
+.pt--quak[data-schritt="1"] .pt-frosch { transform: translateX(70px); } .pt--quak[data-schritt="2"] .pt-frosch { transform: translateX(140px); } .pt--quak[data-schritt="3"] .pt-frosch { transform: translateX(196px) translateY(-8px); }
+.pt--quak:not([data-schritt="0"]) .pt-koerper { animation: pt-huepf .7s cubic-bezier(.3,1.5,.5,1); }
+.pt--quak[data-schritt="2"] .pt-koerper { animation-name: pt-huepf2; } .pt--quak[data-schritt="3"] .pt-koerper { animation-name: pt-huepf; }
+@keyframes pt-huepf2 { 40% { transform: translateY(-14px); } 70% { transform: translateY(0) scale(1.04, .96); } }
+
+/* ---------- W08 Ember (Fuchs) ---------- */
+.pt--ember { --fell: color-mix(in srgb, var(--fehler) 50%, var(--amber)); --fell2: color-mix(in srgb, var(--text) 86%, var(--surface)); --iris: var(--amber-light); }
+.pt--ember .pt-schwanz { fill: var(--fell); }
+.pt--ember .pt-schwanzgruppe { transform-box: fill-box; transform-origin: 0% 90%; animation: pt-wedeln 2.4s ease-in-out infinite; }
+.pt--ember .pt-spitze { fill: var(--fell2); }
+.pt--ember .pt-bein { stroke: color-mix(in srgb, var(--ground-deep) 60%, var(--fell)); stroke-width: 4; }
+@keyframes pt-wedeln { 50% { transform: rotate(-5deg); } }
+.pt--ember .pt-kopf { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .7s cubic-bezier(.3,1.2,.5,1); }
+.pt--ember[data-schlaeft] .pt-kopf { transform: translateY(10px) rotate(-6deg); }
+.pt--ember[data-schlaeft] .pt-schwanzgruppe { animation: none; transform: rotate(-14deg) translate(-12px, -4px); transition: transform .7s; }
+
+/* ---------- W09 Spirale (Weinbergschnecke) ---------- */
+.pt--schnecke { --fell: color-mix(in srgb, var(--text-soft) 40%, var(--surface-hi)); }
+.pt--schnecke .pt-haut { fill: var(--fell); }
+.pt--schnecke .pt-fuehler { stroke: var(--fell); stroke-width: 3.4; }
+.pt--schnecke .pt-haus { fill: color-mix(in srgb, var(--amber) 30%, var(--surface)); stroke: color-mix(in srgb, var(--amber) 40%, var(--ground-deep)); stroke-width: 2; }
+.pt--schnecke .pt-haus-linie { fill: none; stroke: color-mix(in srgb, var(--ground-deep) 40%, transparent); stroke-width: 1.4; stroke-linecap: round; }
+.pt--schnecke .pt-schleimspur { stroke: color-mix(in srgb, var(--text) 18%, transparent); stroke-width: 3; stroke-linecap: round; }
+.pt-spirale-spur, .pt-spirale { fill: none; stroke-linecap: round; stroke-width: 4.5; }
+.pt-spirale-spur { stroke: color-mix(in srgb, var(--ground-deep) 30%, transparent); }
+.pt-spirale { stroke: var(--amber-light); stroke-dasharray: calc(var(--tag) * 100) 100; transition: stroke-dasharray .5s; }
+.pt--schnecke .pt-koerper { animation: pt-kriechen 7s ease-in-out infinite; }
+@keyframes pt-kriechen { 50% { transform: translateX(-3px) scaleX(1.015); } }
+
+/* ---------- W10 Vinyl (Katze auf dem Plattenspieler) ---------- */
+.pt--vinyl { --fell: color-mix(in srgb, var(--ground-deep) 82%, var(--flieder)); --fell2: color-mix(in srgb, var(--ground-deep) 68%, var(--flieder)); --iris: var(--amber); }
+.pt--vinyl .pt-schwanz--katze { fill: none; stroke: var(--fell); stroke-width: 7; stroke-linecap: round; transform-box: fill-box; transform-origin: 0% 100%; animation: pt-wedeln 4s ease-in-out infinite; }
+.pt--vinyl .pt-ohr-innen { fill: color-mix(in srgb, var(--fehler) 30%, var(--fell)); }
+.pt--vinyl .pt-nase { fill: color-mix(in srgb, var(--fehler) 50%, var(--text)); }
+.pt--vinyl .pt-mund, .pt--vinyl .pt-bart { fill: none; stroke: color-mix(in srgb, var(--text) 55%, transparent); stroke-width: 1; stroke-linecap: round; }
+.pt--vinyl .pt-sklera { fill: var(--iris); } .pt--vinyl .pt-iris { fill: color-mix(in srgb, var(--amber-light) 60%, var(--amber)); }
+.pt-spieler { fill: color-mix(in srgb, var(--amber) 22%, var(--ground-deep)); stroke: color-mix(in srgb, var(--amber) 30%, transparent); }
+.pt-spieler__knopf { fill: var(--amber); }
+.pt-platte ellipse { fill: #121214; } .pt-platte .pt-platte__rille { fill: none; stroke: color-mix(in srgb, var(--text) 14%, #121214); stroke-width: 1; stroke-dasharray: 18 9; animation: pt-rille 2.4s linear infinite; } .pt-platte .pt-platte__rille--2 { animation-duration: 1.7s; }
+@keyframes pt-rille { to { stroke-dashoffset: -27; } }
+.pt--vinyl[data-schlaeft] .pt-platte__rille { animation-play-state: paused; } .pt-platte .pt-platte__mitte { fill: var(--amber); }
+.pt-tonarm { fill: none; stroke: color-mix(in srgb, var(--text-soft) 70%, transparent); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.pt-tonarm__fuss { fill: color-mix(in srgb, var(--text-soft) 50%, var(--ground-deep)); }
+.pt--vinyl .pt-buegel { fill: none; stroke: var(--amber); stroke-width: 3; stroke-linecap: round; }
+.pt--vinyl .pt-muschel { fill: color-mix(in srgb, var(--amber) 70%, var(--ground-deep)); }
+.pt--vinyl .pt-kopf { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .7s cubic-bezier(.3,1.2,.5,1); animation: pt-takt 1.8s ease-in-out infinite; }
+@keyframes pt-takt { 50% { transform: rotate(2deg); } }
+.pt--vinyl[data-schlaeft] .pt-kopf { animation: none; transform: translateY(10px) rotate(8deg); }
+.pt--vinyl[data-schlaeft] .pt-schwanz--katze { animation: none; }
+@keyframes pt-schnurren { 50% { transform: translateX(.8px); } }
+
+
+/* ==========================================================
+   AKTIONEN – einmalige Animationen über data-tut="<id>" am Rahmen (.pt bzw. .pt-uhu)
+   Regel: Aktionen nutzen eigene Keyframes; wo ein Teil schon ein transform trägt (Zustände),
+   arbeiten sie mit den Einzel-Eigenschaften scale/rotate/translate, damit der Zustand bleibt.
+   ========================================================== */
+/* ---------- gemeinsam ---------- */
+.pt[data-tut="freut"] .pt-koerper { animation: pt-huepf .6s cubic-bezier(.3,1.5,.5,1); }
+.pt[data-tut="hopsen"] .pt-koerper { animation: pt-huepf2 .8s cubic-bezier(.3,1.5,.5,1); }
+@keyframes pt-huepf2 { 40% { transform: translateY(-14px); } 70% { transform: translateY(0) scale(1.04, .96); } }
+.pt[data-tut="blinzeln"] .pt-lid { animation: pt-doppelblink 1.1s ease-in-out; }
+@keyframes pt-doppelblink { 0%, 100% { transform: scaleY(0); } 15%, 25% { transform: scaleY(1); } 40% { transform: scaleY(0); } 55%, 65% { transform: scaleY(1); } 80% { transform: scaleY(0); } }
+.pt[data-tut="umschauen"] .pt-blick, .pt[data-tut="maennchen"] .pt-blick { animation: pt-blick-um 2s ease-in-out; }
+@keyframes pt-blick-um { 20%, 40% { transform: translate(calc(var(--bw, 1.5px) * -1), 0); } 60%, 80% { transform: translate(var(--bw, 1.5px), 0); } }
+.pt-maul { fill: var(--ground-deep); transform-box: fill-box; transform-origin: 50% 30%; scale: 0; }
+.pt[data-tut="gaehnen"] .pt-maul { animation: pt-gaehnen-maul 1.9s ease-in-out; }
+.pt[data-tut="gaehnen"] .pt-lid, .pt[data-tut="schnurren"] .pt-lid { animation: pt-lid-halb 1.9s ease-in-out; }
+@keyframes pt-gaehnen-maul { 0%, 100% { scale: 0; } 30%, 65% { scale: 1.15; } }
+@keyframes pt-lid-halb { 0%, 100% { transform: scaleY(0); } 30%, 65% { transform: scaleY(.85); } }
+.pt-tropfen path { fill: color-mix(in srgb, var(--flieder) 55%, var(--text)); opacity: 0; }
+.pt[data-tut="regen"] .pt-tropfen path { animation: pt-tropfen 1s ease-in calc(var(--i) * .32s) 2; }
+@keyframes pt-tropfen { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: 1; } 85% { opacity: 1; transform: translateY(46px); } 100% { opacity: 0; transform: translateY(50px); } }
+
+/* ---------- W01 Uhu (nur im Gewächshaus, Saat bleibt unverändert) ---------- */
+.pt-uhu .uhu__hut, .pt-uhu .uhu__brille { transform-box: fill-box; }
+.pt-uhu .uhu__hut { transform-origin: 30% 100%; }
+.pt-uhu[data-tut="umschauen"] .uhu__kopf { animation: uhu-um 2.3s ease-in-out; }
+.pt-uhu[data-tut="umschauen"] .uhu__pupillen { animation: uhu-um-blick 2.3s ease-in-out; }
+@keyframes uhu-um { 20%, 40% { transform: rotate(-11deg); } 60%, 80% { transform: rotate(10deg); } }
+@keyframes uhu-um-blick { 20%, 40% { transform: translateX(-3px); } 60%, 80% { transform: translateX(3px); } }
+.pt-uhu[data-tut="nicken"] .uhu__kopf { animation: uhu-nick 1.1s ease-in-out; }
+@keyframes uhu-nick { 25%, 75% { transform: translateY(4px); } 50% { transform: none; } }
+.pt-uhu[data-tut="flattern"] .uhu__fluegel--l { animation: uhu-fl-l .2s ease-in-out 6 alternate; }
+.pt-uhu[data-tut="flattern"] .uhu__fluegel--r { animation: uhu-fl-r .2s ease-in-out 6 alternate; }
+.pt-uhu[data-tut="flattern"] .uhu__ganz { animation: uhu-heben 1.3s ease-in-out; }
+@keyframes uhu-fl-l { to { transform: rotate(34deg); } }
+@keyframes uhu-fl-r { to { transform: rotate(-34deg); } }
+@keyframes uhu-heben { 30%, 70% { transform: translateY(-8px); } }
+.pt-uhu[data-tut="brille"] .uhu__brille { animation: uhu-brille 1s ease-in-out; }
+.pt-uhu[data-tut="brille"] .uhu__fluegel--r { animation: uhu-arm-hoch 1s ease-in-out; }
+@keyframes uhu-brille { 35% { transform: translateY(3px); } 60% { transform: translateY(-2px); } }
+@keyframes uhu-arm-hoch { 30%, 60% { transform: rotate(-48deg); } }
+.pt-uhu[data-tut="hut"] .uhu__hut { animation: uhu-hut 1.4s ease-in-out; }
+.pt-uhu[data-tut="hut"] .uhu__fluegel--l { animation: uhu-hut-fl 1.4s ease-in-out; }
+@keyframes uhu-hut { 30%, 65% { transform: translate(-4px, -12px) rotate(-12deg); } }
+@keyframes uhu-hut-fl { 30%, 65% { transform: rotate(40deg); } }
+.pt-uhu[data-tut="einnicken"] .uhu__lider rect { animation: uhu-lider-zu 3.3s ease-in-out; }
+.pt-uhu[data-tut="einnicken"] .uhu__kopf { animation: uhu-einnicken 3.3s ease-in-out; }
+.pt-uhu[data-tut="einnicken"] .uhu__quaste { animation: uhu-quaste-haengt 3.3s ease-in-out; }
+@keyframes uhu-lider-zu { 0%, 100% { transform: scaleY(0); } 20%, 76% { transform: scaleY(1); } }
+@keyframes uhu-einnicken { 20% { transform: rotate(-3deg) translateY(2px); } 70% { transform: rotate(-7deg) translateY(5px); } 78% { transform: rotate(2deg) translateY(-2px); } 90% { transform: none; } }
+@keyframes uhu-quaste-haengt { 20%, 70% { transform: rotate(-8deg); } }
+
+/* ---------- W02 Moosling ---------- */
+.pt--moos .pt-kopf { transform-box: fill-box; transform-origin: 100% 75%; }
+.pt--moos :is(.pt-bein-v, .pt-bein-h) { transform-box: fill-box; transform-origin: 50% 0; }
+.pt--moos:is([data-tut="freut"], [data-tut="nicken"]) .pt-kopf { animation: pt-moos-nicken 1.3s ease-in-out; }
+@keyframes pt-moos-nicken { 25%, 75% { transform: rotate(-8deg); } 50% { transform: none; } }
+.pt--moos[data-tut="einziehen"] .pt-kopf { animation: pt-moos-ein 2.3s cubic-bezier(.5,0,.3,1); }
+@keyframes pt-moos-ein { 20%, 70% { transform: translate(18px, 4px) scale(.7); } }
+.pt--moos[data-tut="gaehnen"] .pt-kopf { animation: pt-moos-reck 1.9s ease-in-out; }
+@keyframes pt-moos-reck { 30%, 65% { transform: translate(-3px, -3px) rotate(8deg); } }
+.pt--moos[data-tut="kriechen"] .pt-koerper { animation: pt-moos-gehen 2.5s ease-in-out; }
+@keyframes pt-moos-gehen { 25%, 75% { transform: translate(-4px, -1px); } 50% { transform: translate(-8px, 0); } }
+.pt--moos[data-tut="kriechen"] .pt-bein-v { animation: pt-bein-schritt .62s ease-in-out 4 alternate; }
+.pt--moos[data-tut="kriechen"] .pt-bein-h { animation: pt-bein-schritt .62s ease-in-out .31s 4 alternate; }
+@keyframes pt-bein-schritt { from { transform: rotate(10deg); } to { transform: rotate(-10deg); } }
+.pt--moos[data-tut="wachsen"] .pt-spross { animation: pt-spriessen 1.5s cubic-bezier(.3,1.5,.5,1); }
+@keyframes pt-spriessen { 40% { scale: 1.25; } 70% { scale: .95; } }
+.pt--moos[data-tut="regen"] .pt-spross { animation: pt-spross-wippen .4s ease-in-out .9s 4 alternate; }
+@keyframes pt-spross-wippen { to { rotate: 9deg; } }
+
+/* ---------- W03 Funke ---------- */
+.pt--funke { --bw: 1.2px; }
+.pt--funke .pt-licht-hof { transform-box: fill-box; transform-origin: center; }
+.pt--funke[data-tut="aufleuchten"] .pt-licht-hof { animation: pt-funke-hof 1.2s ease-out; }
+.pt--funke[data-tut="aufleuchten"] .pt-licht { animation: pt-funke-licht 1.2s ease-out; }
+@keyframes pt-funke-hof { 25% { opacity: .95; scale: 1.35; } }
+@keyframes pt-funke-licht { 25% { filter: brightness(1.35); } }
+.pt--funke[data-tut="morsen"] .pt-licht-hof { animation: pt-morse-hof 2.5s step-end; }
+.pt--funke[data-tut="morsen"] .pt-licht { animation: pt-morse 2.5s step-end; }
+@keyframes pt-morse-hof { 0% { opacity: .9; } 8% { opacity: 0; } 16% { opacity: .9; } 24% { opacity: 0; } 36% { opacity: .9; } 70% { opacity: 0; } }
+@keyframes pt-morse { 0% { filter: brightness(1.35); } 8% { filter: brightness(.55); } 16% { filter: brightness(1.35); } 24% { filter: brightness(.55); } 36% { filter: brightness(1.35); } 70% { filter: brightness(.55); } 100% { filter: none; } }
+.pt--funke .pt-brief { opacity: 0; transform-box: fill-box; transform-origin: 50% 0; }
+.pt--funke .pt-brief .pt-faden { fill: none; stroke: var(--text-soft); stroke-width: 1; }
+.pt-brief__papier { fill: var(--text); }
+.pt-brief__klappe { fill: none; stroke: color-mix(in srgb, var(--ground-deep) 50%, var(--text)); stroke-width: 1.2; stroke-linejoin: round; }
+.pt--funke[data-tut="brief"] .pt-brief { animation: pt-brief 3.1s ease-in-out; }
+.pt--funke[data-tut="brief"] .pt-schweben { animation: pt-brief-flug 3.1s ease-in-out; }
+@keyframes pt-brief { 0% { opacity: 1; transform: none; } 30% { transform: rotate(9deg); } 50% { transform: rotate(-7deg); } 70% { opacity: 1; transform: rotate(3deg); } 100% { opacity: 0; transform: translateY(8px); } }
+@keyframes pt-brief-flug { 0% { transform: translate(-40px, -26px); } 22% { transform: none; } 60% { transform: translate(2px, -4px); } }
+.pt--funke[data-tut="kreisen"] .pt-schweben { animation: pt-kreisen 2.9s ease-in-out; }
+@keyframes pt-kreisen { 25% { transform: translate(16px, -14px) rotate(6deg); } 50% { transform: translate(0, -28px); } 75% { transform: translate(-16px, -12px) rotate(-6deg); } }
+.pt--funke .pt-fuehler { transform-box: fill-box; transform-origin: 100% 100%; }
+.pt--funke[data-tut="putzen"] .pt-fuehler { animation: pt-fuehler-putzen 1.4s ease-in-out; }
+@keyframes pt-fuehler-putzen { 20% { transform: rotate(14deg); } 40% { transform: rotate(-6deg); } 60% { transform: rotate(12deg); } 80% { transform: rotate(-4deg); } }
+
+/* ---------- W04 Harzel ---------- */
+.pt--harzel .pt-kopf { transform-box: fill-box; transform-origin: 70% 90%; }
+.pt--harzel .pt-eichel, .pt-kruemel circle { transform-box: fill-box; transform-origin: center; }
+.pt-kruemel circle { fill: color-mix(in srgb, var(--amber) 55%, var(--ground-deep)); opacity: 0; }
+.pt--harzel[data-tut="knabbern"] .pt-eichel { animation: pt-knabber .14s ease-in-out 14 alternate; }
+.pt--harzel[data-tut="knabbern"] .pt-kopf { animation: pt-knabber-kopf .14s ease-in-out 14 alternate; }
+.pt--harzel[data-tut="knabbern"] .pt-kruemel circle { animation: pt-kruemel .9s ease-in 2; }
+.pt--harzel[data-tut="knabbern"] .pt-kruemel circle:nth-child(2) { animation-delay: .3s; }
+.pt--harzel[data-tut="knabbern"] .pt-kruemel circle:nth-child(3) { animation-delay: .55s; }
+@keyframes pt-knabber { to { transform: translate(-1px, -1.6px) rotate(-6deg); } }
+@keyframes pt-knabber-kopf { to { transform: rotate(2.5deg); } }
+@keyframes pt-kruemel { 0% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translate(-4px, 30px); } }
+.pt--harzel[data-tut="vergraben"] .pt-eichel { animation: pt-vergraben 2.5s ease-in-out; }
+.pt--harzel[data-tut="vergraben"] .pt-kopf { animation: pt-harzel-bueck 2.5s ease-in-out; }
+.pt--harzel[data-tut="vergraben"] .pt-vorrat__n { animation: pt-vorrat-hops .5s 1.2s cubic-bezier(.3,1.5,.5,1); }
+@keyframes pt-vergraben { 30% { transform: translate(-16px, 18px) rotate(-20deg); } 50% { opacity: 1; transform: translate(-30px, 32px) scale(.8); } 60%, 80% { opacity: 0; transform: translate(-30px, 34px) scale(.6); } 81% { opacity: 0; transform: none; } 100% { opacity: 1; } }
+@keyframes pt-harzel-bueck { 30%, 55% { transform: rotate(-14deg) translate(-3px, 4px); } }
+@keyframes pt-vorrat-hops { 50% { translate: 0 -4px; } }
+.pt--harzel[data-tut="maennchen"] .pt-koerper { animation: pt-maennchen 1.8s ease-in-out; }
+@keyframes pt-maennchen { 25%, 70% { transform: translateY(-7px) scale(.98, 1.05); } }
+.pt--harzel[data-tut="umschauen"] .pt-kopf { animation: pt-kopf-um 2s ease-in-out; }
+@keyframes pt-kopf-um { 20%, 40% { transform: rotate(-8deg); } 60%, 80% { transform: rotate(6deg); } }
+.pt--harzel[data-tut="schwanz"] :is(.pt-schwanz, .pt-schwanzfell) { animation: pt-zucken .55s ease-in-out 2; }
+@keyframes pt-zucken { 30% { transform: rotate(-9deg); } 60% { transform: rotate(3deg); } }
+.pt--harzel[data-tut="backen"] .pt-backe { animation: pt-backen 2s cubic-bezier(.3,1.5,.5,1); }
+.pt--harzel[data-tut="backen"] .pt-eichel { animation: pt-eichel-weg 2s ease-in-out; }
+@keyframes pt-backen { 25%, 75% { scale: 1.5; } }
+@keyframes pt-eichel-weg { 22% { opacity: 0; transform: translate(-4px, -14px) scale(.5); } 80% { opacity: 0; transform: none; } 100% { opacity: 1; } }
+
+/* ---------- W05 Stachel ---------- */
+.pt--igel .pt-nase, .pt--igel .pt-fuss, .pt--igel .pt-laub { transform-box: fill-box; transform-origin: center; }
+.pt--igel[data-tut="schnueffeln"] .pt-nase { animation: pt-schnupper .18s ease-in-out 8 alternate; }
+.pt--igel[data-tut="schnueffeln"] .pt-gesicht { animation: pt-igel-tasten 1.6s ease-in-out; }
+@keyframes pt-schnupper { to { transform: translate(1px, -1px) scale(1.2); } }
+@keyframes pt-igel-tasten { 30%, 70% { translate: 4px -2px; } }
+.pt--igel[data-tut="straeuben"] .pt-stacheln { animation: pt-straeuben 1.1s cubic-bezier(.3,1.5,.5,1); }
+@keyframes pt-straeuben { 35%, 60% { scale: 1.1 1.22; } }
+.pt--igel[data-tut="schuetteln"] .pt-koerper { animation: pt-schuetteln 1.2s ease-in-out; }
+.pt--igel[data-tut="schuetteln"] .pt-laub--1 { animation: pt-laub-l 1.2s ease-out; }
+.pt--igel[data-tut="schuetteln"] .pt-laub--2 { animation: pt-laub-r 1.2s ease-out; }
+@keyframes pt-schuetteln { 10%, 30% { transform: rotate(-3deg); } 20%, 40% { transform: rotate(3deg); } 50% { transform: rotate(-1.5deg); } 60% { transform: none; } }
+@keyframes pt-laub-l { 40% { transform: translate(-8px, -16px) rotate(-50deg); } }
+@keyframes pt-laub-r { 40% { transform: translate(8px, -14px) rotate(40deg); } }
+.pt--igel[data-tut="trippeln"] .pt-fuss--1 { animation: pt-tripp .2s ease-in-out 8 alternate; }
+.pt--igel[data-tut="trippeln"] .pt-fuss--2 { animation: pt-tripp .2s ease-in-out .2s 7 alternate; }
+.pt--igel[data-tut="trippeln"] .pt-koerper { animation: pt-tripp-koerper .4s ease-in-out 4; }
+@keyframes pt-tripp { to { transform: translateY(-3px); } }
+@keyframes pt-tripp-koerper { 50% { transform: translateY(-1.5px); } }
+
+/* ---------- W06 Sporli ---------- */
+.pt--sporli :is(.pt-hutgruppe, .pt-rumpf) { transform-box: fill-box; transform-origin: 50% 100%; }
+.pt--sporli[data-tut="hut"] .pt-hutgruppe { animation: pt-hut-lueften 1.8s ease-in-out; }
+@keyframes pt-hut-lueften { 30%, 60% { transform: translate(-6px, -14px) rotate(-12deg); } }
+.pt--sporli[data-tut="wackeln"] .pt-rumpf { animation: pt-wackeln 1.6s ease-in-out; }
+@keyframes pt-wackeln { 20% { transform: rotate(-4deg); } 45% { transform: rotate(3.5deg); } 70% { transform: rotate(-2deg); } }
+.pt--sporli[data-tut="laterne"] .pt-laterne { animation: pt-laterne-schwung 2.1s ease-in-out; }
+.pt--sporli[data-tut="laterne"] .pt-laterne__hof { animation: pt-flackern .3s step-end 7; }
+@keyframes pt-laterne-schwung { 20% { transform: rotate(22deg); } 45% { transform: rotate(-16deg); } 70% { transform: rotate(8deg); } }
+@keyframes pt-flackern { 50% { opacity: .6; } }
+.pt--sporli[data-tut="strecken"] .pt-rumpf { animation: pt-strecken 1.7s cubic-bezier(.3,1.4,.5,1); }
+@keyframes pt-strecken { 35%, 60% { transform: scale(.97, 1.08); } }
+.pt--sporli[data-tut="sporen"] .pt-sporen circle { animation: pt-spore-wolke 2.2s ease-out; animation-delay: calc(var(--s) * .07s); }
+.pt--sporli[data-tut="sporen"] .pt-hutgruppe { animation: pt-hut-puff .5s ease-out; }
+@keyframes pt-spore-wolke { 0% { opacity: 0; transform: translate(0, 30px); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(calc((var(--s) - 3.5) * 5px), -36px); } }
+@keyframes pt-hut-puff { 40% { scale: 1.04 .94; } }
+
+/* ---------- W07 Quak ---------- */
+.pt--quak { --bw: 2.4px; }
+.pt-kehle { fill: color-mix(in srgb, var(--fell2) 80%, var(--text)); transform-box: fill-box; transform-origin: 50% 20%; scale: 0; }
+.pt--quak[data-tut="quaken"] .pt-kehle { animation: pt-quaken 1.6s ease-in-out; }
+@keyframes pt-quaken { 10% { scale: 1; } 25% { scale: .3; } 40% { scale: 1.1; } 55%, 100% { scale: 0; } }
+.pt-zunge { fill: none; stroke: color-mix(in srgb, var(--fehler) 70%, var(--text)); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 100 100; stroke-dashoffset: 100; opacity: 0; }
+.pt-fliege { opacity: 0; }
+.pt-fliege__leib { fill: var(--ground-deep); }
+.pt-fliege__fluegel { fill: color-mix(in srgb, var(--text) 50%, var(--surface-hi)); transform-box: fill-box; transform-origin: 50% 100%; }
+.pt--quak[data-tut="zunge"] .pt-zunge { animation: pt-zunge 1.9s ease-out; }
+.pt--quak[data-tut="zunge"] .pt-fliege { animation: pt-fliege 1.9s ease-in-out; }
+.pt--quak[data-tut="zunge"] .pt-fliege__fluegel { animation: pt-summ .07s linear infinite alternate; }
+@keyframes pt-zunge { 0%, 46% { opacity: 1; stroke-dashoffset: 100; } 54% { stroke-dashoffset: 0; } 66% { stroke-dashoffset: 100; } 100% { opacity: 1; stroke-dashoffset: 100; } }
+@keyframes pt-fliege { 0% { opacity: 0; transform: translate(34px, -18px); } 12% { opacity: 1; } 25% { transform: translate(12px, -6px); } 38% { transform: translate(4px, 4px); } 52% { opacity: 1; transform: none; } 55%, 100% { opacity: 0; transform: none; } }
+@keyframes pt-summ { to { transform: scaleY(.4); } }
+.pt-wellen ellipse { fill: none; stroke: color-mix(in srgb, var(--flieder) 50%, var(--text)); stroke-width: 1.2; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.pt--quak:is([data-tut="wellen"], [data-tut="abtauchen"]) .pt-wellen ellipse { animation: pt-welle 1.5s ease-out; }
+.pt--quak:is([data-tut="wellen"], [data-tut="abtauchen"]) .pt-welle--2 { animation-delay: .5s; }
+.pt--quak[data-tut="abtauchen"] .pt-wellen ellipse { animation-delay: .5s; } .pt--quak[data-tut="abtauchen"] .pt-welle--2 { animation-delay: 1.1s; }
+@keyframes pt-welle { 0% { opacity: .9; transform: scale(.5); } 100% { opacity: 0; transform: scale(1.7); } }
+.pt--quak[data-tut="abtauchen"] .pt-koerper { animation: pt-abtauchen 2.5s ease-in-out; }
+@keyframes pt-abtauchen { 25%, 65% { opacity: 0; transform: translateY(16px) scale(1, .9); } }
+
+/* ---------- W08 Ember ---------- */
+.pt--ember .pt-ohr--l { transform-box: fill-box; transform-origin: 70% 100%; }
+.pt--ember .pt-ohr--r { transform-box: fill-box; transform-origin: 30% 100%; }
+.pt--ember .pt-nase, .pt--ember .pt-bein--r { transform-box: fill-box; transform-origin: 50% 0; }
+.pt--ember[data-tut="ohren"] .pt-ohr--l { animation: pt-ohr-l .45s ease-in-out; }
+.pt--ember[data-tut="ohren"] .pt-ohr--r { animation: pt-ohr-r .45s ease-in-out .45s; }
+@keyframes pt-ohr-l { 30% { transform: rotate(-16deg); } 60% { transform: rotate(4deg); } }
+@keyframes pt-ohr-r { 30% { transform: rotate(16deg); } 60% { transform: rotate(-4deg); } }
+.pt--ember[data-tut="lauschen"] .pt-kopf { animation: pt-lauschen 2.3s ease-in-out; }
+.pt--ember[data-tut="lauschen"] .pt-ohr--l { animation: pt-ohr-vor-l 2.3s ease-in-out; }
+.pt--ember[data-tut="lauschen"] .pt-ohr--r { animation: pt-ohr-vor-r 2.3s ease-in-out; }
+@keyframes pt-lauschen { 25%, 75% { transform: rotate(9deg); } }
+@keyframes pt-ohr-vor-l { 25%, 75% { transform: rotate(9deg); } }
+@keyframes pt-ohr-vor-r { 25%, 75% { transform: rotate(-9deg); } }
+.pt--ember[data-tut="schnueffeln"] .pt-nase { animation: pt-schnupper .17s ease-in-out 8 alternate; }
+.pt--ember[data-tut="schnueffeln"] .pt-kopf { animation: pt-ember-heben 1.4s ease-in-out; }
+@keyframes pt-ember-heben { 30%, 70% { transform: translateY(-3px) rotate(-3deg); } }
+.pt--ember[data-tut="gaehnen"] .pt-kopf { animation: pt-ember-heben 1.9s ease-in-out; }
+.pt--ember[data-tut="wedeln"] .pt-schwanzgruppe { animation: pt-wedeln-schnell .2s ease-in-out 8 alternate; }
+@keyframes pt-wedeln-schnell { from { transform: rotate(4deg); } to { transform: rotate(-11deg); } }
+.pt--ember[data-tut="pfote"] .pt-bein--r { animation: pt-pfote 1.4s ease-in-out; }
+@keyframes pt-pfote { 25%, 70% { transform: translateY(-8px); } }
+
+/* ---------- W09 Spirale ---------- */
+.pt--schnecke { --bw: 1.1px; }
+.pt--schnecke :is(.pt-kopf, .pt-fuehlergruppe, .pt-hausgruppe) { transform-box: fill-box; transform-origin: 50% 100%; }
+.pt--schnecke .pt-kopf { transform-origin: 100% 100%; }
+.pt--schnecke[data-tut="fuehler"] .pt-fuehlergruppe { animation: pt-fuehler-ein 2.1s ease-in-out; }
+@keyframes pt-fuehler-ein { 25%, 65% { transform: scale(.9, .25); } }
+.pt--schnecke[data-tut="haus"] .pt-kopf { animation: pt-ins-haus 2.9s ease-in-out; }
+.pt--schnecke[data-tut="haus"] .pt-fuehlergruppe { animation: pt-fuehler-ein 2.9s ease-in-out; }
+.pt--schnecke[data-tut="haus"] .pt-hausgruppe { animation: pt-haus-ruck 2.9s ease-in-out; }
+@keyframes pt-ins-haus { 30%, 70% { transform: translate(34px, 8px) scale(.6); } }
+@keyframes pt-haus-ruck { 30%, 70% { transform: translateY(5px); } }
+.pt--schnecke[data-tut="kriechen"] .pt-koerper { animation: pt-schnecke-weg 3.1s ease-in-out; }
+@keyframes pt-schnecke-weg { 50% { transform: translateX(-9px) scale(1.04, .98); } }
+.pt--schnecke[data-tut="umschauen"] .pt-fuehlergruppe { animation: pt-fuehler-pendel 2.5s ease-in-out; }
+@keyframes pt-fuehler-pendel { 25% { transform: rotate(-9deg); } 60% { transform: rotate(7deg); } }
+.pt--schnecke[data-tut="regen"] .pt-fuehlergruppe { animation: pt-fuehler-reck 3s ease-in-out; }
+@keyframes pt-fuehler-reck { 40%, 70% { transform: scale(1, 1.14); } }
+.pt--lauf .pt-spirale { transition: none; }
+
+/* ---------- W10 Vinyl ---------- */
+.pt--vinyl .pt-platte, .pt--vinyl .pt-pfote { transform-box: fill-box; transform-origin: center; }
+.pt-noten g { opacity: 0; }
+.pt-noten path { fill: none; stroke: var(--amber-light); stroke-width: 1.8; stroke-linecap: round; }
+.pt-noten ellipse { fill: var(--amber-light); }
+.pt--vinyl[data-tut="noten"] .pt-noten g { animation: pt-note 1.8s ease-out calc(var(--i) * .45s); }
+@keyframes pt-note { 0% { opacity: 0; transform: translate(-6px, 14px); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(8px, -16px) rotate(10deg); } }
+.pt--vinyl[data-tut="mitwippen"] .pt-kopf { animation: pt-wippen-stark .42s ease-in-out 6 alternate; }
+.pt--vinyl[data-tut="mitwippen"] .pt-koerper { animation: pt-wippen-koerper .84s ease-in-out 3; }
+@keyframes pt-wippen-stark { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+@keyframes pt-wippen-koerper { 50% { transform: translateY(1.5px) scale(1, .99); } }
+.pt--vinyl[data-tut="scratchen"] .pt-platte { animation: pt-scratch .17s ease-in-out 10 alternate; }
+.pt--vinyl[data-tut="scratchen"] .pt-pfote { animation: pt-scratch-pfote .17s ease-in-out 10 alternate; }
+.pt--vinyl[data-tut="scratchen"] .pt-platte__rille { animation: pt-rille .25s linear infinite reverse; }
+.pt--vinyl[data-tut="scratchen"] .pt-kopf { animation: pt-scratch-kopf 1.7s ease-in-out; }
+@keyframes pt-scratch { to { transform: translateX(2.5px); } }
+@keyframes pt-scratch-pfote { to { transform: translate(-3px, 1px); } }
+@keyframes pt-scratch-kopf { 20%, 80% { transform: rotate(-7deg) translateY(2px); } }
+.pt--vinyl[data-tut="strecken"] .pt-koerper { animation: pt-katze-strecken 1.8s ease-in-out; }
+@keyframes pt-katze-strecken { 35%, 60% { transform: scale(1.03, 1.1); } }
+.pt--vinyl[data-tut="gaehnen"] .pt-kopf { animation: pt-katze-gaehnen 1.9s ease-in-out; }
+@keyframes pt-katze-gaehnen { 30%, 65% { transform: rotate(-6deg) translateY(-2px); } }
+.pt--vinyl[data-tut="schnurren"] .pt-koerper { animation: pt-schnurren .08s linear 15; }
+
+/* ==========================================================
+   Mini-Abteil je Pet (#pets/<slug>)
+   ========================================================== */
+.pt-zum-show { text-decoration: none; display: inline-block; margin-top: 10px; }
+.pt-show { display: grid; gap: 20px; }
+.pt-show__leiste { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pt-show__leiste a { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 12px; border: 1px solid var(--border-hi); border-radius: 999px; color: var(--text-soft); text-decoration: none; font-size: .82rem; transition: border-color .2s, color .2s; }
+.pt-show__leiste a span { color: var(--muted); font-size: .7rem; letter-spacing: .04em; }
+.pt-show__leiste a:hover { border-color: var(--amber); color: var(--text); }
+.pt-show__leiste a[aria-current] { background: var(--amber); border-color: var(--amber); color: var(--auf-akzent); }
+.pt-show__leiste a[aria-current] span { color: inherit; opacity: .7; }
+.pt-show__zurueck { font-weight: 600; margin-right: 6px; }
+.pt-show__haupt { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.pt-show__buehne { position: relative; height: 470px; overflow: hidden; border: 1px solid var(--border); border-radius: calc(18px * var(--ecken, 1)); background: radial-gradient(circle at 50% 42%, var(--surface-hi), var(--ground-deep) 75%); }
+.pt-show__buehne .pt-buehne { padding: 20px 20px 18px; }
+.pt-show__buehne .pt-buehne > .pt { width: min(330px, 82%); }
+.pt-show__buehne .pt-buehne > .pt--quak { width: 96%; max-width: 560px; }
+.pt-show__buehne .pt-uhu { width: 240px !important; }
+.pt-show__seite { display: flex; flex-direction: column; gap: 12px; }
+.pt-show__titel { display: flex; align-items: center; gap: 10px; }
+.pt-show__titel h3 { margin: 0; font: 500 1.7rem var(--font-display); color: var(--text); }
+.pt-show__seite > p { margin: 0; color: var(--text-soft); line-height: 1.55; }
+.pt-show__zeile { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.pt-show h4 { margin: 0; font: 600 .78rem var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.pt-show__leben { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: .8rem; cursor: pointer; }
+.pt-show__leben input { accent-color: var(--amber); }
+.pt-show__aktionen { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 8px; }
+.pt-aktion { position: relative; display: grid; gap: 3px; align-content: start; padding: 10px 12px 12px; text-align: left; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border-hi); border-radius: calc(12px * var(--ecken, 1)); cursor: pointer; overflow: hidden; transition: border-color .2s, background .2s; }
+.pt-aktion strong { font-size: .9rem; font-weight: 600; }
+.pt-aktion span { font-size: .76rem; color: var(--muted); line-height: 1.4; }
+.pt-aktion em { font-style: normal; font-size: .68rem; color: var(--amber-light); }
+.pt-aktion:hover { border-color: var(--amber); }
+.pt-aktion.laeuft { border-color: var(--amber); background: color-mix(in srgb, var(--amber) 12%, var(--surface)); }
+.pt-aktion.laeuft::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--amber); transform-origin: left; animation: pt-laeuft var(--ms, 1s) linear forwards; }
+@keyframes pt-laeuft { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.pt-show__alle { align-self: flex-start; }
+.pt-show__alle:disabled { opacity: .5; cursor: default; }
+.pt-show__kann { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pt-show__kann > div { padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: calc(14px * var(--ecken, 1)); }
+.pt-show__kann ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 4px; color: var(--text-soft); font-size: .9rem; }
+.pt-show__kann .gh-einsatz { margin: 10px 0 0; }
+.pt-show__weiter { display: flex; justify-content: space-between; }
+.pt-show__weiter a { color: var(--amber-light); text-decoration: none; font-size: .9rem; }
+.pt-show__weiter a:hover { color: var(--text); }
+@media (max-width: 860px) {
+  .pt-show__haupt, .pt-show__kann { grid-template-columns: 1fr; }
+  .pt-show__buehne { height: 400px; }
+}
+
+/* ---------- Bewegung aus ---------- */
+html[data-bewegung="aus"] .pt *, html[data-bewegung="dezent"] .pt:not([data-tut]) :is(.pt-koerper, .pt-sporen circle, .pt-fluegel, .pt-schwanz, .pt-schwanzgruppe, .pt-schweben, .pt-laterne, .pt-kopf, .pt-platte__rille) { animation: none !important; }
+html[data-bewegung="aus"] .pt-blick { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pt *, .pt-uhu * { animation: none !important; } .pt-aktion.laeuft::after { animation: none; } }

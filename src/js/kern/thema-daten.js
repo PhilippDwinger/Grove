@@ -409,7 +409,7 @@ export const MENUE_LAYOUTS = [
         lichtung: { bilder: { szene: "morgen" }, bewegung: { hintergrund: "nebel" } },
     },
     {
-        id: "regal", name: "Bibliothek", art: "Bücherregal", text: "Jeder Dienst ist ein Buchrücken. Drüberfahren zieht das Buch heraus.",
+        id: "regal", name: "Bibliothek", art: "Bücherregal", text: "Jeder Dienst ist ein Buchrücken. Drüberfahren hebt das Buch an, unten auf dem Regalbrett steht, worum es geht.",
         thema: {
             farben: { ground: "#1A130F", "ground-deep": "#120D0A", surface: "#251B15", "surface-hi": "#2E221A",
                 border: "#3A2B20", "border-hi": "#4B382A", amber: "#C9A45C", "amber-light": "#E6C98A", flieder: "#8E5B4A",
@@ -422,7 +422,7 @@ export const MENUE_LAYOUTS = [
         lichtung: { bilder: { szene: "herbst" }, bewegung: { hintergrund: "sporen" } },
     },
     {
-        id: "platten", name: "Plattenkiste", art: "Vinyl", text: "Die Dienste als Plattencover. Beim Drüberfahren rutscht die Platte raus.",
+        id: "platten", name: "Plattenkiste", art: "Vinyl", text: "Alle Dienste als große Plattencover auf einen Blick. Beim Drüberfahren rutscht die Platte raus.",
         thema: {
             farben: { ground: "#12131F", "ground-deep": "#0C0D16", surface: "#1A1C2B", "surface-hi": "#222538",
                 border: "#262940", "border-hi": "#33375A", amber: "#E8B64A", "amber-light": "#F6D88C", flieder: "#E07AA8",
@@ -433,7 +433,7 @@ export const MENUE_LAYOUTS = [
         lichtung: { bilder: { szene: "buehne" }, bewegung: { hintergrund: "noten" } },
     },
     {
-        id: "orbit", name: "Sternwarte", art: "Umlaufbahn", text: "Die Dienste kreisen langsam um dein Grove. Drüberfahren hält alles an.",
+        id: "orbit", name: "Sternwarte", art: "Umlaufbahn", text: "Zwei Bahnen kreisen gegenläufig um eine leuchtende Mitte. Drüberfahren hält alles an und zeigt den Dienst in der Mitte.",
         thema: {
             farben: { ground: "#0A0E1C", "ground-deep": "#070A15", surface: "#121831", "surface-hi": "#18203D",
                 border: "#1E2848", "border-hi": "#2A375F", amber: "#8FB8FF", "amber-light": "#C4DAFF", flieder: "#C9A7FF",
@@ -460,7 +460,7 @@ export const MENUE_LAYOUTS = [
         lichtung: { bilder: { szene: "keine" }, bewegung: { hintergrund: "regen" } },
     },
     {
-        id: "dock", name: "Polarlicht", art: "Dock", text: "Die ganze Lichtung als Bühne, die Dienste in einem Dock am unteren Rand.",
+        id: "dock", name: "Polarlicht", art: "Startbildschirm", text: "Große App-Kacheln mitten im Polarlicht – wie der Startbildschirm eines Tablets.",
         thema: {
             farben: { ground: "#0C1322", "ground-deep": "#08101C", surface: "#132036", "surface-hi": "#192942",
                 border: "#1F3150", "border-hi": "#2A4268", amber: "#6FE3CF", "amber-light": "#B5F5EA", flieder: "#B49CFF",
@@ -469,7 +469,7 @@ export const MENUE_LAYOUTS = [
             form: { ecken: 1.8 },
             bewegung: { hintergrund: "polarlicht", zeichen: "atmen", begruessung: "nebel" },
         },
-        lichtung: { bilder: { szene: "bergsee" }, bewegung: { hintergrund: "polarlicht" } },
+        lichtung: { bilder: { szene: "keine" }, bewegung: { hintergrund: "polarlicht", hintergrundStaerke: 130 } },
     },
     {
         id: "faecher", name: "Herbstfächer", art: "Kartenfächer", text: "Die Dienste wie ein Blatt Karten aufgefächert – zieh dir eine.",
@@ -510,7 +510,7 @@ export const MENUE_LAYOUTS = [
         lichtung: { bilder: { szene: "morgen" }, bewegung: { hintergrund: "hain" } },
     },
     {
-        id: "streifen", name: "Abendrot", art: "Streifen", text: "Schmale Lichtstreifen, die beim Drüberfahren aufgehen wie Vorhänge.",
+        id: "streifen", name: "Abendrot", art: "Streifen", text: "Schmale Lichtstreifen mit Bild und Nummer – einer ist immer offen, Drüberfahren öffnet den nächsten.",
         thema: {
             farben: { ground: "#1E1220", "ground-deep": "#170D18", surface: "#28172A", "surface-hi": "#301C33",
                 border: "#36203A", "border-hi": "#462A4B", amber: "#F08A6C", "amber-light": "#FFB59A", flieder: "#C9A7D1",
