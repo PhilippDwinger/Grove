@@ -128,7 +128,7 @@ export function variablen(w, { nurFarben = false } = {}) {
     v["--font-body"] = schrift(w.schrift.text).familie
     v["--schrift-faktor"] = String((w.schrift.groesse || 100) / 100)
     v["--korn"] = String((w.flaeche.korn ?? 6) / 100)
-    v["--schein-farbe"] = `color-mix(in srgb, ${p["surface-hi"]} ${w.flaeche.schein ?? 100}%, ${p.ground})`
+    v["--schein-farbe"] = `color-mix(in srgb, ${p["surface-hi"]} ${Math.max(0, Math.min(100, w.flaeche.schein ?? 100))}%, ${p.ground})`
     v["--muster"] = musterSvg(w.flaeche.muster, p.amber, (w.flaeche.musterStaerke ?? 7) / 100)
     v["--muster-groesse"] = (w.flaeche.musterGroesse || 48) + "px"
     v["--symbol-strich"] = String(w.symbole.strich || 1.8)
@@ -151,6 +151,7 @@ export function anwenden() {
     root.dataset.eingang = w.bewegung.eingang
     root.dataset.hover = w.bewegung.hover
     root.dataset.enden = w.symbole.enden
+    root.dataset.menue = wirksam("lichtung").layout?.menue || "raster"   // Anordnung der Lichtung (Laub → Menü)
     root.toggleAttribute("data-symbole", !!w.symbole.strich)
 
     schriftenLaden([w.schrift.titel, w.schrift.text])
@@ -218,8 +219,11 @@ export function bereichAnwenden(el) {
     })
 }
 
+// Menü-Layouts mit eigenen Effekten (Pseudo-Elemente, transform) vertragen 40/41 nicht
+const EIGENER_HOVER = new Set(["regal", "platten", "orbit", "terminal", "dock", "pinnwand", "pfad"])
 function hoverKlasse(el) {
-    const h = wirksam(el.dataset.themaDienst || dienstHier).bewegung.hover
+    let h = wirksam(el.dataset.themaDienst || dienstHier).bewegung.hover
+    if (el.closest(".raster") && EIGENER_HOVER.has(document.documentElement.dataset.menue)) h = "eigen"
     el.classList.toggle("a40", h === "leuchten")
     el.classList.toggle("a41", h === "kippen")
 }

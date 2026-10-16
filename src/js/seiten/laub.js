@@ -31,6 +31,7 @@ const ICON = (pfad) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColo
 
 const ABSCHNITTE = [
     { id: "presets",  name: "Presets",         icon: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>' },
+    { id: "menue",    name: "Menü-Layout",     icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/><path d="M13 13h4M13 17h4"/>' },
     { id: "farben",   name: "Farben",          icon: '<path d="M12 21c-4.5 0-8-3.5-8-8 0-5 4-9 9-9 4.4 0 7 2.6 7 5.6 0 2.3-1.8 3.9-4 3.9h-1.6a1.6 1.6 0 0 0-1.1 2.8c.4.4.6.9.6 1.4 0 1.8-.9 3.3-1.9 3.3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/>' },
     { id: "schrift",  name: "Schrift",         icon: '<path d="M4 20L10 4h1l6 16"/><path d="M6.5 14h8"/><path d="M17 20h4"/>' },
     { id: "form",     name: "Form & Symbole",  icon: '<rect x="3" y="3" width="8" height="8" rx="3"/><circle cx="17" cy="7" r="4"/><path d="M7 14l4 7H3z"/><path d="M14 14h7v7h-7z"/>' },
@@ -96,7 +97,7 @@ function navMarkieren() {
 
 function panelZeichnen() {
     aktualisierer = []
-    const bauer = { presets, farben, schrift, form, bilder, bewegung, galerie, flaeche }[abschnitt]
+    const bauer = { presets, menue, farben, schrift, form, bilder, bewegung, galerie, flaeche }[abschnitt]
     const a = ABSCHNITTE.find((x) => x.id === abschnitt)
     panel.replaceChildren(
         el("header", { class: "panel-kopf" }, el("h2", {}, a.name), bereichsHinweis()),
@@ -219,6 +220,47 @@ function presets() {
             ? el("div", { class: "presets" }, ...T.laub.presets.map((p) => karte(p, true)))
             : el("p", { class: "leer-text" }, "Noch keine eigenen Presets. Stell dir etwas zusammen und speichere es oben."),
         einfuegen,
+    ]
+}
+
+// ==========================================================
+// 1b · Menü-Layouts der Lichtung (jedes mit eigenem Theme)
+// ==========================================================
+function layoutMini(l) {
+    // Schema der Anordnung in den Farben des Layout-Themes
+    const w = T.wirksam("lichtung", D.menueLayoutEinstellungen(l))
+    const box = el("span", { class: "lmini", dataset: { l: l.id } },
+        el("span", { class: "lmini__held" }, el("i", {}), el("b", {})),
+        el("span", { class: "lmini__flaeche" }, ...Array.from({ length: 7 }, (_, i) => { const k = el("i"); k.style.setProperty("--i", i); return k })))
+    T.variablenSetzen(box, T.variablen(w))
+    return box
+}
+function menue() {
+    T.schriftenLaden(D.MENUE_LAYOUTS.flatMap((l) => [l.thema.schrift?.titel, l.thema.schrift?.text]).filter(Boolean))
+    const aktuell = () => T.wirksam("lichtung").layout?.menue || "raster"
+    const karte = (l) => {
+        const k = el("article", { class: "preset layout" + (l.id === "raster" ? " preset--standard" : "") },
+            layoutMini(l),
+            el("div", { class: "preset__text" },
+                el("strong", {}, l.name, el("small", {}, l.art)),
+                el("p", {}, l.text)),
+            el("div", { class: "preset__aktionen" },
+                el("button", { type: "button", class: "knopf-voll", onclick: () => {
+                    T.setzen(D.menueLayoutEinstellungen(l))
+                    hinweis(`„${l.name}“ mit Theme angewendet – schau auf die Lichtung`)
+                } }, "Mit Theme"),
+                el("button", { type: "button", class: "knopf-text", title: "Deine Farben und Schriften bleiben", onclick: () => {
+                    T.wertSetzen("lichtung", "layout.menue", l.id === "raster" ? undefined : l.id)
+                    hinweis(`Anordnung „${l.art}“ übernommen`)
+                } }, "Nur Anordnung")),
+            el("span", { class: "preset__aktiv" }, "Aktiv"))
+        aktualisierer.push(() => k.classList.toggle("ist-aktiv", aktuell() === l.id))
+        return k
+    }
+    return [
+        el("p", { class: "panel-intro" }, "Wie deine Dienste auf der Lichtung verteilt sind. Jedes Layout hat ein eigenes Theme: „Mit Theme“ stellt Farben, Schrift und Bewegung passend ein (wie ein Preset), „Nur Anordnung“ ändert nur die Verteilung und lässt deinen Look, wie er ist."),
+        el("p", { class: "panel-intro" }, el("a", { href: "/", class: "knopf-text" }, "Zur Lichtung →")),
+        el("div", { class: "presets layouts" }, ...D.MENUE_LAYOUTS.map(karte)),
     ]
 }
 

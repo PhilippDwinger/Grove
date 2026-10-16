@@ -1,29 +1,44 @@
 // ==========================================================
 // Saat · Kurs „Bäume“ (Grove) – 80 Arten, geordnet von bekannt zu unbekannt
-// Vorderseite: deutscher Name · Antwort: botanischer Name · Rückseite: Steckbrief, Merkmale, Merkhilfen
+// Vorderseite: Foto des Baums · Antwort: deutscher Name (botanischer Name zählt auch) · Rückseite: Steckbrief, Merkmale, Fun Fact, Merkhilfen
 // Stufen: 1 = vor der Haustür · 2 = im Wald & in der Stadt · 3 = selten & heimisch · 4 = Parks & Gärten · 5 = Welt
 // ==========================================================
+import { FAKTEN } from "./baeume-fakten.js"
+import { BILDER } from "./baeume-bilder.js"
+
 let blockNr = 0
 const b = (typ, felder) => ({ id: `b${++blockNr}`, typ, ...felder })
 
 function baum(id, name, botanisch, { familie, typ = "Laubbaum", heimat, merkmale, merksatz, hinweis, siehe = [], alt = [], eingaben = [], stufe }) {
+    // Vorderseite = Foto („Welcher Baum ist das?“), Antwort = deutscher Name; der botanische Name zählt auch.
+    // Ohne Foto fragt die Karte über den botanischen Namen.
+    const foto = BILDER[id]
+    const vorne = foto
+        ? { text: "", zusatz: "Welcher Baum ist das?", bloecke: [b("bild", { quelle: bildPfad(id), alt: "Foto eines Baums", unterschrift: "" })] }
+        : { text: botanisch, zusatz: "Welcher Baum ist das?" }
     const hinten = [
-        b("tabelle", { titel: "Steckbrief", kopf: false, zeilen: [["Familie", familie], ["Art", typ], ["Heimat", heimat]] }),
+        b("tabelle", { titel: "Steckbrief", kopf: false, zeilen: [["Botanisch", botanisch], ["Familie", familie], ["Art", typ], ["Heimat", heimat]] }),
         b("text", { text: merkmale }),
     ]
+    if (FAKTEN[id]) hinten.push(b("funfakt", { text: FAKTEN[id] }))
     if (merksatz) hinten.push(b("merksatz", { text: merksatz }))
     if (hinweis) hinten.push(b("hinweis", { text: hinweis, verborgen: true }))
     if (siehe.length) hinten.push(b("verweis", { titel: "Nicht verwechseln mit", karten: siehe.map((s) => `baum-${s}`) }))
+    // Bildnachweis auf der Rückseite (vorn würde der Urheber manchmal den Baum verraten)
+    if (foto) hinten.push(b("text", { text: `*Foto: ${foto.autor} · ${foto.lizenz} · Wikimedia Commons*` }))
     return {
         id: `baum-${id}`,
-        vorne: { text: name, zusatz: typ },
-        antwort: botanisch,
-        alternativen: alt,
+        vorne,
+        antwort: name,
+        alternativen: [botanisch, ...alt],
         eingaben,
         hinten,
         tags: [typ === "Nadelbaum" ? "nadelbaum" : typ === "Laubbaum" ? "laubbaum" : "sonderform", `stufe-${stufe}`],
     }
 }
+
+// Fotos liegen als kurse/baeume/<id>.jpg in der App und werden beim Herunterladen in den Lernspeicher kopiert
+export const bildPfad = (id) => `medien/kurs-baeume-${id}.jpg`
 
 const BUCHE = "Buchengewächse (Fagaceae)", KIEFER = "Kieferngewächse (Pinaceae)", BIRKE = "Birkengewächse (Betulaceae)"
 const ROSE = "Rosengewächse (Rosaceae)", AHORN = "Seifenbaumgewächse (Sapindaceae)", WEIDE = "Weidengewächse (Salicaceae)"
@@ -214,18 +229,34 @@ const KARTEN = [
         merkmale: "Schirmförmige, dichte Krone wie ein umgedrehter Regenschirm. Das rote Harz („Drachenblut“) wurde als Farbstoff und Heilmittel gehandelt. Botanisch kein typischer Baum, sondern ein baumförmiges Spargelgewächs.", alt: ["Drachenblutbaum"] }),
 ]
 
+// Kurzformen fürs Schreiben: „Gemeine Fichte“ → auch „Fichte“, „Hänge-Birke“ → auch „Hängebirke“.
+// Reihenfolge = bekannt → unbekannt: Die bekanntere Art bekommt die Kurzform („Fichte“ = Gemeine Fichte, nicht Serbische).
+{
+    const vergeben = new Set(KARTEN.flatMap((k) => [k.antwort, ...k.alternativen].map((x) => x.toLowerCase())))
+    for (const k of KARTEN) {
+        const extra = []
+        if (k.antwort.includes("-")) extra.push(k.antwort.replace(/-(\p{L})/u, (_, c) => c.toLowerCase()))
+        const teile = k.antwort.split(" ")
+        if (teile.length === 2 && /(e|er|es|en)$/.test(teile[0])) {
+            const kurz = teile[1]
+            if (!vergeben.has(kurz.toLowerCase())) { extra.push(kurz); vergeben.add(kurz.toLowerCase()) }
+        }
+        k.eingaben = [...new Set([...k.eingaben, ...extra])]
+    }
+}
+
 export const KURS = {
     format: "grove-saat",
     version: 2,
     id: "kurs-grove-baeume",
     titel: "Bäume · Kurs",
-    beschreibung: "80 Baumarten von bekannt zu unbekannt: deutscher Name → botanischer Name, mit Steckbrief, Merkmalen und Merkhilfen. Weltweit gibt es übrigens rund 60.000 Baumarten – hier geht es um die wichtigsten und spannendsten.",
+    beschreibung: "80 Baumarten von bekannt zu unbekannt am Foto erkennen – mit botanischem Namen, Steckbrief, Merkmalen, Fun Fact und Merkhilfen. Weltweit gibt es übrigens rund 60.000 Baumarten – hier geht es um die wichtigsten und spannendsten.",
     autor: "Grove",
     gebiet: "Botanik",
-    sprachen: { vorne: "de", hinten: "la" },
+    sprachen: { vorne: "la", hinten: "de" },
     tags: ["kurs", "bäume"],
     erstellt: "2026-10-16T08:00:00.000Z",
-    geaendert: "2026-10-16T08:00:00.000Z",
-    kurs: { id: "grove-baeume", version: 1, von: "Grove" },
+    geaendert: "2026-10-16T18:00:00.000Z",
+    kurs: { id: "grove-baeume", version: 3, von: "Grove" },
     karten: KARTEN,
 }

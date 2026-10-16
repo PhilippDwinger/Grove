@@ -65,6 +65,7 @@ const DARSTELLER = {
         </div>`
     },
     merksatz: (b) => `${kopf("merksatz", "Eselsbrücke")}<div class="sb__text">${absaetze(b.text)}</div>`,
+    funfakt: (b) => `${kopf("funfakt", "Wusstest du?")}<div class="sb__text">${absaetze(b.text)}</div>`,
     beispiele: (b) => `${kopf("beispiele", b.titel || "Beispiele")}<ul class="sb__beispiele">${(b.eintraege || []).filter((e) => e.text?.trim()).map((e) =>
         `<li><span>${inline(e.text)}</span>${e.zusatz ? `<small>${inline(e.zusatz)}</small>` : ""}</li>`).join("")}</ul>`,
     hinweis: (b) => b.verborgen === false

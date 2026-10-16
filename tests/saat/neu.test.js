@@ -139,7 +139,7 @@ test("Kurs Bäume: 80 gültige Karten, eindeutige IDs, Verweise zeigen auf vorha
     assert.equal(ids.size, def.karten)
     for (const k of r.deck.karten) {
         for (const b of k.hinten) if (b.typ === "verweis") for (const v of b.karten) assert.ok(ids.has(v), `${k.id} → ${v}`)
-        assert.ok(k.antwort && k.vorne.text)
+        assert.ok(k.antwort && (k.vorne.text || k.vorne.bloecke?.length))
     }
     assert.ok(r.deck.karten[0].tags.includes("stufe-1") && r.deck.karten.at(-1).tags.includes("stufe-5"), "von bekannt zu unbekannt")
     assert.equal(r.deck.kurs.id, "grove-baeume")
@@ -182,4 +182,49 @@ test("Kurs: herunterladen, lernen, entfernen löscht den Stand nur in DIESEM Spe
     assert.equal(neu.kursDeck("grove-baeume"), null)
     // Sicherung der alten Protokolldatei existiert
     assert.ok((await a.verz.liste("sicherung")).length)
+})
+
+test("Kurs Bäume: jede Karte hat einen Fun Fact; Fotos (falls vorhanden) mit Urheber und Lizenz", async () => {
+    const kurs = await KURSE.find((k) => k.id === "grove-baeume").laden()
+    for (const k of kurs.karten) {
+        const fakt = k.hinten.find((b) => b.typ === "funfakt")
+        assert.ok(fakt?.text?.length > 30, `${k.id} ohne Fun Fact`)
+        // Foto auf der Vorderseite, gefragt wird der deutsche Name; der botanische zählt auch
+        const bild = (k.vorne.bloecke || []).find((b) => b.typ === "bild")
+        if (bild) {
+            assert.equal(k.vorne.text, "")
+            assert.equal(bild.quelle, `medien/kurs-baeume-${k.id.slice(5)}.jpg`)
+            assert.ok(!`${bild.alt} ${bild.unterschrift}`.toLowerCase().includes(k.antwort.toLowerCase().split(" ").at(-1)), `${k.id}: Name verrät sich vorn`)
+            assert.ok(k.hinten.some((b) => b.typ === "text" && /^\*Foto: .+ · .+ · Wikimedia Commons\*$/.test(b.text)), `${k.id}: Bildnachweis fehlt`)
+        } else assert.equal(k.vorne.text, k.alternativen[0])
+        assert.match(k.alternativen[0], /^[A-Z][a-z]+ [×a-z]/, `${k.id}: botanischer Name als Alternative`)
+        assert.ok(!k.hinten.some((b) => b.typ === "bild"))
+    }
+})
+
+test("Kurs: mitgelieferte Bilder landen im Speicher und verschwinden beim Entfernen (geteilte bleiben)", async () => {
+    const u = { t: T0 }
+    const a = await lagerMitBeispielen(u)
+    const kurs = structuredClone(await KURSE[0].laden())
+    const mitBild = (k, p) => k.hinten.unshift({ id: "foto", typ: "bild", quelle: p, alt: "", unterschrift: "" })
+    mitBild(kurs.karten[0], "medien/kurs-baeume-stieleiche.jpg")
+    mitBild(kurs.karten[1], "medien/kurs-baeume-rotbuche.jpg")
+    const medien = new Map([
+        ["medien/kurs-baeume-stieleiche.jpg", new Blob(["eiche"], { type: "image/jpeg" })],
+        ["medien/kurs-baeume-rotbuche.jpg", new Blob(["buche"], { type: "image/jpeg" })],
+        ["../boese.jpg", new Blob(["x"])],
+    ])
+    // Rotbuche (mit Foto) steht auch in einer eigenen Datei → ihr Foto bleibt
+    const eigen = { format: "grove-saat", version: 2, id: "d-eigen", titel: "Eigen", karten: [structuredClone(kurs.karten[1])] }
+    await a.verz.schreiben("saatgut/eigen.saat", JSON.stringify(eigen))
+    await a.lager.laden()
+    await a.lager.kursInstallieren(kurs, medien)
+    assert.ok(await a.verz.existiert("medien/kurs-baeume-stieleiche.jpg"))
+    assert.equal(await (await a.lager.medienDatei("medien/kurs-baeume-rotbuche.jpg")).text(), "buche")
+    assert.equal(await a.verz.existiert("../boese.jpg").catch(() => false), false)
+    const fehlend = (await a.lager.fehlendeMedien()).map((m) => m.pfad)
+    assert.ok(!fehlend.includes("medien/kurs-baeume-stieleiche.jpg") && !fehlend.includes("medien/kurs-baeume-rotbuche.jpg"))
+    await a.lager.kursEntfernen("grove-baeume")
+    assert.equal(await a.verz.existiert("medien/kurs-baeume-stieleiche.jpg"), false)
+    assert.ok(await a.verz.existiert("medien/kurs-baeume-rotbuche.jpg"), "von eigener Datei benutzt")
 })

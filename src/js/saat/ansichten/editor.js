@@ -9,7 +9,7 @@ import { esc } from "../../kern/html.js"
 import { bestaetigen } from "../../kern/dialog.js"
 import { S, BLOCK_SYMBOL } from "../symbole.js"
 import { BLOECKE, GRUPPEN, SPRACHEN, spracheName } from "../bloecke.js"
-import { neueKarte, neuerBlock, istExtern } from "../format.js"
+import { neueKarte, neuerBlock, istExtern, vorneTitel, vorneIstBild } from "../format.js"
 import { idSauber, normal, neueId } from "../hilfen.js"
 import { vorderseite, rueckseite, aktivieren, medienUrlVergessen } from "../darstellung.js"
 import { herunterladen } from "../paket.js"
@@ -184,7 +184,7 @@ function listeZeichnen() {
         const e = schluessel ? l.eintrag(schluessel) : null
         return `<li><button type="button" class="sa-editor__eintrag${k.id === st.gewaehlt ? " ist-aktiv" : ""}" data-karte="${esc(k.id)}">
             <span class="sa-editor__nr">${i + 1}</span>
-            <span class="sa-editor__text"><strong>${esc(k.vorne?.text || "(leer)")}</strong><small>${esc(k.antwort || "")}</small></span>
+            <span class="sa-editor__text"><strong>${vorneIstBild(k) ? BLOCK_SYMBOL.bild : ""}${esc(vorneTitel(k) || "(leer)")}</strong><small>${esc(vorneIstBild(k) ? "Bild auf der Vorderseite" : k.antwort || "")}</small></span>
             ${schluessel ? stufeMarke(l.beherrschung(schluessel, jetzt), { text: false }) : ""}
             ${e && e.vorkommen.length > 1 ? `<span class="sa-marke" title="Steht in ${e.vorkommen.length} Lerndateien – gemeinsamer Lernstand">${S.kette}</span>` : ""}
         </button></li>`

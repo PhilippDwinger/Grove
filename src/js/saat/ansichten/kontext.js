@@ -7,7 +7,9 @@ export function ctxFuer(app, deck) {
         vorlesen: l.profil.einstellungen.vorlesen,
         karteVon: (id) => {
             const e = l.eintrag(id) ?? [...l.index.eintraege.values()].find((x) => x.id === id)
-            return e ? { vorne: e.karte.vorne?.text || "", antwort: e.karte.antwort || "" } : null
+            if (!e) return null
+            const t = (e.karte.vorne?.text || "").trim()
+            return t ? { vorne: t, antwort: e.karte.antwort || "" } : { vorne: e.karte.antwort || "", antwort: (e.karte.alternativen || [])[0] || "" }
         },
         oeffnen: (id) => app.karteAnsehen(l.eintrag(id) ? id : [...l.index.eintraege.values()].find((x) => x.id === id)?.schluessel ?? id),
     }

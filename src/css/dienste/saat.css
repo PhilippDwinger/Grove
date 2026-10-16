@@ -237,6 +237,9 @@ kbd { display: inline-block; min-width: 1.5em; padding: 1px 5px; border: 1px sol
 .sa-lernkarte__vorne { text-align: center; }
 .sk-begriff { margin: 0; font: 400 clamp(2.2rem, 7vw, 3.6rem)/1.15 var(--font-display); overflow-wrap: anywhere; }
 .sk-zusatz { margin: 8px 0 0; color: var(--muted); font-size: 1.05rem; }
+.sk-vorne > .sk-zusatz:first-child { margin: 0 0 4px; color: var(--text-soft); font: 400 1.5rem/1.2 var(--font-display); }
+.sk-vorne > .sb--bild:first-of-type, .sk-vorne .sb--bild { background: transparent; padding: 0; }
+.sa-zeile__bild svg, .sa-editor__text strong svg { width: 14px; height: 14px; margin-right: 6px; vertical-align: -2px; color: var(--muted); }
 .sk-vorne .sb { text-align: left; margin-top: 18px; }
 .sa-lernkarte__hinten { margin-top: 22px; padding-top: 22px; border-top: 1px dashed var(--border-hi); }
 .sa-lernkarte.ist-offen .sa-lernkarte__hinten { animation: sa-aufdecken .4s cubic-bezier(.2,.8,.2,1); }
@@ -303,6 +306,8 @@ kbd { display: inline-block; min-width: 1.5em; padding: 1px 5px; border: 1px sol
 .sb--text { background: transparent; padding: 0 2px; }
 .sb__erzaehlt { font-family: var(--font-display); font-style: italic; font-size: 1.04rem; }
 .sb--merksatz { background: color-mix(in srgb, var(--amber) 8%, transparent); box-shadow: inset 3px 0 0 var(--amber); }
+.sb--funfakt { background: color-mix(in srgb, var(--gut) 8%, transparent); box-shadow: inset 3px 0 0 var(--gut); }
+.sb--funfakt .sb__kopf { color: var(--gut); }
 .sb--geschichte { background: color-mix(in srgb, var(--flieder) 8%, transparent); }
 .sb--geschichte .sb__kopf { color: var(--flieder); }
 .sb--satz { padding-right: 52px; }
@@ -743,6 +748,19 @@ button.sa-kal__tag:hover, button.sa-kal__tag:focus-visible { outline: 2px solid 
 .sa-kurs.ist-geladen { border-color: color-mix(in srgb, var(--gut) 35%, transparent); }
 .sa-kurs__bild { display: grid; place-items: center; width: 120px; height: 120px; border-radius: calc(24px * var(--ecken)); background: color-mix(in srgb, var(--gut) 12%, var(--surface-hi)); color: var(--gut); }
 .sa-kurs__bild svg { width: 64px; height: 64px; stroke-width: 1.4; }
+.sa-kurs__bild:has(.sa-kursbild) { overflow: hidden; background: color-mix(in srgb, var(--gut) 8%, var(--surface-hi)); }
+.sa-kurs__bild .sa-kursbild { width: 120px; height: 120px; }
+.sa-kursbild__sonne { fill: color-mix(in srgb, var(--amber) 55%, transparent); }
+.sa-kursbild__huegel { fill: color-mix(in srgb, var(--gut) 22%, var(--ground-deep)); }
+.sa-kursbild__stamm { fill: color-mix(in srgb, var(--amber) 38%, var(--ground-deep)); }
+.sa-kursbild__krone { fill: color-mix(in srgb, var(--gut) 72%, var(--ground-deep)); }
+.sa-kursbild__krone--hinten { fill: color-mix(in srgb, var(--gut) 42%, var(--ground-deep)); }
+.sa-kursbild__krone--vorn { fill: none; stroke: color-mix(in srgb, var(--gut) 70%, var(--text)); stroke-width: 2.6; stroke-linecap: round; opacity: .8; }
+.sa-kursbild__blatt { fill: var(--amber); }
+.sa-kursbild__blatt--hell { fill: var(--amber-light); }
+.sa-kurs__bild .sa-kursbild { transition: transform .5s cubic-bezier(.2, .8, .2, 1); transform-origin: 50% 90%; }
+.sa-kurs:hover .sa-kursbild { transform: rotate(-1.5deg) scale(1.03); }
+@media (prefers-reduced-motion: reduce) { .sa-kurs:hover .sa-kursbild { transform: none; } }
 .sa-kurs__text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .sa-kurs__text header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .sa-kurs__text h2 { margin: 0; font: 400 1.7rem/1.1 var(--font-display); }
@@ -849,3 +867,61 @@ button.sa-kal__tag:hover, button.sa-kal__tag:focus-visible { outline: 2px solid 
 .sa-uhu .uhu__ganz { animation-fill-mode: none; }
 @media (prefers-reduced-motion: reduce) { .uhu * { animation: none !important; } }
 :root[data-bewegung="aus"] .uhu * { animation: none !important; }
+
+/* ==========================================================
+   Saat · Feinschliff Bewegung (16.10.2026)
+   Kurz, einmalig, nur als Antwort auf eine Aktion. Respektiert Laub (data-bewegung) und reduced-motion.
+   ========================================================== */
+/* Reiter: Unterstrich wächst aus der Mitte */
+.sa-nav__punkt { position: relative; }
+.sa-nav__punkt[aria-current="page"] { box-shadow: none; }
+.sa-nav__punkt::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 0; height: 2px; border-radius: 2px; background: var(--amber); scale: 0 1; transition: scale .35s cubic-bezier(.2,.8,.2,1); }
+.sa-nav__punkt[aria-current="page"]::after { scale: 1 1; }
+.sa-nav__punkt svg { transition: translate .25s cubic-bezier(.2,.8,.2,1), opacity .2s; }
+.sa-nav__punkt:hover svg { translate: 0 -1px; opacity: 1; }
+
+/* Kacheln, Lerndateien, Kurse: ruhiges Anheben */
+.sa-kachel, .sa-deck, .sa-kurs { transition: border-color .25s, translate .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s; }
+.sa-deck:hover, .sa-kurs:hover { translate: 0 -2px; box-shadow: 0 16px 34px -18px rgba(0,0,0,.6); border-color: color-mix(in srgb, var(--amber) 30%, var(--border)); }
+.sa-kachel { animation: sa-hoch .5s cubic-bezier(.2,.8,.2,1) both; }
+.sa-kachel:nth-child(2) { animation-delay: .06s; } .sa-kachel:nth-child(3) { animation-delay: .12s; } .sa-kachel:nth-child(4) { animation-delay: .18s; } .sa-kachel:nth-child(5) { animation-delay: .24s; }
+.sa-kurse__liste > .sa-kurs { animation: sa-hoch .5s cubic-bezier(.2,.8,.2,1) backwards; }
+
+/* Rückseite: Blöcke erscheinen nacheinander */
+.sk-hinten > * { animation: sa-hoch .45s cubic-bezier(.2,.8,.2,1) both; }
+.sk-hinten > :nth-child(2) { animation-delay: .05s; } .sk-hinten > :nth-child(3) { animation-delay: .1s; } .sk-hinten > :nth-child(4) { animation-delay: .15s; }
+.sk-hinten > :nth-child(5) { animation-delay: .2s; } .sk-hinten > :nth-child(6) { animation-delay: .25s; } .sk-hinten > :nth-child(n + 7) { animation-delay: .3s; }
+.sa-lernkarte--vorschau .sk-hinten > * { animation: none; }
+
+/* Bewertung & Auswahl: Druckgefühl, Optionen kommen gestaffelt */
+.sa-bewertung { transition: background .15s, border-color .15s, translate .15s, scale .12s; }
+.sa-bewertung:active { scale: .96; }
+.sa-bewertung::after { transition: left .25s cubic-bezier(.2,.8,.2,1), right .25s cubic-bezier(.2,.8,.2,1); }
+.sa-bewertung:hover::after { left: 6px; right: 6px; }
+.sa-bewerten > * { animation: sa-hoch .35s cubic-bezier(.2,.8,.2,1) backwards; }
+.sa-bewerten > :nth-child(2) { animation-delay: .04s; } .sa-bewerten > :nth-child(3) { animation-delay: .08s; } .sa-bewerten > :nth-child(4) { animation-delay: .12s; }
+.sa-option { animation: sa-hoch .35s cubic-bezier(.2,.8,.2,1) backwards; transition: border-color .15s, background .15s, opacity .25s, translate .2s cubic-bezier(.2,.8,.2,1), scale .12s; }
+.sa-option:nth-child(2) { animation-delay: .05s; } .sa-option:nth-child(3) { animation-delay: .1s; } .sa-option:nth-child(4) { animation-delay: .15s; }
+.sa-option:hover:not(:disabled) { translate: 3px 0; }
+.sa-option:active:not(:disabled) { scale: .985; }
+.sa-option[data-ergebnis="richtig"] { animation: sa-richtig .5s cubic-bezier(.2,.8,.2,1); }
+@keyframes sa-richtig { 40% { scale: 1.02; box-shadow: 0 0 0 6px color-mix(in srgb, var(--gut) 18%, transparent); } }
+
+/* Lernserie: die Flamme flackert einmal auf, die Zahl zählt hoch */
+.sa-serie__aktuell:not(.ist-aus) svg { animation: sa-flamme 1.2s cubic-bezier(.2,.8,.2,1) .3s both; transform-origin: 50% 90%; }
+@keyframes sa-flamme { 0% { scale: .4; opacity: 0; } 50% { scale: 1.15; } 70% { scale: .95; } 100% { scale: 1; opacity: 1; } }
+
+/* Lernkalender: wischt von links nach rechts herein, Tage wachsen beim Drüberfahren */
+.sa-kal__gitter { animation: sa-kal-wisch 1s cubic-bezier(.2,.8,.2,1) .15s both; }
+@keyframes sa-kal-wisch { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.sa-kal__gitter .sa-kal__tag { transition: scale .15s, outline-color .15s; }
+.sa-kal__gitter button.sa-kal__tag:hover { scale: 1.35; position: relative; z-index: 1; }
+
+/* Fortschrittsring zeichnet sich beim Öffnen */
+.sa-ring .bogen { animation: sa-ring-rein 1s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes sa-ring-rein { from { stroke-dasharray: 0 100; } }
+
+html[data-bewegung="aus"] :is(.sa-kachel, .sk-hinten > *, .sa-bewerten > *, .sa-option, .sa-kal__gitter, .sa-ring .bogen, .sa-serie__aktuell svg, .sa-kurs) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.sa-kachel, .sk-hinten > *, .sa-bewerten > *, .sa-option, .sa-kal__gitter, .sa-ring .bogen, .sa-serie__aktuell svg, .sa-kurs) { animation: none !important; }
+}

@@ -39,6 +39,9 @@ dienste.forEach((dienst, i) => {
     karte.style.setProperty("--i", i)
     karte.dataset.status = dienst.status
     karte.dataset.themaDienst = dienst.id          // Farben + Bild dieses Dienstes (Laub)
+    karte.dataset.id = dienst.id                   // für Layouts (z. B. Terminal: „grove open <id>“)
+    karte.dataset.nr = karte.querySelector(".dienst__buehne").dataset.nr = String(i + 1).padStart(2, "0")
+    karte.style.setProperty("--r", `${((i * 37) % 9) - 4}deg`)   // feste „Schiefe“ für Pinnwand & Co.
 
     karte.querySelector(".dienst__bild").src = karteFuer(dienst.id, dienst.bild)
     karte.querySelector(".dienst__name").textContent = dienst.name
@@ -56,3 +59,13 @@ dienste.forEach((dienst, i) => {
     raster.insertBefore(karte, platzhalter)
 })
 platzhalter.style.setProperty("--i", dienste.length)
+platzhalter.dataset.nr = String(dienste.length + 1).padStart(2, "0")
+
+// Für die Menü-Layouts aus Laub (html[data-menue], css/seiten/hauptmenue.css): Anzahl + Mitte
+raster.style.setProperty("--n", dienste.length)
+raster.style.setProperty("--mitte", (dienste.length - 1) / 2)
+const mitte = document.createElement("div")       // Zentrum der „Umlaufbahn“ (sonst unsichtbar)
+mitte.className = "raster__mitte"
+mitte.setAttribute("aria-hidden", "true")
+mitte.innerHTML = `<img src="/bilder/marke/grove-logo.svg" alt="" data-logo><span>Grove</span>`
+raster.prepend(mitte)

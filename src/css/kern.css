@@ -208,3 +208,12 @@
 .g-dialog__knoepfe { display: flex; justify-content: flex-end; gap: 8px; }
 .g-knopf--gefahr { background: var(--fehler); }
 .g-knopf--gefahr:hover { background: var(--fehler-hell); }
+
+/* ---------- Feinschliff (16.10.2026): Knöpfe geben beim Drücken kurz nach – nur auf Aktion, nie dauerhaft ---------- */
+:is(.g-knopf, .g-knopf-leise, .g-knopf-text, .knopf-voll, .knopf-leise, .knopf-text, .suche-knopf) {
+  transition: background .18s, border-color .18s, color .18s, scale .12s cubic-bezier(.2,.8,.2,1), box-shadow .2s;
+}
+:is(.g-knopf, .g-knopf-leise, .knopf-voll, .knopf-leise, .suche-knopf):active:not(:disabled) { scale: .96; }
+.g-knopf:hover:not(:disabled) { box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--amber) 60%, transparent); }
+:is(.g-knopf, .g-knopf-leise, .knopf-voll, .knopf-leise):focus-visible { outline: 2px solid var(--amber-light); outline-offset: 2px; }
+html[data-bewegung="aus"] :is(.g-knopf, .g-knopf-leise, .knopf-voll, .knopf-leise):active { scale: 1; }

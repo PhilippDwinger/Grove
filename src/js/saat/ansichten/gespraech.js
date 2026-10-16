@@ -6,6 +6,7 @@
 // Alle Antworten zählen wie in den einzelnen Modi (Protokoll-Feld mo: "gespraech").
 // ==========================================================
 import { esc } from "../../kern/html.js"
+import { vorneIstBild } from "../format.js"
 import { S } from "../symbole.js"
 import { Sitzung } from "../sitzung.js"
 import { eingabePruefen, loesungenVon, schreibTauglich } from "../eingabe.js"
@@ -141,7 +142,9 @@ async function naechste(lauf) {
     eingabe(lauf, "")
     const werte = { vorne: karte.vorne?.text || "…", aufgabe: zeichenAufgabe(karte), antwort: karte.antwort }
     const zeigeKarte = modus !== "zeichnen" && (karte.vorne?.bloecke?.length || (karte.vorne?.text || "").length > 40)
-    await lehrerSagt(lauf, satz(modus, werte), {
+    const bildfrage = vorneIstBild(karte) && modus !== "zeichnen"
+    werte.frage = karte.vorne?.zusatz || "Was ist das?"
+    await lehrerSagt(lauf, satz(bildfrage ? `${modus}Bild` : modus, werte), {
         extra: zeigeKarte ? `<div class="sa-blase__extra sa-blase__karte">${vorderseite(karte, lauf.ctx)}</div>` : "",
     })
     lauf.start = performance.now()

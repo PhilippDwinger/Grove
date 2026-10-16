@@ -100,3 +100,14 @@ a.dienst:hover .dienst__los::after { translate: 4px 0; }
 .dienst--platz .dienst__name { font-weight: 400; font-style: italic; color: var(--text-soft); }
 
 @keyframes hoch { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+
+/* ---------- Feinschliff (16.10.2026): Szene „setzt sich“ beim Laden, Titel bekommt einen Strich ---------- */
+.lichtung__szene { animation: szene-rein 1.6s cubic-bezier(.2,.8,.2,1) both; transform-origin: 50% 100%; }
+@keyframes szene-rein { from { opacity: 0; scale: 1.04; } to { opacity: 1; scale: 1; } }
+.bereich__titel { position: relative; }
+.bereich__titel::after { content: ""; position: absolute; left: 0; bottom: -6px; width: 42px; height: 2px; border-radius: 2px; background: var(--amber); transform-origin: left; animation: titel-strich .8s .3s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes titel-strich { from { scale: 0 1; } }
+html:is([data-menue="terminal"], [data-menue="zeitung"], [data-menue="dock"]) .bereich__titel::after { display: none; }
+.dienst__status { transition: background .25s, color .25s; }
+a.dienst:hover .dienst__status { background: color-mix(in srgb, currentColor 10%, transparent); }
+html[data-bewegung="aus"] .lichtung__szene, html[data-bewegung="aus"] .bereich__titel::after { animation: none; }

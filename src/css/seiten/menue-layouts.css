@@ -1,0 +1,441 @@
+/* ==========================================================
+   Grove · Menü-Layouts der Lichtung  (Claude, 16.10.2026)
+   Gewählt in Laub → „Menü“. thema.js setzt html[data-menue="<id>"].
+   Jedes Layout nutzt NUR Theme-Variablen – passt also auch zu jedem anderen Look.
+   Bausteine einer Karte (hauptmenue.js): .dienst[data-id][data-nr] (--i, --r)
+     > .dienst__buehne > img.dienst__bild
+     > .dienst__inhalt > .dienst__zeile (.dienst__name, .dienst__status), .dienst__art, .dienst__text, .dienst__los
+   Am Raster: --n (Anzahl), --mitte; .raster__mitte = Zentrum (nur Umlaufbahn).
+   Schmale Bildschirme: verspielte Layouts fallen auf eine ruhige Liste zurück.
+   ========================================================== */
+
+.raster__mitte { display: none; }
+
+/* ---------- gemeinsame Rückfall-Liste fürs Handy ---------- */
+@media (max-width: 720px) {
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster {
+    display: grid !important; grid-template-columns: 1fr !important; height: auto !important; gap: 12px !important;
+    position: static !important; padding: 0 !important; background: none !important; border: 0 !important; box-shadow: none !important; transform: none !important;
+  }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst {
+    position: relative !important; inset: auto !important; transform: none !important; rotate: none !important; width: auto !important; height: auto !important;
+    margin: 0 !important; flex-direction: row !important; align-items: center; writing-mode: horizontal-tb !important;
+  }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst .dienst__buehne { width: 96px; height: 80px; flex: none; border-bottom: 0; border-right: 1px solid var(--border); }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst :is(.dienst__inhalt, .dienst__name) { writing-mode: horizontal-tb !important; display: flex !important; opacity: 1 !important; }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst :is(.dienst__text, .dienst__los) { display: none !important; }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst { translate: none !important; }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst .dienst__zeile { rotate: none !important; writing-mode: horizontal-tb !important; flex-direction: row !important; align-self: stretch !important; }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst .dienst__inhalt { position: static !important; height: auto !important; padding: 12px 16px !important; align-items: flex-start !important; justify-content: center !important; text-align: left; }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst .dienst__buehne { display: grid !important; position: static !important; opacity: 1 !important; }
+  html[data-menue="regal"] .raster > .dienst::before, html[data-menue="regal"] .raster > .dienst::after { display: none; }
+  html[data-menue="regal"] .raster > .dienst .dienst__name { color: var(--text) !important; font-size: 1.2rem !important; }
+  html[data-menue="regal"] .raster > .dienst { background: var(--surface) !important; border-color: var(--border) !important; }
+  html[data-menue="regal"] .raster > .dienst .dienst__status { display: none; }
+  html[data-menue="orbit"] .raster__mitte { display: none !important; }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst { justify-content: flex-start !important; }
+  html:is([data-menue="orbit"], [data-menue="faecher"], [data-menue="streifen"], [data-menue="regal"]) .raster > .dienst .dienst__bild { width: 88% !important; max-width: 100% !important; }
+  html[data-menue="dock"] .lichtung__gruss { font-size: clamp(2.4rem, 11vw, 3.4rem); }
+  /* Dock bleibt ein Dock – nur kleiner und wischbar */
+  html[data-menue="dock"] .raster { gap: 6px; padding: 8px 10px; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; align-items: center; }
+  html[data-menue="dock"] .dienst, html[data-menue="dock"] .dienst:has(+ a.dienst:hover), html[data-menue="dock"] a.dienst:hover + .dienst,
+  html[data-menue="dock"] a.dienst:is(:hover, :focus-visible) { width: 52px; height: 52px; translate: none; }
+  html[data-menue="dock"] .dienst__inhalt { display: none; }
+}
+
+/* ==========================================================
+   BENTO · Kacheln in verschiedenen Größen
+   ========================================================== */
+html[data-menue="bento"] .raster {
+  grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 210px; grid-auto-flow: dense; gap: 16px;
+}
+html[data-menue="bento"] .dienst { flex-direction: column; }
+html[data-menue="bento"] .dienst__buehne { flex: 1; height: auto; min-height: 90px; }
+html[data-menue="bento"] .dienst__inhalt { flex: none; padding: 14px 18px 16px; }
+html[data-menue="bento"] .dienst__text, html[data-menue="bento"] .dienst__los { display: none; }
+html[data-menue="bento"] .dienst__name { font-size: 1.35rem; }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 1) { grid-column: span 2; grid-row: span 2; }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 1) .dienst__name { font-size: 2.2rem; }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 1) :is(.dienst__text, .dienst__los) { display: block; }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 4) { grid-column: span 2; flex-direction: row; }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 4) .dienst__buehne { border-bottom: 0; border-right: 1px solid var(--border); }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 4) .dienst__inhalt { flex: 1; align-self: center; }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 4) .dienst__text { display: block; }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 6) { grid-row: span 2; }
+html[data-menue="bento"] .dienst:nth-of-type(7n + 6) .dienst__text { display: block; }
+html[data-menue="bento"] .dienst:nth-of-type(3n + 2) .dienst__buehne { background: radial-gradient(ellipse at 30% 0%, color-mix(in srgb, var(--flieder) 22%, transparent), transparent 70%), var(--surface-hi); }
+@media (max-width: 900px) { html[data-menue="bento"] .raster { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { html[data-menue="bento"] .raster { grid-template-columns: 1fr; grid-auto-rows: auto; } html[data-menue="bento"] .dienst { grid-column: auto !important; grid-row: auto !important; } html[data-menue="bento"] .dienst__buehne { min-height: 130px; } }
+
+/* ==========================================================
+   REGAL · Buchrücken im Bücherregal
+   ========================================================== */
+html[data-menue="regal"] .raster {
+  display: flex; align-items: flex-end; gap: 6px; height: 400px; padding: 0 28px;
+  position: relative; overflow-x: auto; overflow-y: visible; scrollbar-width: thin;
+  border-bottom: 18px solid color-mix(in srgb, var(--amber) 30%, var(--ground-deep));
+  box-shadow: 0 14px 30px -10px rgba(0,0,0,.6);
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--ground-deep) 70%, transparent));
+}
+html[data-menue="regal"] .dienst {
+  --buch: color-mix(in srgb, var(--amber) calc(28% + (var(--i) * 7%)), var(--surface-hi));
+  flex: none; width: 66px; height: calc(300px + (var(--i) * 23px) % 90px);
+  border-radius: calc(4px * var(--ecken)) calc(4px * var(--ecken)) 2px 2px;
+  background: linear-gradient(90deg, rgba(0,0,0,.28), transparent 18%, transparent 82%, rgba(0,0,0,.3)), var(--buch);
+  border: 1px solid color-mix(in srgb, var(--buch) 60%, black);
+  transition: width .5s cubic-bezier(.2,.8,.2,1), translate .4s cubic-bezier(.2,.8,.2,1), background .4s;
+  transform-origin: bottom center;
+}
+html[data-menue="regal"] .dienst:nth-of-type(3n + 2) { --buch: color-mix(in srgb, var(--flieder) 40%, var(--surface)); }
+html[data-menue="regal"] .dienst:nth-of-type(4n + 3) { rotate: -2.5deg; margin-left: 6px; }
+html[data-menue="regal"] .dienst__buehne { display: none; }
+html[data-menue="regal"] .dienst__inhalt { padding: 18px 0; align-items: center; justify-content: space-between; height: 100%; }
+html[data-menue="regal"] .dienst__zeile { writing-mode: vertical-rl; rotate: 180deg; flex-direction: row-reverse; gap: 14px; }
+html[data-menue="regal"] .dienst__name { color: var(--ground-deep); font-size: 1.45rem; letter-spacing: .04em; white-space: nowrap; }
+html[data-menue="regal"] .dienst__status { border-color: color-mix(in srgb, var(--ground-deep) 40%, transparent); color: var(--ground-deep) !important; font-size: .6rem; padding: 6px 3px; }
+html[data-menue="regal"] :is(.dienst__art, .dienst__text, .dienst__los) { display: none; }
+html[data-menue="regal"] .dienst::before, html[data-menue="regal"] .dienst::after {   /* Goldbänder am Rücken */
+  content: ""; position: absolute; left: 8px; right: 8px; height: 3px; border-radius: 2px;
+  background: color-mix(in srgb, var(--ground-deep) 45%, transparent);
+}
+html[data-menue="regal"] .dienst::before { top: 12px; } html[data-menue="regal"] .dienst::after { bottom: 12px; }
+/* Buch herausziehen */
+html[data-menue="regal"] a.dienst:is(:hover, :focus-visible) {
+  width: 300px; translate: 0 -14px; rotate: 0deg; z-index: 2;
+  background: linear-gradient(90deg, rgba(0,0,0,.25), transparent 6%), var(--surface);
+  box-shadow: 0 24px 40px -12px rgba(0,0,0,.6);
+}
+html[data-menue="regal"] a.dienst:is(:hover, :focus-visible) .dienst__inhalt { align-items: flex-start; justify-content: flex-start; padding: 26px 22px; gap: 10px; }
+html[data-menue="regal"] a.dienst:is(:hover, :focus-visible) .dienst__zeile { writing-mode: horizontal-tb; rotate: 0deg; flex-direction: row; }
+html[data-menue="regal"] a.dienst:is(:hover, :focus-visible) .dienst__name { color: var(--text); white-space: normal; font-size: 1.9rem; }
+html[data-menue="regal"] a.dienst:is(:hover, :focus-visible) .dienst__status { color: var(--amber-light) !important; font-size: .7rem; padding: 4px 10px; }
+html[data-menue="regal"] a.dienst:is(:hover, :focus-visible) :is(.dienst__art, .dienst__text, .dienst__los) { display: block; animation: hoch .4s .12s both; }
+html[data-menue="regal"] .dienst--platz { display: none; }
+
+/* ==========================================================
+   PLATTEN · Plattencover, Platte rutscht heraus
+   ========================================================== */
+html[data-menue="platten"] .raster {
+  display: flex; gap: 64px; overflow-x: auto; padding: 26px 90px 30px 6px; scroll-snap-type: x mandatory; scrollbar-width: thin;
+}
+html[data-menue="platten"] .dienst {
+  flex: none; width: 230px; scroll-snap-align: start; overflow: visible; background: none; border: 0; isolation: isolate;
+}
+html[data-menue="platten"] .dienst__buehne {
+  position: relative; height: 230px; width: 230px; border: 1px solid var(--border-hi);
+  border-radius: calc(4px * var(--ecken)); z-index: 1; box-shadow: 6px 10px 24px rgba(0,0,0,.45);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--amber) 22%, var(--surface)), var(--surface) 55%, color-mix(in srgb, var(--flieder) 20%, var(--surface)));
+}
+html[data-menue="platten"] .dienst:nth-of-type(2n) .dienst__buehne { background: linear-gradient(200deg, color-mix(in srgb, var(--flieder) 26%, var(--surface)), var(--surface) 60%); }
+html[data-menue="platten"] .dienst__buehne::after {        /* Titel-Aufkleber */
+  content: attr(data-nr); position: absolute; top: 12px; left: 14px; font: 400 .8rem var(--font-display); color: var(--amber-light); letter-spacing: .1em;
+}
+html[data-menue="platten"] .dienst::before {               /* die Schallplatte */
+  content: ""; position: absolute; top: 6px; left: 6px; width: 218px; height: 218px; border-radius: 50%; z-index: 0;
+  background:
+    radial-gradient(circle, var(--amber) 0 13%, var(--ground-deep) 13.5% 15%, transparent 15.5%),
+    conic-gradient(from 30deg, rgba(255,255,255,0) 0 10%, rgba(255,255,255,.12) 14%, rgba(255,255,255,0) 20% 60%, rgba(255,255,255,.1) 64%, rgba(255,255,255,0) 70%),
+    repeating-radial-gradient(circle, #0a0a0c 0 2px, #1b1b20 2px 3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.08);
+  translate: 30px 0;
+  transition: translate .6s cubic-bezier(.2,.8,.2,1), rotate 1.4s cubic-bezier(.2,.8,.2,1);
+}
+html[data-menue="platten"] a.dienst:is(:hover, :focus-visible)::before { translate: 110px 0; rotate: 200deg; }
+html[data-menue="platten"] a.dienst:is(:hover, :focus-visible) { z-index: 2; }
+html[data-menue="platten"] a.dienst:hover { translate: none; box-shadow: none; }
+html[data-menue="platten"] .dienst__inhalt { padding: 16px 2px 0; gap: 4px; }
+html[data-menue="platten"] .dienst__name { font-size: 1.35rem; }
+html[data-menue="platten"] .dienst__text { font-size: .86rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+html[data-menue="platten"] .dienst__los { padding-top: 6px; }
+html[data-menue="platten"] .dienst--platz .dienst__buehne { border-style: dashed; box-shadow: none; background: transparent; }
+html[data-menue="platten"] .dienst--platz::before { display: none; }
+
+/* ==========================================================
+   ORBIT · Umlaufbahn um das Grove-Logo
+   ========================================================== */
+@property --umlauf { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+html[data-menue="orbit"] .raster {
+  --radius: min(300px, 38vw);
+  display: block; position: relative; height: calc(var(--radius) * 2 + 190px); max-width: none;
+  animation: orbit-umlauf 160s linear infinite;
+}
+html[data-menue="orbit"] .raster:is(:hover, :focus-within) { animation-play-state: paused; }
+@keyframes orbit-umlauf { to { --umlauf: 360deg; } }
+html[data-menue="orbit"] .raster::before, html[data-menue="orbit"] .raster::after {        /* Bahnen */
+  content: ""; position: absolute; left: 50%; top: 50%; translate: -50% -50%; border-radius: 50%; pointer-events: none;
+  width: calc(var(--radius) * 2); height: calc(var(--radius) * 2);
+  border: 1px dashed color-mix(in srgb, var(--amber) 28%, transparent);
+}
+html[data-menue="orbit"] .raster::after { width: calc(var(--radius) * 1.15); height: calc(var(--radius) * 1.15); border-style: solid; border-color: color-mix(in srgb, var(--flieder) 16%, transparent); }
+html[data-menue="orbit"] .raster__mitte {
+  display: grid; place-items: center; gap: 6px; position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  width: 150px; height: 150px; border-radius: 50%; text-align: center;
+  background: radial-gradient(circle, color-mix(in srgb, var(--amber) 22%, transparent), transparent 70%);
+}
+html[data-menue="orbit"] .raster__mitte img { width: 74px; height: 74px; }
+html[data-menue="orbit"] .raster__mitte span { font: 400 1.1rem var(--font-display); color: var(--amber-light); letter-spacing: .2em; text-transform: uppercase; }
+html[data-menue="orbit"] .dienst {
+  --winkel: calc(var(--i) * 360deg / var(--n) + var(--umlauf));
+  position: absolute; left: 50%; top: 50%; width: 148px; margin: -74px 0 0 -74px; z-index: 1;
+  transform: rotate(var(--winkel)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--winkel) * -1));
+  border-radius: calc(26px * var(--ecken)); text-align: center;
+  background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(6px);
+}
+html[data-menue="orbit"] .dienst__buehne { height: 86px; border-bottom: 0; background: radial-gradient(circle at 50% 70%, color-mix(in srgb, var(--amber) 18%, transparent), transparent 70%); }
+html[data-menue="orbit"] .dienst__bild { width: 100%; max-height: 80px; }
+html[data-menue="orbit"] .dienst__inhalt { padding: 2px 10px 14px; align-items: center; gap: 2px; }
+html[data-menue="orbit"] .dienst__zeile { justify-content: center; }
+html[data-menue="orbit"] .dienst__name { font-size: 1.05rem; }
+html[data-menue="orbit"] :is(.dienst__status, .dienst__text, .dienst__los) { display: none; }
+html[data-menue="orbit"] .dienst__art { font-size: .62rem; }
+html[data-menue="orbit"] a.dienst:hover { translate: none; scale: 1.12; z-index: 3; box-shadow: 0 0 0 1px var(--amber), 0 0 40px color-mix(in srgb, var(--amber) 35%, transparent); }
+html[data-menue="orbit"] .dienst--platz { display: none; }
+html[data-bewegung="dezent"][data-menue="orbit"] .raster, html[data-bewegung="aus"][data-menue="orbit"] .raster { animation: none; }
+
+/* ==========================================================
+   TERMINAL · Befehle statt Karten
+   ========================================================== */
+html[data-menue="terminal"] .lichtung__gruss::before { content: "> "; color: var(--amber); }
+html[data-menue="terminal"] .lichtung__gruss::after { content: "_"; color: var(--amber); animation: term-cursor 1.1s steps(1) infinite; }
+@keyframes term-cursor { 50% { opacity: 0; } }
+html[data-menue="terminal"] .bereich__titel::before { content: "~/grove $ ls dienste/"; display: block; font-size: .85rem; color: var(--muted); margin-bottom: 4px; }
+html[data-menue="terminal"] .raster {
+  display: flex; flex-direction: column; gap: 0; padding: 44px 0 16px;
+  background: var(--ground-deep); border: 1px solid var(--border-hi); border-radius: calc(10px * var(--ecken)); position: relative;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--amber) 12%, transparent), 0 0 60px color-mix(in srgb, var(--amber) 8%, transparent) inset;
+}
+html[data-menue="terminal"] .raster::before {             /* Fensterleiste */
+  content: "●  ●  ●     grove — zsh"; position: absolute; inset: 0 0 auto 0; height: 32px; padding: 0 14px; display: flex; align-items: center;
+  font-size: .78rem; color: var(--muted); border-bottom: 1px solid var(--border); background: var(--surface);
+  border-radius: calc(10px * var(--ecken)) calc(10px * var(--ecken)) 0 0;
+}
+html[data-menue="terminal"] .raster::after { content: "$ █"; padding: 10px 22px 0; color: var(--amber); animation: term-cursor 1.1s steps(1) infinite; }
+html[data-menue="terminal"] .dienst {
+  flex-direction: row; align-items: baseline; gap: 0; border: 0; border-radius: 0; background: none; padding: 7px 22px;
+  overflow: visible;
+}
+html[data-menue="terminal"] .dienst::before { content: "$ grove open " attr(data-id); flex: 0 0 15.5em; color: var(--muted); font-size: .9rem; }
+html[data-menue="terminal"] .dienst__buehne { display: none; }
+html[data-menue="terminal"] .dienst__inhalt { padding: 0; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+html[data-menue="terminal"] .dienst__zeile { gap: 12px; }
+html[data-menue="terminal"] .dienst__name { font-size: 1rem; font-weight: 600; color: var(--amber-light); }
+html[data-menue="terminal"] .dienst__name::after { content: "/"; color: var(--muted); }
+html[data-menue="terminal"] .dienst__status { border: 0; padding: 0; font-size: .75rem; }
+html[data-menue="terminal"] .dienst__status::before { content: "["; } html[data-menue="terminal"] .dienst__status::after { content: "]"; }
+html[data-menue="terminal"] .dienst__art { text-transform: none; letter-spacing: 0; font-size: .85rem; }
+html[data-menue="terminal"] .dienst__art::before { content: "# "; }
+html[data-menue="terminal"] .dienst__text { display: none; }
+html[data-menue="terminal"] .dienst__los { padding: 0; margin: 0 0 0 auto; font-size: .82rem; opacity: 0; }
+html[data-menue="terminal"] a.dienst:is(:hover, :focus-visible) { background: var(--amber); translate: none; box-shadow: none; }
+html[data-menue="terminal"] a.dienst:is(:hover, :focus-visible) * , html[data-menue="terminal"] a.dienst:is(:hover, :focus-visible)::before { color: var(--auf-akzent) !important; }
+html[data-menue="terminal"] a.dienst:is(:hover, :focus-visible) .dienst__los { opacity: 1; }
+html[data-menue="terminal"] .dienst--platz::before { content: "$ mkdir neu"; }
+@media (max-width: 720px) { html[data-menue="terminal"] .dienst { flex-direction: column; } html[data-menue="terminal"] .dienst::before { flex: none; } }
+
+/* ==========================================================
+   DOCK · große Bühne, Dienste im Dock unten
+   ========================================================== */
+html[data-menue="dock"] .lichtung { min-height: calc(100svh - 64px); align-items: center; }
+html[data-menue="dock"] .lichtung__text { padding: 0 0 160px; }
+html[data-menue="dock"] .lichtung__gruss { font-size: clamp(3rem, 9vw, 6.4rem); }
+html[data-menue="dock"] .bereich { padding: 0; }
+html[data-menue="dock"] .bereich__kopf { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+html[data-menue="dock"] .fuss { padding-bottom: 130px; }
+html[data-menue="dock"] .raster {
+  position: fixed; z-index: 20; bottom: 18px; left: 0; right: 0; margin: 0 auto; width: max-content; max-width: calc(100vw - 24px);
+  display: flex; align-items: flex-end; gap: 10px; padding: 10px 14px;
+  background: color-mix(in srgb, var(--surface) 62%, transparent); backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid color-mix(in srgb, var(--text) 14%, transparent); border-radius: calc(26px * var(--ecken));
+  box-shadow: 0 20px 50px rgba(0,0,0,.45);
+}
+html[data-menue="dock"] .dienst {
+  width: 66px; height: 66px; flex: none; overflow: visible; border-radius: calc(18px * var(--ecken));
+  background: linear-gradient(160deg, color-mix(in srgb, var(--amber) 22%, var(--surface-hi)), var(--surface));
+  transition: width .25s cubic-bezier(.2,.8,.2,1), height .25s cubic-bezier(.2,.8,.2,1), translate .25s;
+}
+html[data-menue="dock"] .dienst__buehne { height: 100%; border: 0; background: none; border-radius: inherit; overflow: hidden; }
+html[data-menue="dock"] .dienst__bild { width: 150%; max-height: none; }
+html[data-menue="dock"] .dienst__inhalt { position: absolute; bottom: calc(100% + 14px); left: 50%; translate: -50% 6px; padding: 6px 12px; opacity: 0; pointer-events: none;
+  background: var(--surface-hi); border: 1px solid var(--border-hi); border-radius: 10px; white-space: nowrap; transition: opacity .2s, translate .2s; }
+html[data-menue="dock"] .dienst__name { font-size: .95rem; }
+html[data-menue="dock"] :is(.dienst__status, .dienst__art, .dienst__text, .dienst__los) { display: none; }
+html[data-menue="dock"] a.dienst:is(:hover, :focus-visible) { width: 96px; height: 96px; translate: 0 -8px; box-shadow: none; }
+html[data-menue="dock"] a.dienst:is(:hover, :focus-visible) .dienst__inhalt { opacity: 1; translate: -50% 0; }
+html[data-menue="dock"] .dienst:has(+ a.dienst:hover), html[data-menue="dock"] a.dienst:hover + .dienst { width: 80px; height: 80px; translate: 0 -3px; }
+html[data-menue="dock"] .dienst--platz { display: none; }
+html[data-menue="dock"] .dienst[data-status="aktiv"]::after { content: ""; position: absolute; bottom: -7px; left: 50%; translate: -50% 0; width: 4px; height: 4px; border-radius: 50%; background: var(--text-soft); }
+
+/* ==========================================================
+   FÄCHER · Karten wie ein Blatt in der Hand
+   ========================================================== */
+html[data-menue="faecher"] .raster { display: flex; justify-content: center; height: 470px; padding-top: 60px; }
+html[data-menue="faecher"] .dienst {
+  flex: none; width: 200px; height: 300px; margin: 0 -58px;
+  rotate: calc((var(--i) - var(--mitte)) * 5deg); translate: 0 calc(pow(var(--i) - var(--mitte), 2) * 4px);
+  transform-origin: 50% 140%;
+  box-shadow: -8px 10px 30px rgba(0,0,0,.4);
+  transition: rotate .45s cubic-bezier(.2,.8,.2,1), translate .45s cubic-bezier(.2,.8,.2,1), box-shadow .3s, margin .45s;
+}
+html[data-menue="faecher"] .dienst__buehne { height: 140px; }
+html[data-menue="faecher"] .dienst__inhalt { padding: 14px 16px; }
+html[data-menue="faecher"] .dienst__name { font-size: 1.3rem; }
+html[data-menue="faecher"] .dienst__text { font-size: .84rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+html[data-menue="faecher"] .dienst__status { display: none; }
+html[data-menue="faecher"] a.dienst:is(:hover, :focus-visible) { rotate: 0deg; translate: 0 -54px; z-index: 5; margin: 0 -10px; box-shadow: 0 30px 60px rgba(0,0,0,.5), 0 0 0 1px var(--amber); }
+html[data-menue="faecher"] .dienst--platz { display: none; }
+@supports not (translate: 0 calc(pow(2, 2) * 1px)) { html[data-menue="faecher"] .dienst { translate: 0 0; } }
+
+/* ==========================================================
+   PINNWAND · Polaroids an der Korkwand
+   ========================================================== */
+html[data-menue="pinnwand"] .bereich {
+  padding: 48px 28px 40px; margin-top: 36px; border-radius: calc(8px * var(--ecken));
+  background: color-mix(in srgb, var(--ground-deep) 80%, var(--amber) 4%);
+  box-shadow: inset 0 0 0 10px color-mix(in srgb, var(--ground-deep) 60%, black 25%), inset 0 0 60px rgba(0,0,0,.25);
+}
+html[data-menue="pinnwand"] .bereich__titel { font-size: 2.6rem; rotate: -1.5deg; }
+html[data-menue="pinnwand"] .raster { grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); gap: 34px 26px; }
+html[data-menue="pinnwand"] .dienst {
+  rotate: var(--r); padding: 12px 12px 6px; border: 0; border-radius: 2px; overflow: visible;
+  background: var(--surface); box-shadow: 2px 6px 14px rgba(0,0,0,.28);
+}
+html[data-menue="pinnwand"] .dienst::before {               /* Pinnnadel */
+  content: ""; position: absolute; top: -9px; left: 50%; width: 18px; height: 18px; translate: -50% 0; border-radius: 50%; z-index: 2;
+  background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--amber) 40%, white), var(--amber) 55%, color-mix(in srgb, var(--amber) 60%, black));
+  box-shadow: 1px 3px 4px rgba(0,0,0,.35);
+}
+html[data-menue="pinnwand"] .dienst:nth-of-type(3n)::before { background: radial-gradient(circle at 35% 35%, white, var(--flieder) 55%, color-mix(in srgb, var(--flieder) 60%, black)); }
+html[data-menue="pinnwand"] .dienst__buehne { height: 160px; border: 0; background: color-mix(in srgb, var(--ground) 45%, var(--surface-hi)); }
+html[data-menue="pinnwand"] .dienst__inhalt { padding: 10px 4px 8px; gap: 2px; }
+html[data-menue="pinnwand"] .dienst__name { font-size: 1.9rem; font-weight: 700; }
+html[data-menue="pinnwand"] .dienst__status { display: none; }
+html[data-menue="pinnwand"] .dienst__text { font-size: .86rem; }
+html[data-menue="pinnwand"] .dienst__los { display: none; }
+html[data-menue="pinnwand"] a.dienst:is(:hover, :focus-visible) { rotate: 0deg; scale: 1.05; translate: none; z-index: 3; box-shadow: 6px 18px 30px rgba(0,0,0,.35); }
+html[data-menue="pinnwand"] .dienst--platz { background: color-mix(in srgb, var(--surface) 50%, transparent); }
+
+/* ==========================================================
+   PFAD · Stationen entlang eines Waldwegs
+   ========================================================== */
+html[data-menue="pfad"] .raster { grid-template-columns: 1fr 1fr; gap: 0 90px; position: relative; padding: 10px 0 30px; }
+html[data-menue="pfad"] .raster::before {                   /* der Weg */
+  content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; translate: -50% 0; border-radius: 4px;
+  background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--amber) 55%, transparent) 0 14px, transparent 14px 26px);
+}
+html[data-menue="pfad"] .dienst { flex-direction: row; margin-bottom: 26px; overflow: visible; }
+html[data-menue="pfad"] .dienst:nth-of-type(odd) { grid-column: 1; }
+html[data-menue="pfad"] .dienst:nth-of-type(even) { grid-column: 2; margin-top: 110px; margin-bottom: -84px; }
+html[data-menue="pfad"] .dienst::after {                    /* Station auf dem Weg */
+  content: attr(data-nr); position: absolute; top: 50%; translate: 0 -50%; width: 40px; height: 40px; display: grid; place-items: center;
+  border-radius: 50%; background: var(--ground); border: 3px solid var(--amber); color: var(--amber-light); font: 600 .8rem var(--font-text, inherit);
+}
+html[data-menue="pfad"] .dienst:nth-of-type(odd)::after { right: -66px; }
+html[data-menue="pfad"] .dienst:nth-of-type(even)::after { left: -66px; }
+html[data-menue="pfad"] .dienst:nth-of-type(odd)::before, html[data-menue="pfad"] .dienst:nth-of-type(even)::before {   /* Abzweig */
+  content: ""; position: absolute; top: 50%; width: 26px; height: 2px; background: color-mix(in srgb, var(--amber) 55%, transparent);
+}
+html[data-menue="pfad"] .dienst:nth-of-type(odd)::before { right: -27px; } html[data-menue="pfad"] .dienst:nth-of-type(even)::before { left: -27px; }
+html[data-menue="pfad"] .dienst__buehne { width: 150px; height: auto; flex: none; border-bottom: 0; border-right: 1px solid var(--border); }
+html[data-menue="pfad"] .dienst__bild { width: 92%; }
+html[data-menue="pfad"] .dienst__inhalt { padding: 16px 18px; }
+html[data-menue="pfad"] .dienst__name { font-size: 1.35rem; }
+html[data-menue="pfad"] .dienst__text { font-size: .88rem; }
+html[data-menue="pfad"] .dienst__los { padding-top: 6px; }
+html[data-menue="pfad"] a.dienst:hover::after { background: var(--amber); color: var(--auf-akzent); }
+@media (max-width: 820px) {
+  html[data-menue="pfad"] .raster { grid-template-columns: 1fr; padding-left: 46px; }
+  html[data-menue="pfad"] .raster::before { left: 14px; }
+  html[data-menue="pfad"] .dienst:nth-of-type(n) { grid-column: 1; margin: 0 0 18px; }
+  html[data-menue="pfad"] .dienst:nth-of-type(n)::after { left: -50px; right: auto; width: 30px; height: 30px; }
+  html[data-menue="pfad"] .dienst:nth-of-type(n)::before { display: none; }
+  html[data-menue="pfad"] .dienst__buehne { width: 96px; }
+}
+
+/* ==========================================================
+   STREIFEN · schmale Vorhänge, die aufgehen
+   ========================================================== */
+html[data-menue="streifen"] .raster { display: flex; gap: 8px; height: 440px; }
+html[data-menue="streifen"] .dienst {
+  flex: 1 1 0; min-width: 0; position: relative; justify-content: flex-end;
+  transition: flex-grow .6s cubic-bezier(.2,.8,.2,1), border-color .3s;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--amber) calc(6% + var(--i) * 3%), var(--surface)), var(--surface));
+}
+html[data-menue="streifen"] .dienst__buehne { position: absolute; inset: 0; height: auto; border: 0; background: none; opacity: .35; transition: opacity .5s; }
+html[data-menue="streifen"] .dienst__bild { width: 190px; max-width: none; }
+html[data-menue="streifen"] .dienst__inhalt { position: relative; padding: 18px; flex: none; }
+html[data-menue="streifen"] .dienst__zeile { writing-mode: vertical-rl; rotate: 180deg; align-self: flex-start; }
+html[data-menue="streifen"] .dienst__name { white-space: nowrap; font-size: 1.5rem; }
+html[data-menue="streifen"] :is(.dienst__status, .dienst__art, .dienst__text, .dienst__los) { display: none; }
+html[data-menue="streifen"] a.dienst:is(:hover, :focus-visible) { flex-grow: 5; translate: none; }
+html[data-menue="streifen"] a.dienst:is(:hover, :focus-visible) .dienst__buehne { opacity: 1; place-items: start center; padding-top: 30px; }
+html[data-menue="streifen"] a.dienst:is(:hover, :focus-visible) .dienst__zeile { writing-mode: horizontal-tb; rotate: 0deg; align-self: stretch; }
+html[data-menue="streifen"] a.dienst:is(:hover, :focus-visible) :is(.dienst__status, .dienst__art, .dienst__text, .dienst__los) { display: block; animation: hoch .45s .15s both; }
+html[data-menue="streifen"] a.dienst:is(:hover, :focus-visible) .dienst__name { font-size: 2rem; white-space: normal; }
+html[data-menue="streifen"] .dienst--platz { display: none; }
+
+/* ==========================================================
+   ARCADE · Neon, Leuchtgitter, Press Start
+   ========================================================== */
+html[data-menue="arcade"] .lichtung__gruss { text-transform: uppercase; letter-spacing: .04em; text-shadow: 0 0 18px color-mix(in srgb, var(--amber) 70%, transparent); }
+html[data-menue="arcade"] main { overflow-x: clip; }
+html[data-menue="arcade"] .bereich { position: relative; perspective: 600px; }
+html[data-menue="arcade"] .bereich::before {               /* Leuchtgitter am Boden */
+  content: ""; position: absolute; left: -30%; right: -30%; bottom: -40px; height: 340px; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(transparent 0 calc(100% - 2px), color-mix(in srgb, var(--amber) 60%, transparent) 0) 0 0 / 100% 42px,
+    linear-gradient(90deg, transparent 0 calc(100% - 2px), color-mix(in srgb, var(--flieder) 55%, transparent) 0) 0 0 / 60px 100%;
+  transform: rotateX(66deg); transform-origin: bottom; mask-image: linear-gradient(to top, black, transparent 85%);
+  animation: arcade-gitter 3s linear infinite;
+}
+@keyframes arcade-gitter { to { background-position: 0 42px, 0 0; } }
+html[data-bewegung="dezent"][data-menue="arcade"] .bereich::before, html[data-bewegung="aus"][data-menue="arcade"] .bereich::before { animation: none; }
+html[data-menue="arcade"] .bereich__titel { text-transform: uppercase; letter-spacing: .14em; color: var(--flieder); text-shadow: 0 0 14px color-mix(in srgb, var(--flieder) 60%, transparent); }
+html[data-menue="arcade"] .raster { grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); }
+html[data-menue="arcade"] .dienst {
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  border: 2px solid var(--amber);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--amber) 50%, transparent), inset 0 0 18px color-mix(in srgb, var(--amber) 18%, transparent);
+}
+html[data-menue="arcade"] .dienst:nth-of-type(2n) { border-color: var(--flieder); box-shadow: 0 0 14px color-mix(in srgb, var(--flieder) 50%, transparent), inset 0 0 18px color-mix(in srgb, var(--flieder) 16%, transparent); }
+html[data-menue="arcade"] .dienst__buehne { height: 130px; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.18) 3px 4px), var(--ground-deep); }
+html[data-menue="arcade"] .dienst__name { text-transform: uppercase; letter-spacing: .05em; }
+html[data-menue="arcade"] .dienst__los { font-size: 0; }
+html[data-menue="arcade"] .dienst__los::after { content: "▶ PRESS START"; font-size: .82rem; letter-spacing: .18em; }
+html[data-menue="arcade"] a.dienst:hover .dienst__los::after { translate: none; animation: term-cursor .8s steps(1) infinite; }
+html[data-menue="arcade"] .dienst[aria-disabled="true"] .dienst__los::after { content: "COMING SOON"; }
+html[data-menue="arcade"] .dienst--platz .dienst__los::after { content: "INSERT COIN"; }
+
+/* ==========================================================
+   ZEITUNG · Feuilleton mit Spalten und Initialen
+   ========================================================== */
+html[data-menue="zeitung"] .lichtung { min-height: 0; background: var(--ground); border-bottom: 3px double var(--text); }
+html[data-menue="zeitung"] .lichtung__text { padding: 46px 0 34px; align-items: center; text-align: center; }
+html[data-menue="zeitung"] .lichtung__datum { order: -1; width: 100%; padding: 6px 0; border-block: 1px solid var(--text); color: var(--text-soft); letter-spacing: .3em; }
+html[data-menue="zeitung"] .lichtung__gruss { font-size: clamp(2.6rem, 8vw, 5.4rem); font-weight: 600; font-style: italic; }
+html[data-menue="zeitung"] .lichtung__unter { max-width: 60ch; font-style: italic; }
+html[data-menue="zeitung"] .bereich__kopf { border-bottom: 1px solid var(--text); padding-bottom: 8px; }
+html[data-menue="zeitung"] .bereich__titel { text-transform: uppercase; letter-spacing: .2em; font-size: 1rem; font-weight: 700; }
+html[data-menue="zeitung"] .raster { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+html[data-menue="zeitung"] .dienst {
+  background: none; border: 0; border-radius: 0; padding: 18px 22px 22px; border-right: 1px solid var(--border-hi); border-bottom: 1px solid var(--border-hi);
+}
+html[data-menue="zeitung"] .dienst:first-of-type { grid-column: span 2; grid-row: span 2; }
+html[data-menue="zeitung"] .dienst:first-of-type .dienst__name { font-size: 3rem; }
+html[data-menue="zeitung"] .dienst:first-of-type .dienst__buehne { height: 300px; }
+html[data-menue="zeitung"] .dienst__buehne { order: 2; height: 110px; overflow: hidden; margin: 10px 0 4px; border: 1px solid var(--border-hi); background: var(--surface-hi); filter: grayscale(1) contrast(1.05); }
+html[data-menue="zeitung"] .dienst__inhalt { display: contents; }
+html[data-menue="zeitung"] .dienst__art { order: 0; color: var(--amber); font-weight: 700; font-size: .72rem; letter-spacing: .2em; }
+html[data-menue="zeitung"] .dienst__zeile { order: 1; }
+html[data-menue="zeitung"] .dienst__name { font-size: 1.8rem; line-height: 1.05; font-weight: 600; }
+html[data-menue="zeitung"] .dienst__status { border-radius: 0; border-color: var(--text-soft); color: var(--text-soft) !important; }
+html[data-menue="zeitung"] .dienst__bild { max-height: 92%; width: auto; max-width: 80%; }
+html[data-menue="zeitung"] .dienst__text { order: 3; hyphens: auto; }
+html[data-menue="zeitung"] .dienst:first-of-type .dienst__text { font-size: 1.15rem; column-count: 2; column-gap: 26px; }
+html[data-menue="zeitung"] .dienst__text::first-letter { float: left; font: 600 2.9em/.85 var(--font-display); padding: 4px 6px 0 0; color: var(--amber); }
+html[data-menue="zeitung"] .dienst__los { order: 4; font-style: italic; font-weight: 400; }
+html[data-menue="zeitung"] a.dienst:hover { translate: none; box-shadow: none; background: var(--surface); }
+html[data-menue="zeitung"] a.dienst:hover .dienst__name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+@media (max-width: 860px) { html[data-menue="zeitung"] .raster { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { html[data-menue="zeitung"] .raster { grid-template-columns: 1fr; } html[data-menue="zeitung"] .dienst:first-of-type { grid-column: auto; grid-row: auto; } }
+html[data-menue="orbit"][data-eingang="aufblaettern"] .dienst { animation-name: thema-einblenden; }
+html[data-bewegung="dezent"][data-menue="terminal"] :is(.lichtung__gruss, .raster)::after { animation: none; }

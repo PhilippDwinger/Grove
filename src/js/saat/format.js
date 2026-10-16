@@ -49,6 +49,10 @@ export function neuerBlock(typ) {
 // ---------- Fingerabdrücke ----------
 // Kern = woran man erkennt, ob zwei Karten „dieselbe“ sind: Vorderseite + Antwort.
 // Unterschiede nur auf der Rückseite (Beispiele, Merksätze …) sind KEIN Konflikt.
+// Kurzer Titel einer Karte für Listen. Bildkarten (Vorderseite nur Bild) zeigen ihre Antwort.
+export const vorneTitel = (k) => (k?.vorne?.text || "").trim() || (k?.vorne?.bloecke?.length ? (k.antwort || "") : "")
+export const vorneIstBild = (k) => !(k?.vorne?.text || "").trim() && !!k?.vorne?.bloecke?.some((b) => b.typ === "bild")
+
 export function kernAbdruck(karte) {
     return fnv(normal(karte?.vorne?.text) + "\u0001" + normal(karte?.antwort))
 }

@@ -59,6 +59,7 @@ export const BLOCK_SYMBOL = {
     satz: svg(`<path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 4v-4H6a2 2 0 0 1-2-2z"/><path d="M8 9h8M8 12.5h5"/>`),
     uebersetzung: svg(`<path d="M4 7h9M8.5 4v3M6 7c.5 3 2.5 5.5 5 6.5"/><path d="M11 7c-.5 3-3 6-6.5 7"/><path d="M13 20l3.5-8 3.5 8M14.2 17.3h4.6"/>`),
     aussprache: S.lautsprecher,
+    funfakt: svg(`<path d="M12 3l1.8 4.6L18.5 9l-4.7 1.5L12 15l-1.8-4.5L5.5 9l4.7-1.4z"/><path d="M18.5 15l.8 2 2 .7-2 .8-.8 2-.8-2-2-.8 2-.7zM5.5 16l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4L3.5 18l1.4-.6z"/>`),
     merksatz: svg(`<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>`),
     beispiele: svg(`<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.5M4 12h.5M4 18h.5" stroke-width="2.6"/>`),
     hinweis: svg(`<path d="M9 21h6"/><path d="M8 17h8l-1-3.5a5 5 0 1 0-6 0z"/><path d="M12 3v1M4.2 6.2l.7.7M19.8 6.2l-.7.7"/>`),

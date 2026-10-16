@@ -77,6 +77,7 @@ Jeder Block: `{ "id": "…", "typ": "…", …Felder }`. Texte dürfen `**fett**
 | `uebersetzung` | `text`, `bezug` (ID eines Satz-/Textblocks, leer = Vorderseite), `sprache`, `notiz` |
 | `aussprache` | `lautschrift`, `text` (leer = Vorderseite), `audio` (Quelle), `sprache` (Vorlesen per Sprachausgabe) |
 | `merksatz` | `text` |
+| `funfakt` | `text` („Wusstest du?“) |
 | `beispiele` | `titel`, `eintraege: [{ text, zusatz }]` |
 | `hinweis` | `text`, `verborgen` (Standard `true`: erst auf Klick) |
 | `tabelle` | `titel`, `kopf` (erste Zeile = Überschrift), `zeilen: [[…], …]` |
@@ -155,3 +156,5 @@ Kurse sind normale Lerndateien mit einem zusätzlichen Feld `"kurs": { "id": "gr
 Sie stecken als Script in `src/js/saat/kurse/<id>.js` und werden beim Herunterladen als `saatgut/kurs-<id>.saat` in den
 **gerade geöffneten** Lernspeicher gelegt. Entfernen löscht die Datei und die Protokollzeilen ihrer Karten in diesem Speicher
 (vorher Sicherung in `sicherung/`); Karten, die auch in eigenen Lerndateien stehen, behalten ihren Stand. Andere Speicher bleiben unberührt.
+Mitgelieferte Bilder (z. B. Baumfotos) kommen beim Herunterladen als `medien/kurs-<kurs>-<name>` mit in den Speicher und werden beim Entfernen
+wieder gelöscht, sofern keine andere Lerndatei sie benutzt.

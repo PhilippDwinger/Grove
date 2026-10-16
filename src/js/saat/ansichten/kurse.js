@@ -13,6 +13,22 @@ import { verteilungHtml, meldung, fehlerMeldung, dialog } from "./ui.js"
 
 const laeuft = new Set()       // Kurs-IDs, die gerade geladen werden
 
+// Titelbilder der Kurse (Farben nur über CSS-Variablen, siehe .sa-kursbild in saat.css)
+const TITELBILDER = {
+    baeume: `<svg class="sa-kursbild" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="sa-kursbild__sonne" cx="99" cy="22" r="11" />
+        <path class="sa-kursbild__huegel" d="M-4 112c22-12 52-15 76-11 18 3 34 3 52-1v24H-4z" />
+        <path class="sa-kursbild__stamm" d="M53 106c2.4-8 3-17 1.6-25-1-5.4-4-9.6-8.6-13.4l3-2.6c3.8 2.8 6.6 6 8.4 9.8 1.6-5.6 5.2-10 10.8-13.2l2 3c-5.2 3.4-8 8.6-8.2 15.2-.2 8.8 1 17.6 4 26.2z" />
+        <path class="sa-kursbild__krone sa-kursbild__krone--hinten" d="M27 66c-9-2-13-12-8-20 2-4 6-6 10-6-1-10 7-18 17-17 3-8 12-13 21-10 8-5 19-2 23 6 9 0 16 8 15 17 7 3 9 12 5 18-3 6-10 8-16 6-4 6-12 8-19 5-6 5-15 5-21 0-7 4-16 3-21-2z" />
+        <path class="sa-kursbild__krone" d="M33 62c-7-2-10-9-6-15 2-3 5-5 9-5 0-8 7-14 15-13 3-6 11-10 18-7 7-3 15 0 18 7 7 1 12 7 11 14 5 3 6 10 2 14-3 4-8 5-12 4-3 5-10 7-16 4-5 4-12 4-17 0-6 3-13 2-17-3z" />
+        <path class="sa-kursbild__krone sa-kursbild__krone--vorn" d="M40 47c-1-6 4-11 10-10 2-5 8-7 13-4 4-3 10-2 12 3" />
+        <path class="sa-kursbild__krone sa-kursbild__krone--vorn" d="M73 58c4 1 8-2 8-6" />
+        <path class="sa-kursbild__blatt" d="M0 0c3-4.5 9-4.5 12 0-3 4.5-9 4.5-12 0z" transform="translate(86 86) rotate(32)" />
+        <path class="sa-kursbild__blatt sa-kursbild__blatt--hell" d="M0 0c2.4-3.4 6.6-3.4 9 0-2.4 3.4-6.6 3.4-9 0z" transform="translate(22 92) rotate(-28)" />
+        <path class="sa-kursbild__blatt" d="M0 0c2-3 6-3 8 0-2 3-6 3-8 0z" transform="translate(98 100) rotate(-10)" />
+    </svg>`,
+}
+
 export function zeigen(el, app) {
     const l = app.lager
     el.innerHTML = `
@@ -40,7 +56,7 @@ function kursHtml(l, k) {
     const status = laeuft.has(k.id) ? `<span class="sa-marke">wird geladen …</span>`
         : d ? `<span class="sa-marke sa-marke--gut">${S.haken} in diesem Speicher</span>` : `<span class="sa-marke">nicht geladen</span>`
     return `<article class="sa-kurs${d ? " ist-geladen" : ""}" data-kurs="${esc(k.id)}">
-        <div class="sa-kurs__bild">${S[k.symbol] || S.kurs}</div>
+        <div class="sa-kurs__bild">${TITELBILDER[k.titelbild] || S[k.symbol] || S.kurs}</div>
         <div class="sa-kurs__text">
             <header><h2>${esc(k.titel)}</h2>${status}${update ? `<span class="sa-marke sa-marke--warm">Update verfügbar</span>` : ""}</header>
             <p class="sa-kurs__unter">${esc(k.untertitel)}</p>
@@ -65,8 +81,8 @@ async function herunterladen(app, k) {
     laeuft.add(k.id)
     app.neuZeichnen()
     try {
-        const inhalt = await k.laden()
-        await lager.kursInstallieren(inhalt)
+        const [inhalt, quellen] = await Promise.all([k.laden(), k.medien ? k.medien().catch(() => ({})) : {}])
+        await lager.kursInstallieren(inhalt, await medienHolen(quellen))
         meldung(lager === app.lager ? `„${k.titel}“ ist in deinem Lernspeicher` : `„${k.titel}“ wurde in „${ortName}“ geladen`)
     } catch (f) {
         fehlerMeldung(new Error(`Kurs konnte nicht geladen werden: ${f.message}`))
@@ -74,6 +90,18 @@ async function herunterladen(app, k) {
         laeuft.delete(k.id)
         if (app.aktuell?.name === "kurse") app.neuZeichnen()
     }
+}
+
+// Mitgelieferte Bilder holen (aus der App bzw. dem Offline-Speicher) – fehlende werden übersprungen
+async function medienHolen(quellen) {
+    const medien = new Map()
+    const liste = Object.entries(quellen || {})
+    for (let i = 0; i < liste.length; i += 8) {
+        await Promise.all(liste.slice(i, i + 8).map(async ([pfad, url]) => {
+            try { const a = await fetch(url); if (a.ok) medien.set(pfad, await a.blob()) } catch { /* offline und nicht im Cache */ }
+        }))
+    }
+    return medien
 }
 
 function lernen(app, k, artWaehlen = false) {

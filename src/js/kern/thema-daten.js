@@ -10,6 +10,7 @@
 //   SCHRIFTEN, ZEICHEN, KARTEN, SZENEN, MUSTER,
 //   HINTERGRUENDE, ZEICHEN_EFFEKTE, BEGRUESSUNGEN,
 //   EINGAENGE, HOVER, SEITENWECHSEL   → die Auswahl-Listen
+//   MENUE_LAYOUTS     Anordnungen der Dienste auf der Lichtung, jede mit eigenem Theme
 //
 // Einstellungen eines Nutzers sind immer nur die ÄNDERUNGEN:
 //   { grove: { farben: { amber: "#…" } }, dienste: { myzel: { … } } }
@@ -29,6 +30,7 @@ export const STANDARD = {
     symbole: { strich: 0, enden: "rund" },          // strich 0 = wie gezeichnet
     flaeche: { korn: 6, schein: 100, muster: "keins", musterStaerke: 7, musterGroesse: 48 },
     bilder: { einfaerben: true, logo: "grove", zeichen: null, karte: null, szene: "lichtung" },
+    layout: { menue: "raster" },                    // Anordnung der Dienste auf der Lichtung (MENUE_LAYOUTS)
     bewegung: {
         stufe: "voll", tempo: 1,
         hintergrund: "keiner", hintergrundStaerke: 100,
@@ -382,3 +384,172 @@ export const PRESETS = [
         }, dienste: { lichtung: { bewegung: { hintergrund: "keiner" } } } },
     },
 ]
+
+// ---------- Menü-Layouts (Lichtung) ----------
+// Wie die Dienste im Hauptmenü verteilt sind. Jedes Layout bringt ein passendes Theme mit
+// (thema = Einstellungen für „Ganz Grove“, lichtung = nur für die Lichtung). In Laub:
+// „Mit Theme“ wendet beides an (wie ein Preset), „Nur Anordnung“ ändert nur layout.menue.
+// Das Aussehen steht in css/seiten/hauptmenue.css unter html[data-menue="<id>"].
+export const MENUE_LAYOUTS = [
+    {
+        id: "raster", name: "Lichtung", art: "Raster", text: "Das Original: große Karten mit Bild, sauber im Raster.",
+        thema: {}, lichtung: {},
+    },
+    {
+        id: "bento", name: "Leinen", art: "Bento", text: "Kacheln in verschiedenen Größen – hell, luftig, wie ein Magazin.",
+        thema: {
+            farben: { ground: "#F2EDE4", "ground-deep": "#E8E0D2", surface: "#FFFDF8", "surface-hi": "#F7F1E6",
+                border: "#E2D8C7", "border-hi": "#CFC1AA", amber: "#B4552E", "amber-light": "#8E3E1E", flieder: "#6E7F4E",
+                text: "#26201B", "text-soft": "#4A4038", muted: "#7A6D60", gut: "#4F7D45", fehler: "#B3473A" },
+            schrift: { titel: "dmserif", text: "dmsans" },
+            form: { ecken: 1.3 },
+            flaeche: { korn: 2, schein: 40 },
+            bewegung: { hintergrund: "keiner", eingang: "wachsen", hover: "heben", begruessung: "worte" },
+        },
+        lichtung: { bilder: { szene: "morgen" }, bewegung: { hintergrund: "nebel" } },
+    },
+    {
+        id: "regal", name: "Bibliothek", art: "Bücherregal", text: "Jeder Dienst ist ein Buchrücken. Drüberfahren zieht das Buch heraus.",
+        thema: {
+            farben: { ground: "#1A130F", "ground-deep": "#120D0A", surface: "#251B15", "surface-hi": "#2E221A",
+                border: "#3A2B20", "border-hi": "#4B382A", amber: "#C9A45C", "amber-light": "#E6C98A", flieder: "#8E5B4A",
+                text: "#F0E6D6", "text-soft": "#D2C2AA", muted: "#A08C74", gut: "#B9D3A0", fehler: "#E5927F" },
+            schrift: { titel: "cormorant", text: "lora" },
+            form: { ecken: 0.5 },
+            flaeche: { muster: "maserung", musterStaerke: 6, korn: 8 },
+            bewegung: { hintergrund: "sporen", zeichen: "glimmen", begruessung: "nebel", eingang: "aufsteigen", hover: "ruhig" },
+        },
+        lichtung: { bilder: { szene: "herbst" }, bewegung: { hintergrund: "sporen" } },
+    },
+    {
+        id: "platten", name: "Plattenkiste", art: "Vinyl", text: "Die Dienste als Plattencover. Beim Drüberfahren rutscht die Platte raus.",
+        thema: {
+            farben: { ground: "#12131F", "ground-deep": "#0C0D16", surface: "#1A1C2B", "surface-hi": "#222538",
+                border: "#262940", "border-hi": "#33375A", amber: "#E8B64A", "amber-light": "#F6D88C", flieder: "#E07AA8",
+                text: "#EDE8F5", "text-soft": "#C4BED6", muted: "#8F89A8", gut: "#9ED9B8", fehler: "#F08A8A" },
+            schrift: { titel: "abril", text: "dmsans" },
+            bewegung: { hintergrund: "noten", zeichen: "bass", begruessung: "neon", hover: "leuchten" },
+        },
+        lichtung: { bilder: { szene: "buehne" }, bewegung: { hintergrund: "noten" } },
+    },
+    {
+        id: "orbit", name: "Sternwarte", art: "Umlaufbahn", text: "Die Dienste kreisen langsam um dein Grove. Drüberfahren hält alles an.",
+        thema: {
+            farben: { ground: "#0A0E1C", "ground-deep": "#070A15", surface: "#121831", "surface-hi": "#18203D",
+                border: "#1E2848", "border-hi": "#2A375F", amber: "#8FB8FF", "amber-light": "#C4DAFF", flieder: "#C9A7FF",
+                text: "#E8EEFF", "text-soft": "#B9C4E2", muted: "#8090B5", gut: "#9FE0C8", fehler: "#F29A9A" },
+            schrift: { titel: "spacegrotesk", text: "inter" },
+            form: { ecken: 1.6 },
+            flaeche: { muster: "sterne", musterStaerke: 9 },
+            bewegung: { hintergrund: "sternschnuppen", zeichen: "glimmen", begruessung: "glanz", hover: "leuchten" },
+        },
+        lichtung: { bilder: { szene: "bergsee" }, bewegung: { hintergrund: "sternschnuppen" } },
+    },
+    {
+        id: "terminal", name: "Terminal", art: "Kommandozeile", text: "Grüner Bildschirm, Befehle statt Karten. Für Nerds.",
+        thema: {
+            farben: { ground: "#070C08", "ground-deep": "#040805", surface: "#0C140D", "surface-hi": "#112012",
+                border: "#163019", "border-hi": "#1F4A25", amber: "#5CFF8A", "amber-light": "#A8FFC0", flieder: "#5CD6FF",
+                text: "#C8F5D0", "text-soft": "#8FD6A0", muted: "#5E9A6C", gut: "#5CFF8A", fehler: "#FF6B6B" },
+            schrift: { titel: "plexmono", text: "plexmono", groesse: 96 },
+            form: { ecken: 0.15 },
+            symbole: { strich: 1.4, enden: "eckig" },
+            flaeche: { korn: 12, schein: 100 },
+            bewegung: { hintergrund: "regen", hintergrundStaerke: 60, begruessung: "schreibmaschine", eingang: "einblenden", hover: "ruhig" },
+        },
+        lichtung: { bilder: { szene: "keine" }, bewegung: { hintergrund: "regen" } },
+    },
+    {
+        id: "dock", name: "Polarlicht", art: "Dock", text: "Die ganze Lichtung als Bühne, die Dienste in einem Dock am unteren Rand.",
+        thema: {
+            farben: { ground: "#0C1322", "ground-deep": "#08101C", surface: "#132036", "surface-hi": "#192942",
+                border: "#1F3150", "border-hi": "#2A4268", amber: "#6FE3CF", "amber-light": "#B5F5EA", flieder: "#B49CFF",
+                text: "#E6F4F7", "text-soft": "#B8D3DB", muted: "#7E9BAA", gut: "#9BE8C4", fehler: "#F59A9A" },
+            schrift: { titel: "spacegrotesk", text: "inter" },
+            form: { ecken: 1.8 },
+            bewegung: { hintergrund: "polarlicht", zeichen: "atmen", begruessung: "nebel" },
+        },
+        lichtung: { bilder: { szene: "bergsee" }, bewegung: { hintergrund: "polarlicht" } },
+    },
+    {
+        id: "faecher", name: "Herbstfächer", art: "Kartenfächer", text: "Die Dienste wie ein Blatt Karten aufgefächert – zieh dir eine.",
+        thema: {
+            farben: { ground: "#1F1512", "ground-deep": "#170F0C", surface: "#2A1C17", "surface-hi": "#33221B",
+                border: "#3A2820", "border-hi": "#4A3328", amber: "#E07B39", "amber-light": "#F4A66A", flieder: "#D9A0A0",
+                text: "#F2E6DA", "text-soft": "#D6C2B0", muted: "#A88E78", gut: "#C7D9A0", fehler: "#EC8F7C" },
+            schrift: { titel: "playfair" },
+            flaeche: { muster: "blaetter", musterStaerke: 6 },
+            bewegung: { hintergrund: "blaetter", zeichen: "schaukeln", eingang: "aufblaettern", hover: "heben" },
+        },
+        lichtung: { bilder: { szene: "herbst" }, bewegung: { hintergrund: "blaetter" } },
+    },
+    {
+        id: "pinnwand", name: "Pinnwand", art: "Polaroids", text: "Fotos an der Korkwand, schief angepinnt – handgeschrieben beschriftet.",
+        thema: {
+            farben: { ground: "#C9A57B", "ground-deep": "#B8946A", surface: "#FFFCF4", "surface-hi": "#F8F1E3",
+                border: "#B28E64", "border-hi": "#9A784F", amber: "#C2412B", "amber-light": "#962E1B", flieder: "#3F6C8E",
+                text: "#2B2118", "text-soft": "#4E3F31", muted: "#6B5640", gut: "#3F7A44", fehler: "#B03A2E" },
+            schrift: { titel: "caveat", text: "nunito", groesse: 104 },
+            form: { ecken: 0.3 },
+            flaeche: { muster: "punkte", musterStaerke: 14, musterGroesse: 30, korn: 10, schein: 0 },
+            bewegung: { hintergrund: "keiner", begruessung: "schreibmaschine", eingang: "wachsen", hover: "kippen" },
+        },
+        lichtung: { bilder: { szene: "keine" }, bewegung: { hintergrund: "keiner" } },
+    },
+    {
+        id: "pfad", name: "Waldpfad", art: "Pfad", text: "Ein Weg schlängelt sich durch den Wald – jeder Dienst ist eine Station.",
+        thema: {
+            farben: { ground: "#121A15", "ground-deep": "#0D1410", surface: "#19231C", "surface-hi": "#1F2B23",
+                border: "#24322A", "border-hi": "#2F4136", amber: "#9CC873", "amber-light": "#C2E3A0", flieder: "#B7A6D9",
+                text: "#E6EFE4", "text-soft": "#BFCFBF", muted: "#8DA192", gut: "#A8E0B8", fehler: "#E8907E" },
+            schrift: { titel: "lora", text: "worksans" },
+            form: { ecken: 1.4 },
+            flaeche: { muster: "punkte", musterStaerke: 6 },
+            bewegung: { hintergrund: "sporen", eingang: "wachsen" },
+        },
+        lichtung: { bilder: { szene: "morgen" }, bewegung: { hintergrund: "hain" } },
+    },
+    {
+        id: "streifen", name: "Abendrot", art: "Streifen", text: "Schmale Lichtstreifen, die beim Drüberfahren aufgehen wie Vorhänge.",
+        thema: {
+            farben: { ground: "#1E1220", "ground-deep": "#170D18", surface: "#28172A", "surface-hi": "#301C33",
+                border: "#36203A", "border-hi": "#462A4B", amber: "#F08A6C", "amber-light": "#FFB59A", flieder: "#C9A7D1",
+                text: "#F7E8E6", "text-soft": "#DCC2C4", muted: "#AD8F96", gut: "#BFE3B4", fehler: "#F2A0A0" },
+            schrift: { titel: "dmserif" },
+            bewegung: { hintergrund: "polarlicht", begruessung: "worte", eingang: "einblenden" },
+        },
+        lichtung: { bewegung: { hintergrund: "sternschnuppen" } },
+    },
+    {
+        id: "arcade", name: "Neon-Arcade", art: "Arcade", text: "Synthwave: Neonrahmen, Leuchtgitter am Boden, „Press Start“.",
+        thema: {
+            farben: { ground: "#0D0221", "ground-deep": "#08011A", surface: "#160536", "surface-hi": "#1E0A45",
+                border: "#2A1160", "border-hi": "#3D1C85", amber: "#FF2E97", "amber-light": "#FF8CC6", flieder: "#2DE2E6",
+                text: "#F7EDFF", "text-soft": "#D3BFEF", muted: "#9A85C2", gut: "#2DE2E6", fehler: "#FF6B6B" },
+            schrift: { titel: "abril", text: "spacegrotesk" },
+            form: { ecken: 0.4 },
+            flaeche: { korn: 4, schein: 100 },
+            bewegung: { hintergrund: "sternschnuppen", zeichen: "bass", begruessung: "neon", eingang: "wachsen", hover: "leuchten" },
+        },
+        lichtung: { bilder: { szene: "keine" }, bewegung: { hintergrund: "sternschnuppen" } },
+    },
+    {
+        id: "zeitung", name: "Feuilleton", art: "Zeitung", text: "Grove als Tageszeitung: Schlagzeilen, Spalten, Initialen.",
+        thema: {
+            farben: { ground: "#F4F0E6", "ground-deep": "#EAE4D6", surface: "#FBF8F0", "surface-hi": "#F1ECDF",
+                border: "#D9D1BF", "border-hi": "#B9AE97", amber: "#A3271F", "amber-light": "#7C1B15", flieder: "#2E4A62",
+                text: "#1B1A17", "text-soft": "#3B3934", muted: "#6E6A60", gut: "#3C6E47", fehler: "#A3271F" },
+            schrift: { titel: "playfair", text: "lora" },
+            form: { ecken: 0 },
+            symbole: { strich: 1.5, enden: "eckig" },
+            flaeche: { korn: 6, schein: 0 },
+            bewegung: { hintergrund: "keiner", begruessung: "worte", eingang: "einblenden", hover: "ruhig" },
+        },
+        lichtung: { bilder: { szene: "keine" }, bewegung: { hintergrund: "keiner" } },
+    },
+]
+// Fertige Einstellungen für „Mit Theme“
+export const menueLayoutEinstellungen = (l) => ({
+    grove: structuredClone(l.thema),
+    dienste: { lichtung: { ...structuredClone(l.lichtung), layout: { menue: l.id } } },
+})

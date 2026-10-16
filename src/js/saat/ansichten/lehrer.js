@@ -63,6 +63,22 @@ const SAETZE = {
         "Nächste Karte: „{vorne}“. Na, klingelt's?",
         "Denk kurz nach: „{vorne}“ …",
     ],
+    karteBild: [
+        "Schau dir das Bild genau an – {frage}",
+        "Was siehst du hier? Überleg erst, dann deck auf.",
+        "Erkennst du das? Sag es dir im Kopf.",
+        "Bildrätsel! {frage}",
+    ],
+    auswahlBild: [
+        "Schau aufs Bild – welche Antwort passt?",
+        "Eins von dreien stimmt. {frage}",
+        "Kleines Bilderquiz: Was nimmst du?",
+    ],
+    tippenBild: [
+        "Schreib mir, was du auf dem Bild siehst.",
+        "Genau hinschauen und eintippen: {frage}",
+        "Ganz ohne Hilfe – was ist das?",
+    ],
     auswahl: [
         "Welche Antwort passt zu „{vorne}“?",
         "Eins von dreien ist richtig. „{vorne}“ bedeutet …",

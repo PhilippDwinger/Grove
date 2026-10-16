@@ -2,8 +2,9 @@
 // Saat · Alle Karten: Beherrschung, Suche, Filter, Sortierung, Detail, Vorziehen
 // ==========================================================
 import { esc } from "../../kern/html.js"
-import { S, STUFEN, STUFEN_NAME } from "../symbole.js"
+import { S, STUFEN, STUFEN_NAME, BLOCK_SYMBOL } from "../symbole.js"
 import { normal } from "../hilfen.js"
+import { vorneTitel, vorneIstBild } from "../format.js"
 import { stufeMarke, faelligText, leerHtml, BILD } from "./ui.js"
 import { karteDetailHtml, karteDetailAktivieren } from "./karte-dialog.js"
 import { konflikteHtml, konflikteAktivieren } from "./konflikte.js"
@@ -93,7 +94,7 @@ function listeZeichnen(el, app) {
         faellig: (a, b) => (a.z?.faellig ?? unendlich) - (b.z?.faellig ?? unendlich) || a.i - b.i,
         schwach: (a, b) => a.r - b.r || a.i - b.i,
         stark: (a, b) => b.r - a.r || a.i - b.i,
-        alpha: (a, b) => (a.e.karte.vorne?.text || "").localeCompare(b.e.karte.vorne?.text || "", "de"),
+        alpha: (a, b) => vorneTitel(a.e.karte).localeCompare(vorneTitel(b.e.karte), "de"),
         zuletzt: (a, b) => (b.z?.letzte ?? 0) - (a.z?.letzte ?? 0),
         schwer: (a, b) => (b.z?.d ?? 0) - (a.z?.d ?? 0),
         datei: (a, b) => a.i - b.i,
@@ -119,8 +120,8 @@ function listeZeichnen(el, app) {
         <div class="sa-zeile${f.gewaehlt === e.schluessel ? " ist-aktiv" : ""}" role="listitem" data-k="${esc(e.schluessel)}" tabindex="0">
             ${stufeMarke(stufe, { text: false })}
             <div class="sa-zeile__text">
-                <strong>${esc(e.karte.vorne?.text || "(ohne Vorderseite)")}${e.karte.vorne?.zusatz ? ` <small>${esc(e.karte.vorne.zusatz)}</small>` : ""}</strong>
-                <span>${esc(e.karte.antwort || "")}</span>
+                <strong>${vorneIstBild(e.karte) ? `<span class="sa-zeile__bild" title="Bildkarte">${BLOCK_SYMBOL.bild}</span>` : ""}${esc(vorneTitel(e.karte) || "(ohne Vorderseite)")}${e.karte.vorne?.zusatz && !vorneIstBild(e.karte) ? ` <small>${esc(e.karte.vorne.zusatz)}</small>` : ""}</strong>
+                <span>${esc(vorneIstBild(e.karte) ? (e.karte.alternativen || [])[0] || "" : e.karte.antwort || "")}</span>
             </div>
             <span class="sa-zeile__info">${e.vorkommen.length > 1 ? `<span class="sa-marke" title="Steht in ${e.vorkommen.length} Lerndateien – ein gemeinsamer Lernstand">${S.kette}${e.vorkommen.length}</span>` : ""}${e.konflikt && !e.konflikt.geloest ? `<span class="sa-marke sa-marke--warm" title="ID-Konflikt">${S.warnung}</span>` : ""}<span class="sa-zeile__wann">${faelligText(z, jetzt)}</span></span>
             <span class="sa-zeile__knoepfe">

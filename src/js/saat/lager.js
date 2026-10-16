@@ -712,13 +712,19 @@ export class Lager extends EventTarget {
         return [...this.decks.values()].find((d) => kursVon(d.deck)?.id === kursId) ?? null
     }
     // deck = Inhalt aus js/saat/kurse/<id>.js – landet als saatgut/kurs-<id>.saat im AKTUELLEN Speicher
-    async kursInstallieren(kursDeck) {
+    // medien: Map("medien/…" → Blob) – mitgelieferte Bilder; vorhandene Dateien bleiben unangetastet
+    async kursInstallieren(kursDeck, medien = new Map()) {
         const kurs = kursVon(kursDeck)
         if (!kurs) throw new Error("Das ist kein Kurs.")
         const vorhanden = this.kursDeck(kurs.id)
         const datei = vorhanden?.datei ?? `${deckIdFuer(kurs.id)}${ENDUNG}`
         const deck = deckLesen(structuredClone(kursDeck), { dateiname: datei }).deck
         if (vorhanden) await this.vorherSichern(`${PFAD.saatgut}/${datei}`, `saatgut/${datei}`)
+        for (const [p, blob] of medien) {
+            if (!p.startsWith(`${PFAD.medien}/`) || p.includes("..") || (await this.verz.existiert(p))) continue
+            await this.verz.schreiben(p, blob)
+            this.medienCache.delete(p)
+        }
         await this.verz.schreiben(`${PFAD.saatgut}/${datei}`, deckSchreiben(deck))
         if (vorhanden && vorhanden.deck.id !== deck.id) this.decks.delete(vorhanden.deck.id)
         this.decks.set(deck.id, { deck, datei, warnungen: [], nurLesen: false })
@@ -731,14 +737,20 @@ export class Lager extends EventTarget {
     async kursEntfernen(kursId) {
         const d = this.kursDeck(kursId)
         if (!d) return { karten: 0, abfragen: 0 }
-        const anderswo = new Set()
+        const anderswo = new Set(), medienAnderswo = new Set()
         for (const x of this.decks.values()) {
             if (x === d) continue
             for (const k of x.deck.karten) { const s = this.index.schluessel(x.deck.id, k.id); if (s) anderswo.add(s) }
+            for (const p of medienVerweise(x.deck)) medienAnderswo.add(p)
         }
         const weg = new Set(d.deck.karten.map((k) => this.index.schluessel(d.deck.id, k.id)).filter((s) => s && !anderswo.has(s)))
         const abfragen = await this.ereignisseEntfernen(weg)
         await this.verz.loeschen(`${PFAD.saatgut}/${d.datei}`)
+        for (const p of new Set(medienVerweise(d.deck))) {
+            if (medienAnderswo.has(p) || !p.startsWith(`${PFAD.medien}/kurs-`)) continue      // nur mitgelieferte Kursbilder
+            await this.verz.loeschen(p).catch(() => {})
+            this.medienCache.delete(p)
+        }
         await this.laden()
         this.senden()
         return { karten: weg.size, abfragen }

@@ -92,6 +92,13 @@ export const BLOECKE = {
         leer: (b) => !b.text?.trim(),
         zusammenfassung: (b) => b.text,
     },
+    funfakt: {
+        name: "Wusstest du?", gruppe: "merken", kurz: "Überraschender Fakt, der beim Merken hilft",
+        felder: [{ name: "text", art: "lang", label: "Fun Fact", platzhalter: "Eichelhäher vergraben Tausende Eicheln …" }],
+        neu: () => ({ text: "" }),
+        leer: (b) => !b.text?.trim(),
+        zusammenfassung: (b) => b.text,
+    },
     beispiele: {
         name: "Beispiele", gruppe: "inhalt", kurz: "Weitere Beispiele und Anwendungsfälle",
         felder: [

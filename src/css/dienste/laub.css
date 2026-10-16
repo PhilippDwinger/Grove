@@ -492,3 +492,86 @@
 @media (prefers-reduced-motion: reduce) {
   .galerie__buehne *, .atmo-probe * { animation-duration: 0s !important; }
 }
+
+/* ---------- Menü-Layouts: Schema der Anordnung (Farben = Theme des Layouts) ---------- */
+.lmini {
+  position: relative; display: flex; flex-direction: column; height: 128px; overflow: hidden;
+  border-radius: calc(12px * var(--ecken)); border: 1px solid var(--border);
+  background: var(--ground); font-family: var(--font-display);
+}
+.lmini__held { position: relative; flex: none; height: 34px; background: linear-gradient(180deg, color-mix(in srgb, var(--amber) 16%, var(--ground-deep)), var(--ground)); }
+.lmini__held i { position: absolute; left: 10px; top: 9px; width: 46%; height: 7px; border-radius: 4px; background: var(--text); opacity: .85; }
+.lmini__held b { position: absolute; left: 10px; top: 21px; width: 30%; height: 4px; border-radius: 2px; background: var(--muted); }
+.lmini__flaeche { position: relative; flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; padding: 8px 10px; }
+.lmini__flaeche i { display: block; min-height: 14px; border-radius: calc(5px * var(--ecken)); background: var(--surface); border: 1px solid var(--border-hi); }
+.lmini__flaeche i:nth-child(n + 5) { display: none; }
+.lmini__flaeche i::before { content: ""; display: block; height: 45%; border-radius: inherit; background: color-mix(in srgb, var(--amber) 35%, transparent); }
+
+.lmini[data-l="bento"] .lmini__flaeche { grid-template-rows: 1fr 1fr; grid-auto-flow: dense; }
+.lmini[data-l="bento"] .lmini__flaeche i:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.lmini[data-l="bento"] .lmini__flaeche i:nth-child(4) { grid-column: span 2; }
+.lmini[data-l="bento"] .lmini__flaeche i:nth-child(-n + 5) { display: block; }
+
+.lmini[data-l="regal"] .lmini__flaeche { display: flex; align-items: flex-end; gap: 3px; border-bottom: 5px solid color-mix(in srgb, var(--amber) 35%, var(--ground-deep)); }
+.lmini[data-l="regal"] .lmini__flaeche i { display: block !important; width: 14px; height: calc(46px + var(--i) * 5px - var(--i) * var(--i) * 1px); background: color-mix(in srgb, var(--amber) calc(30% + var(--i) * 8%), var(--surface-hi)); border: 0; }
+.lmini[data-l="regal"] .lmini__flaeche i:nth-child(3) { width: 56px; background: var(--surface); border: 1px solid var(--border-hi); translate: 0 -4px; }
+.lmini[data-l="regal"] .lmini__flaeche i::before { display: none; }
+
+.lmini[data-l="platten"] .lmini__flaeche { isolation: isolate; display: flex; align-items: center; gap: 14px; }
+.lmini[data-l="platten"] .lmini__flaeche i { position: relative; flex: none; width: 46px; height: 46px; border-radius: 2px; background: linear-gradient(135deg, color-mix(in srgb, var(--amber) 30%, var(--surface)), var(--surface)); }
+.lmini[data-l="platten"] .lmini__flaeche i::before { position: absolute; z-index: -1; left: 4px; top: 3px; width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle, var(--amber) 0 14%, #111 16%); }
+.lmini[data-l="platten"] .lmini__flaeche i:nth-child(1)::before { left: 22px; }
+
+.lmini[data-l="orbit"] .lmini__flaeche { display: block; }
+.lmini[data-l="orbit"] .lmini__flaeche::before { content: ""; position: absolute; left: 50%; top: 50%; width: 66px; height: 66px; translate: -50% -50%; border-radius: 50%; border: 1px dashed color-mix(in srgb, var(--amber) 50%, transparent); }
+.lmini[data-l="orbit"] .lmini__flaeche::after { content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; translate: -50% -50%; border-radius: 50%; background: var(--amber); box-shadow: 0 0 14px var(--amber); }
+.lmini[data-l="orbit"] .lmini__flaeche i { display: block !important; position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; min-height: 0; margin: -7px; border-radius: 50%;
+  transform: rotate(calc(var(--i) * 51.4deg)) translateY(-33px); }
+.lmini[data-l="orbit"] .lmini__flaeche i::before { display: none; }
+
+.lmini[data-l="terminal"] .lmini__flaeche { display: flex; flex-direction: column; gap: 4px; margin: 6px 10px; padding: 16px 8px 6px; border: 1px solid var(--border-hi); background: var(--ground-deep); }
+.lmini[data-l="terminal"] .lmini__flaeche i { display: block !important; height: 4px; min-height: 0; border: 0; background: var(--amber); opacity: .7; width: calc(40% + var(--i) * 7%); }
+.lmini[data-l="terminal"] .lmini__flaeche i:nth-child(n + 6) { display: none !important; }
+.lmini[data-l="terminal"] .lmini__flaeche i::before { display: none; }
+
+.lmini[data-l="dock"] .lmini__held { flex: 1; }
+.lmini[data-l="dock"] .lmini__flaeche { flex: none; display: flex; justify-content: center; gap: 4px; margin: 0 auto 8px; padding: 4px 6px; border-radius: 8px; background: color-mix(in srgb, var(--surface) 70%, transparent); border: 1px solid var(--border-hi); }
+.lmini[data-l="dock"] .lmini__flaeche i { display: block !important; width: 14px; height: 14px; min-height: 0; border-radius: 4px; background: color-mix(in srgb, var(--amber) 45%, var(--surface-hi)); border: 0; }
+.lmini[data-l="dock"] .lmini__flaeche i:nth-child(4) { width: 20px; height: 20px; translate: 0 -3px; }
+.lmini[data-l="dock"] .lmini__flaeche i::before { display: none; }
+
+.lmini[data-l="faecher"] .lmini__flaeche { display: flex; justify-content: center; align-items: flex-end; padding-bottom: 0; }
+.lmini[data-l="faecher"] .lmini__flaeche i { display: block !important; flex: none; width: 34px; height: 56px; margin: 0 -9px; transform-origin: 50% 160%; rotate: calc((var(--i) - 3) * 9deg); box-shadow: -2px 2px 6px rgba(0,0,0,.3); }
+
+.lmini[data-l="pinnwand"] .lmini__flaeche { grid-template-columns: repeat(4, 1fr); gap: 8px; background: var(--ground-deep); }
+.lmini[data-l="pinnwand"] .lmini__flaeche i { rotate: calc((var(--i) * 37 % 9 - 4) * 1.6deg); padding: 3px 3px 9px; border: 0; border-radius: 1px; box-shadow: 1px 2px 4px rgba(0,0,0,.25); }
+.lmini[data-l="pinnwand"] .lmini__flaeche i::before { height: 100%; background: color-mix(in srgb, var(--ground) 50%, var(--surface-hi)); }
+
+.lmini[data-l="pfad"] .lmini__flaeche { grid-template-columns: 1fr 1fr; gap: 3px 20px; }
+.lmini[data-l="pfad"] .lmini__flaeche::before { content: ""; position: absolute; left: 50%; top: 4px; bottom: 4px; border-left: 2px dashed var(--amber); }
+.lmini[data-l="pfad"] .lmini__flaeche i { height: 15px; min-height: 0; }
+.lmini[data-l="pfad"] .lmini__flaeche i:nth-child(even) { translate: 0 9px; }
+.lmini[data-l="pfad"] .lmini__flaeche i:nth-child(-n + 4) { display: block; }
+
+.lmini[data-l="streifen"] .lmini__flaeche { display: flex; gap: 3px; }
+.lmini[data-l="streifen"] .lmini__flaeche i { display: block !important; flex: 1; background: color-mix(in srgb, var(--amber) calc(10% + var(--i) * 5%), var(--surface)); }
+.lmini[data-l="streifen"] .lmini__flaeche i:nth-child(3) { flex: 4; }
+.lmini[data-l="streifen"] .lmini__flaeche i::before { display: none; }
+
+.lmini[data-l="arcade"] .lmini__flaeche { grid-template-columns: repeat(3, 1fr); }
+.lmini[data-l="arcade"] .lmini__flaeche::after { content: ""; position: absolute; inset: auto -20% 0; height: 40%; z-index: 0;
+  background: linear-gradient(transparent 0 85%, var(--amber) 0) 0 0 / 100% 8px, linear-gradient(90deg, transparent 0 90%, var(--flieder) 0) 0 0 / 14px 100%;
+  transform: perspective(60px) rotateX(50deg); opacity: .6; }
+.lmini[data-l="arcade"] .lmini__flaeche i { position: relative; z-index: 1; border: 1px solid var(--amber); box-shadow: 0 0 6px var(--amber); }
+.lmini[data-l="arcade"] .lmini__flaeche i:nth-child(2n) { border-color: var(--flieder); box-shadow: 0 0 6px var(--flieder); }
+.lmini[data-l="arcade"] .lmini__flaeche i:nth-child(4) { display: none; }
+
+.lmini[data-l="zeitung"] .lmini__held { border-bottom: 3px double var(--text); background: var(--ground); }
+.lmini[data-l="zeitung"] .lmini__held i { left: 25%; width: 50%; }
+.lmini[data-l="zeitung"] .lmini__held b { left: 35%; }
+.lmini[data-l="zeitung"] .lmini__flaeche { grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 0; }
+.lmini[data-l="zeitung"] .lmini__flaeche i { border: 0; border-right: 1px solid var(--border-hi); border-radius: 0; background: none; padding: 3px; }
+.lmini[data-l="zeitung"] .lmini__flaeche i:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.lmini[data-l="zeitung"] .lmini__flaeche i::before { height: 5px; margin-bottom: 3px; background: var(--text); }
+.lmini[data-l="zeitung"] .lmini__flaeche i::after { content: ""; display: block; height: 50%; background: repeating-linear-gradient(var(--muted) 0 1px, transparent 1px 4px); opacity: .7; }
+.lmini[data-l="zeitung"] .lmini__flaeche i:nth-child(-n + 3) { display: block; }
